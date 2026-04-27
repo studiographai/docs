@@ -1,0 +1,77 @@
+---
+title: "Knowledge graph"
+description: "How Studiograph models information as a connected graph of entities."
+---
+
+## Overview
+
+Studiograph organizes information as a **knowledge graph** — a network of typed entities connected by relationships. Instead of isolated documents, every piece of information is a node that links to related nodes through `[[wikilinks]]`.
+
+Each entity is a Markdown file with YAML frontmatter, organized into [folders](/concepts/folders) (Git repos) within a [workspace](/concepts/workspaces).
+
+## Entity types
+
+Studiograph ships with **20 canonical entity types** across three categories. All types share a common base schema and any folder can contain any type — entity types are not partitioned by folder.
+
+### Identity (4)
+
+| Type | Description |
+|---|---|
+| `person` | Team members, client contacts, collaborators |
+| `organization` | Companies, agencies, institutions |
+| `role` | Job titles from your leveling framework |
+| `practice-area` | Disciplines and specializations |
+
+### Universal (12)
+
+| Type | Description |
+|---|---|
+| `project` | Client engagements and internal initiatives |
+| `meeting` | Conversations with attendees and outcomes |
+| `decision` | Structured decision records (ADR-style) |
+| `task` | Actionable work items and to-dos |
+| `document` | Proposals, contracts, briefs, and memos |
+| `deck` | Presentations and slide decks (renderer-agnostic) |
+| `dataset` | Tabular data — CSV body with a typed-column schema in frontmatter |
+| `reference` | External links and resources |
+| `note` | Freeform observations and research |
+| `deliverable` | Scoped outputs promised to a client |
+| `publication` | Authored content published externally |
+| `deal` | Pre-project sales opportunities |
+
+### Knowledge (4)
+
+| Type | Description |
+|---|---|
+| `process` | Repeatable workflows and SOPs |
+| `guideline` | Guidelines, standards, and best practices |
+| `case-study` | Portfolio narratives for completed projects |
+| `skill` | Reusable agent instructions — body holds a prompt the agent can load on demand |
+
+## Custom and app types
+
+Workspaces can extend the canonical set in two ways:
+
+- **Schema extensions** in `workspace.json` add fields to a built-in type or define a new custom type. Both are validated with Zod at create/update time.
+- **Apps** install into their own folder and register additional entity types (e.g. a Slides app may add a renderer-aware `deck` flavor). App entities validate with resilient fallback so a missing app plugin doesn't strand data on disk.
+
+## Relationships
+
+Entities connect through **wikilinks** — `[[entity-id]]` syntax in frontmatter fields and Markdown body content.
+
+```markdown
+---
+entity_type: meeting
+entity_id: kickoff-2026-01-15
+attendees:
+  - "[[jane-smith]]"
+  - "[[bob-jones]]"
+project: "[[meridian-rebrand]]"
+---
+
+Discussed scope with [[jane-smith]]. Decision recorded as [[dec-2026-001]].
+```
+
+Wikilinks resolve across folders. The graph and search APIs filter wikilinks pointing into folders the caller can't access, so an unauthorized reference is stripped from responses rather than leaked as a broken link.
+
+The `find_related` agent and MCP tool traverse these connections in either direction (outgoing references and incoming backlinks).

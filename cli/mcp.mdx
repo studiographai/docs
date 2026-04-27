@@ -1,0 +1,178 @@
+---
+title: "MCP integration"
+description: "Use Studiograph as an MCP server for AI-powered tools."
+---
+
+## Overview
+
+Studiograph exposes a [Model Context Protocol](https://modelcontextprotocol.io) (MCP) server so AI tools — Claude Code, Claude Desktop, Cursor, and others — can read and write your knowledge graph. Studiograph also acts as an MCP **client** for external services (see [external connectors](#external-mcp-connectors)).
+
+Two transports are available:
+
+- **Streamable HTTP** at `POST /mcp` — for hosted deployments. Authenticated with a per-user `sg_` API token.
+- **stdio** via `studiograph mcp` — for local workspaces driven by Claude Desktop or other clients that spawn subprocesses.
+
+## Mint a per-user API token
+
+For HTTP transport, every connection authenticates as a specific Studiograph user. Tokens are minted from the web UI:
+
+1. Sign in and open **Settings → Connectors → Studiograph MCP**
+2. Click **Mint token**, copy the `sg_…` value (shown once)
+3. Paste the JSON snippet shown alongside into your MCP client's config
+
+Tokens are sha256-hashed at rest and carry the owning user's identity. Folder access is enforced per request — the token sees only the folders its owner sees. Unauthorized folders return "Folder not found" rather than "Forbidden" to avoid leaking existence.
+
+You can also manage tokens via the API:
+
+```http
+POST   /api/auth/tokens         # mint
+GET    /api/auth/tokens         # list (no raw values)
+DELETE /api/auth/tokens/:id     # revoke
+```
+
+## Available tools
+
+### Folder and entity management
+
+| Tool | Purpose |
+|---|---|
+| `list_repos` | List folders the caller can access |
+| `create_repo` | Create a new shared folder; auto-grants admin to caller |
+| `list_entities` | List entities, optionally filtered by type / folder |
+| `get_entity` | Fetch one entity with full frontmatter and body |
+| `search_entities` | Cross-folder search (FTS, semantic, or hybrid) |
+| `create_entity` | Create an entity. Commits to git automatically |
+| `update_entity` | Merge frontmatter fields and/or replace body |
+| `validate_wikilinks` | Check which `[[…]]` refs in an entity resolve |
+| `find_related` | Walk wikilinks (outgoing, incoming, or both) |
+
+### Saved views (per user)
+
+| Tool | Purpose |
+|---|---|
+| `list_views` | List the caller's saved views |
+| `create_view` | Save a view (filter + sort + grouping) |
+| `update_view` | Update a saved view |
+| `delete_view` | Delete a saved view |
+
+### Skills
+
+The `skill` entity is reusable agent instructions. External MCP clients can discover and follow them through these tools — Studiograph itself never executes skill content server-side.
+
+| Tool | Purpose |
+|---|---|
+| `list_skills` | List skill entities the caller can access |
+| `get_skill` | Fetch a skill's metadata and full markdown body |
+
+Bundled filesystem skills (interview, schema rules, etc.) are not exposed — only user-authored `skill` entities.
+
+### Tool parameters
+
+`list_entities`:
+
+| Parameter | Required | Description |
+|---|:---:|---|
+| `repo` | | Folder name (omit for all accessible) |
+| `entity_type` | | Filter by type (e.g. `person`, `project`) |
+| `limit` | | Max results |
+
+`create_entity`:
+
+| Parameter | Required | Description |
+|---|:---:|---|
+| `repo` | yes | Folder name |
+| `entity_type` | yes | Entity type |
+| `entity_id` | yes | Kebab-case ID |
+| `data` | yes | Frontmatter fields (JSON object) |
+| `content` | | Markdown body |
+
+`find_related`:
+
+| Parameter | Required | Description |
+|---|:---:|---|
+| `repo` | yes | Folder name |
+| `entity_type` | yes | Entity type |
+| `entity_id` | yes | Entity ID |
+| `direction` | | `outgoing`, `incoming`, or `both` (default) |
+
+## Configure your client
+
+### Streamable HTTP (hosted)
+
+Use this for Studiograph servers running on Railway or any other host with a public URL.
+
+```json
+{
+  "mcpServers": {
+    "studiograph": {
+      "type": "streamable-http",
+      "url": "https://your-server.example.com/mcp",
+      "headers": {
+        "Authorization": "Bearer sg_<your-token>"
+      }
+    }
+  }
+}
+```
+
+The Connectors modal shows the exact JSON snippet for your deployment, with the token already substituted.
+
+### stdio (local)
+
+For Claude Desktop or any client that spawns the server as a subprocess. Uses the workspace on disk directly.
+
+```json
+{
+  "mcpServers": {
+    "studiograph": {
+      "command": "studiograph",
+      "args": ["mcp"],
+      "cwd": "/absolute/path/to/your/workspace"
+    }
+  }
+}
+```
+
+If you'd rather pass the workspace as an argument:
+
+```json
+{
+  "mcpServers": {
+    "studiograph": {
+      "command": "studiograph",
+      "args": ["mcp", "/absolute/path/to/your/workspace"]
+    }
+  }
+}
+```
+
+stdio transport runs in **open mode** for the local user — there's no per-request auth. Use HTTP transport when you need per-user scoping.
+
+## External MCP connectors
+
+Studiograph also acts as an MCP **client**, calling out to remote MCP servers and exposing their tools to the agent.
+
+Owners configure connectors in **Settings → Connectors → External Connectors** by pasting a JSON config block. Three auth patterns are supported:
+
+- **API key** — `Authorization` header in the JSON config (Linear, Granola, Pipedrive, custom servers)
+- **OAuth via hosted broker** — for pre-registered apps (Asana, Figma). Studiograph redirects to `auth.studiograph.com`, which holds the client secrets so self-hosters get one-click OAuth
+- **OAuth via dynamic registration** — for servers that support it (Linear). MCP SDK handles registration and PKCE
+
+Connector credentials live at two layers:
+
+- `.studiograph/connectors/<name>.json` — committed, with `$ENV_VAR` placeholders for secrets
+- `~/.studiograph/connectors/<name>.json` — local-only, mode `0600`, holds the literal secret values
+
+Manage connectors via the API as well:
+
+```http
+GET    /api/connectors                          # list (secrets masked)
+POST   /api/connectors/import                   # paste a JSON config block
+GET    /api/connectors/:name/config             # fetch one config
+POST   /api/connectors/:name/config             # create / update
+DELETE /api/connectors/:name/config             # delete
+POST   /api/connectors/:name/oauth/connect      # initiate OAuth (broker or local)
+GET    /api/connectors/:name/oauth/status       # poll connection status
+```
+
+The agent reaches connector tools through two proxy tools: `connector_list` (discover what's available) and `connector_call` (route a call to any connector tool).

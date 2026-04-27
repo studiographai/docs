@@ -1,33 +1,211 @@
 ---
-title: 'Introduction'
-description: 'Example section for showcasing API endpoints'
+title: "API reference"
+description: "The Studiograph REST API for managing your knowledge graph programmatically."
 ---
 
-<Note>
-  If you're not looking to build API reference documentation, you can delete
-  this section by removing the api-reference folder.
-</Note>
+## Overview
 
-## Welcome
+The Studiograph server (`studiograph serve`) exposes a REST API, an MCP HTTP endpoint, an embedded Git HTTP server, and a WebSocket channel for real-time events and collaborative editing.
 
-There are two ways to build API documentation: [OpenAPI](https://mintlify.com/docs/api-playground/openapi/setup) and [MDX components](https://mintlify.com/docs/api-playground/mdx/configuration). For the starter kit, we are using the following OpenAPI specification.
+## Base URL
 
-<Card
-  title="Plant Store Endpoints"
-  icon="leaf"
-  href="https://github.com/mintlify/starter/blob/main/api-reference/openapi.json"
->
-  View the OpenAPI specification file
-</Card>
+```
+http://localhost:8000
+```
+
+REST endpoints are mounted under `/api`. Replace the host with your deployment's URL.
 
 ## Authentication
 
-All API endpoints are authenticated using Bearer tokens and picked up from the specification file.
+Studiograph accepts four credential types on the same routes:
+
+| Credential | Header / location | Notes |
+|---|---|---|
+| Session JWT | `__sg_token` httpOnly cookie | Issued by `POST /api/auth/login`. 7-day expiry |
+| Workspace API key | `Authorization: Bearer <key>` | One per workspace, synced via `auth-seed.json` |
+| Per-user API token | `Authorization: Bearer sg_<token>` | Minted in **Settings → Connectors**. Acts as the owning user |
+| HTTP Basic | `Authorization: Basic <base64>` | Email + password. Used by the embedded Git HTTP server |
+
+If no users are configured, the server runs in **open mode** — every request gets full access. The first hit to the web UI shows the setup page so an owner can be created.
+
+The `/api/auth/*`, `/webhooks/*`, `/git/*`, `/ws`, and static-asset routes bypass the auth middleware.
+
+## Workspace and folders
+
+```
+GET    /api/workspace                     — workspace info (name, ABOUT.md)
+PUT    /api/workspace                     — update workspace info (admin)
+GET    /api/workspace/mcp-config          — JSON snippet for MCP clients (admin)
+GET    /api/workspace/status              — git status per folder
+POST   /api/workspace/commit              — commit changes
+POST   /api/workspace/push                — push to remote
+POST   /api/workspace/pull                — pull from remote
+GET    /api/workspace/entities?summary    — bulk entity load (used by web UI)
+
+GET    /api/repos                         — list folders the caller can access
+POST   /api/repos                         — create a folder (admin)
+GET    /api/repos/:repo                   — folder metadata
+PATCH  /api/repos/:repo                   — update folder (admin)
+DELETE /api/repos/:repo                   — delete folder (folder admin)
+```
+
+## Entities
+
+```
+GET    /api/repos/:repo/entities                    — list entities (paginated)
+GET    /api/repos/:repo/entities/:type              — list by type
+GET    /api/repos/:repo/entities/:type/:id          — get single entity
+POST   /api/repos/:repo/entities                    — create entity
+PUT    /api/repos/:repo/entities/:type/:id          — update entity
+DELETE /api/repos/:repo/entities/:type/:id          — delete entity
+POST   /api/repos/:repo/change-type                 — change an entity's type
+POST   /api/repos/:repo/rename                      — rename an entity
+POST   /api/repos/:repo/move                        — move within a folder
+POST   /api/repos/:repo/transfer                    — copy to another folder
+POST   /api/repos/:repo/commit                      — flush pending edits to git
+```
+
+Entity-update writes through the `SessionManager`: web-UI edits land on disk immediately and the git commit is batched on a 5-minute idle window. Other mutation surfaces auto-commit. Pending state survives crashes — see `GET /api/health/dirty`.
+
+## Search
+
+```
+GET    /api/search?q=&type=&tags=&repos=  — cross-folder search
+GET    /api/repos/:repo/search?q=         — within one folder
+GET    /api/graph                         — nodes + edges for visualization
+```
+
+Tier 1 search uses LanceDB FTS (BM25). With a Voyage AI key configured (`studiograph config set voyage_api_key …`), tier 2 enables hybrid semantic search via Reciprocal Rank Fusion.
+
+## Auth and users
+
+```
+POST   /api/auth/setup                         — create the first owner
+POST   /api/auth/login                         — authenticate, set cookie (rate limited)
+POST   /api/auth/logout                        — clear cookie
+GET    /api/auth/me                            — current user
+GET    /api/auth/status                        — public { authEnabled, userCount }
+
+GET    /api/auth/users                         — list users (owner)
+POST   /api/auth/users                         — create user (owner)
+DELETE /api/auth/users/:id                     — delete user (owner)
+PATCH  /api/auth/users/:id/password            — reset password (owner)
+PATCH  /api/auth/me                            — update own profile
+
+POST   /api/auth/tokens                        — mint per-user API token (raw shown once)
+GET    /api/auth/tokens                        — list caller's tokens
+DELETE /api/auth/tokens/:id                    — revoke
+
+POST   /api/auth/api-key/regenerate            — rotate workspace API key (owner)
+GET    /api/auth/seed                          — export auth seed (owner)
+POST   /api/auth/transfer-ownership            — transfer ownership (owner)
+```
+
+## Permissions
+
+Folder access grants. Admin only.
+
+```
+GET    /api/permissions/folders                — folders with their granted users
+POST   /api/permissions/grant                  — { userId, folder, role? }
+POST   /api/permissions/revoke                 — { userId, folder }
+```
+
+## Sync and connectors
+
+```
+POST   /api/repos/:repo/sync                                  — run folder sync
+POST   /api/repos/:repo/entities/:type/:id/refresh            — preview entity refresh
+POST   /api/repos/:repo/entities/:type/:id/refresh/apply      — apply
+
+GET    /api/sources                            — list source definitions
+GET    /api/sources/:name                      — get
+POST   /api/sources/:name                      — create / update
+DELETE /api/sources/:name                      — delete
+
+GET    /api/connectors                         — list (secrets masked)
+POST   /api/connectors/import                  — paste a JSON config block
+POST   /api/connectors/:name/oauth/connect     — initiate OAuth
+GET    /api/connectors/:name/oauth/status      — poll connection
+POST   /api/connectors/:name/oauth/disconnect  — clear OAuth tokens
+```
+
+Sync broadcasts a `sync_complete` WebSocket event on success.
+
+## Capture and import
+
+Universal inbox surfaces — agent-driven by default, with a deterministic bookmark pipeline for HTML exports.
+
+```
+POST   /api/capture                            — text or extracted-text capture (agent decides folder)
+POST   /api/repos/:repo/import                 — file import scoped to a folder
+POST   /api/repos/:repo/import-bookmarks       — Netscape Bookmark File → reference entities (no LLM)
+POST   /api/fetch-url                          — extract readable text from a URL
+```
+
+`/api/capture` and `/api/repos/:repo/import` route through the agent for entity creation. `/api/repos/:repo/import-bookmarks` runs deterministically — no LLM call, dedup by URL.
+
+## Apps and assets
+
+```
+POST   /api/assets                             — upload (local or R2)
+GET    /api/assets/:repo/...                   — fetch
+GET    /api/workspace/assets                   — bulk asset list (used by GalleryView)
+```
+
+## Real-time
+
+```
+GET    /ws                                     — WebSocket (JWT cookie or ?token=)
+GET    /api/health/dirty                       — per-repo working-tree status
+```
+
+The WebSocket endpoint carries:
+
+- **JSON event frames** — `entity_change`, `repo_sync`, `session_commit`, `sync_complete`, `folder_created`, `message_update`, `presence`, `online`, `insights_updated`, etc. Access-scoped per user.
+- **Binary frames** — Yjs sync and awareness messages for collaborative editing. The server holds one Y.Doc per actively edited entity and is the seeding authority.
+
+`entity_change` schema:
 
 ```json
-"security": [
-  {
-    "bearerAuth": []
-  }
-]
+{
+  "type": "entity_change",
+  "action": "created" | "updated" | "deleted",
+  "repo": "projects",
+  "entityType": "project",
+  "entityId": "acme-platform",
+  "actor": "Jane",
+  "source": "api" | "git-push",
+  "timestamp": "2026-03-14T..."
+}
 ```
+
+## MCP
+
+```
+POST   /mcp                                    — Streamable HTTP MCP (Bearer auth, stateless)
+```
+
+Per-user `sg_` API tokens are required in authenticated mode. See [MCP integration](/cli/mcp) for the tool catalog.
+
+## Embedded Git HTTP
+
+```
+GET    /git/:repo/info/refs?service=...        — ref advertisement
+POST   /git/:repo/git-upload-pack              — clone / fetch
+POST   /git/:repo/git-receive-pack             — push
+```
+
+Authenticates via HTTP Basic against `auth-seed.json` credentials. Push triggers a `repo_sync` WebSocket broadcast. Failed logins share the rate limiter with the web UI.
+
+## Webhooks
+
+```
+POST   /webhooks/github                        — git pull on push (HMAC-SHA256 verified)
+```
+
+Set `WEBHOOK_SECRET` to enable signature verification.
+
+## Body limits
+
+The Fastify server is configured with a 10 MB body limit to support large entities like meeting transcripts.

@@ -1,0 +1,119 @@
+---
+title: "Folders"
+description: "Folders group related entities within a workspace. Each folder is a Git repository."
+---
+
+## Overview
+
+A **folder** is a named grouping of entities within a workspace. Each folder is its own Git repository containing entity files organized by type — one folder per project, function, or shared resource, mirroring how teams already organize work.
+
+"Folder" is the user-facing term; the underlying data structure is a Git repo, and APIs and config still use `repo` / `repos` for the field name.
+
+## Graph types
+
+Every folder has a `graph_type` that signals its role in the workspace.
+
+| Type | Purpose | Examples |
+|---|---|---|
+| `project` | Track a single client engagement or initiative | `meridian-rebrand`, `terra-dashboard` |
+| `function` | Internal business operations | `new-business`, `accounting`, `hr` |
+| `shared-resource` | Team-wide knowledge | `templates`, `research`, `resources` |
+| `app` | Installed app plugin | `slides`, `documents`, `gallery` |
+
+Entity types are **not partitioned** by graph type — any folder can contain any entity type. The graph type is a routing hint, not a schema constraint.
+
+## Personal folders
+
+Each user gets exactly one personal folder, auto-provisioned on account creation:
+
+- ID: `entries-{userId}`
+- Display name: `My Entries`
+- Local-only by default (gitignored from the workspace git repo)
+- One per user — the `personal: true` flag is immutable after creation
+
+Personal folders behave like any other folder for sharing — the owner can grant `folder_access` to teammates and the folder stays personal-flagged. The flag is an **origin marker**, not a sharing lock.
+
+The agent recognizes the sentinel strings `repo: "private"` and `repo: "entries"` and resolves them to the current user's `entries-{userId}` folder automatically.
+
+## Creating a folder
+
+From the CLI:
+
+```bash
+studiograph folder add <name> [--description <desc>] [--graph-type project]
+```
+
+From the web UI: sidebar header **+ → New Folder** (admins only).
+
+Or via the API:
+
+```http
+POST /api/repos
+Content-Type: application/json
+
+{ "name": "meridian-rebrand", "graph_type": "project", "description": "..." }
+```
+
+`POST /api/repos` is owner/admin only. Members cannot create new team folders, but every member already has their personal folder.
+
+## File structure
+
+Within a folder, entities live in plural-named subfolders by type:
+
+```
+meridian-rebrand/
+├── project/
+│   └── meridian-rebrand.md
+├── meeting/
+│   ├── kickoff-2026-01-15.md
+│   └── design-review-2026-02-03.md
+├── decision/
+│   └── dec-2026-001.md
+└── deliverable/
+    └── brand-guidelines-v1.md
+```
+
+Path layout: `{folder}/{entityType}/{entityId}.md`. Filenames are kebab-case and become the entity ID.
+
+## Access control
+
+Folders are access-controlled per user, not per workspace role.
+
+- **Workspace owner** sees all *shared* folders (those with more than one member); does not see other users' personal folders.
+- **Folder admin** can rename / delete the folder, add and remove members.
+- **Folder editor** can read and write entries but cannot manage members.
+- **Non-member** cannot see the folder; cross-folder wikilinks pointing into inaccessible folders are stripped from API responses.
+
+Folder roles live in the `folder_access` table — granting workspace ownership does **not** grant folder admin on a folder you're not a member of. See [Authentication & access](/concepts/access) for the full role matrix.
+
+Manage grants from the CLI or the **Workspace → Manage Folders** settings UI:
+
+```bash
+studiograph folder list
+studiograph folder rename <old> <new>
+studiograph folder remove <name>
+```
+
+## Sync rules
+
+Folders can pull entities from external sources. Each folder may carry one or more **sync rules** in `workspace.json`:
+
+```json
+{
+  "repos": [
+    {
+      "name": "meetings",
+      "graph_type": "function",
+      "sync": [
+        { "source": "granola-meetings", "entity_type": "meeting" }
+      ]
+    }
+  ]
+}
+```
+
+Each rule references a **source definition** (in `.studiograph/sources/`) that describes how to extract entities from a **connector** (an MCP server). See [Sync](/cli/sync) for the full architecture.
+
+## Folder types and apps
+
+When an app is installed, it adds a folder of type `app` and may register additional entity types. Apps appear in their own "Apps" sidebar section, separate from team folders. App-defined entity types validate with resilient fallback (strict → lenient → raw frontmatter) so a missing app plugin doesn't strand its data.

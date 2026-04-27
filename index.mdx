@@ -1,97 +1,49 @@
 ---
 title: "Introduction"
-description: "Welcome to the new home for your documentation"
+description: "Studiograph is a team-based AI agent platform with a Git-backed knowledge graph — organize people, projects, meetings, and decisions in structured, connected folders."
 ---
 
-## Setting up
+## What is Studiograph?
 
-Get your documentation site up and running in minutes.
+Studiograph turns your team's scattered information into a connected knowledge graph and gives AI agents direct access to it. Every person, project, meeting, decision, and deliverable becomes a structured entity that links to everything related, stored as Markdown with YAML frontmatter and tracked in Git.
 
-<Card
-  title="Start here"
-  icon="rocket"
-  href="/quickstart"
-  horizontal
->
-  Follow our three step quickstart guide.
-</Card>
-
-## Make it yours
-
-Design a docs site that looks great and empowers your users.
+The result: AI work that reflects your real team context, not generic output.
 
 <Columns cols={2}>
   <Card
-    title="Edit locally"
-    icon="pen-to-square"
-    href="/development"
+    title="Quickstart"
+    icon="rocket"
+    href="/quickstart"
   >
-    Edit your docs locally and preview them in real time.
+    Install the CLI and stand up your first workspace.
   </Card>
   <Card
-    title="Customize your site"
-    icon="palette"
-    href="/essentials/settings"
+    title="Concepts"
+    icon="diagram-project"
+    href="/concepts/knowledge-graph"
   >
-    Customize the design and colors of your site to match your brand.
-  </Card>
-    <Card
-    title="Set up navigation"
-    icon="map"
-    href="/essentials/navigation"
-  >
-    Organize your docs to help users find what they need and succeed with your product.
+    Knowledge graph, folders, entities, and access control.
   </Card>
   <Card
-    title="API documentation"
+    title="CLI reference"
     icon="terminal"
+    href="/cli/overview"
+  >
+    Manage workspaces, sync, and integrations from the command line.
+  </Card>
+  <Card
+    title="API reference"
+    icon="code"
     href="/api-reference/introduction"
   >
-    Auto-generate API documentation from OpenAPI specifications.
+    REST, WebSocket, MCP, and embedded Git HTTP.
   </Card>
 </Columns>
 
-## Create beautiful pages
+## How it fits together
 
-Everything you need to create world-class documentation.
-
-<Columns cols={2}>
-  <Card
-    title="Write with MDX"
-    icon="pen-fancy"
-    href="/essentials/markdown"
-  >
-    Use MDX to style your docs pages.
-  </Card>
-  <Card
-    title="Code samples"
-    icon="code"
-    href="/essentials/code"
-  >
-    Add sample code to demonstrate how to use your product.
-  </Card>
-  <Card
-    title="Images"
-    icon="image"
-    href="/essentials/images"
-  >
-    Display images and other media.
-  </Card>
-  <Card
-    title="Reusable snippets"
-    icon="recycle"
-    href="/essentials/reusable-snippets"
-  >
-    Write once and reuse across your docs.
-  </Card>
-</Columns>
-
-## Need inspiration?
-
-<Card
-  title="See complete examples"
-  icon="stars"
-  href="https://mintlify.com/customers"
->
-  Browse our showcase of exceptional documentation sites.
-</Card>
+- **Workspaces** are root directories containing config and folders. Each workspace runs a single multi-user server.
+- **Folders** are Git repos within a workspace — one per project, function, or shared resource.
+- **Entities** are typed Markdown files with YAML frontmatter, connected via wikilinks.
+- **The agent** reads, writes, and traverses the graph through built-in tools and skills, and can call out to external services via MCP connectors.
+- **MCP** exposes the same graph to Claude Code, Claude Desktop, Cursor, and any other MCP client through Streamable HTTP or stdio.
