@@ -1,0 +1,52 @@
+---
+title: "Entry types"
+description: "Shape the catalog of entry types your workspace uses — rename, restyle, disable, or add your own."
+---
+
+Every entry has a type — note, task, project, and so on — and the catalog of types belongs to your workspace. Owners shape it under **Settings → Entry types**; members see the same catalog read-only. Each type shows a count of the entries you can access.
+
+## Restyle any type
+
+For every type in the catalog you can:
+
+- Rename its label and plural label
+- Write or edit its description
+- Pick an icon from the icon set
+- Pick an accent color
+
+These changes apply everywhere the type appears — the New entry picker, views, and entry pages.
+
+## Turn a type off
+
+Each type has a switch. Turning a type off removes it from the New entry picker, so no one creates new entries of that type. Existing entries keep working exactly as before — nothing is hidden or deleted.
+
+<Note>
+Core types — note, task, event, dataset, and artifact — can't be turned off or deleted.
+</Note>
+
+## Add a custom type
+
+Add your own types for the things your studio tracks — a "Campaign" or a "Vendor", for example. A custom type is a regular markdown entry type: give it a name, icon, color, and description, then add the fields it needs (text, dates, statuses, connections to other entries).
+
+### Put a custom type on Calendar, Timeline, or Kanban
+
+Views pick up custom types through field roles. When you edit a field, you can give it a role:
+
+| Role | What it unlocks |
+| --- | --- |
+| Date (primary or start) | The type's entries appear on **Calendar** and **Timeline** |
+| Connection | The field links to entries of another type |
+| Grouping | The field becomes a **Kanban** column axis and a group-by option |
+
+## Edit fields
+
+- On built-in types, the built-in fields are fixed — you can't change or remove them. Fields you added yourself are editable.
+- Once a field holds values on real entries, its name and type lock.
+
+## Adopt a type
+
+If your workspace contains entries whose type isn't in the catalog — for example, from imported content — the page offers to adopt it. Adopting registers the type so you can style it and manage it like any other.
+
+## Delete a custom type
+
+Deleting a custom type converts its existing entries to another type of your choice — note by default — so no entries are lost. Only custom types can be deleted; core types can't.

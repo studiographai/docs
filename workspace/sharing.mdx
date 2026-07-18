@@ -1,0 +1,68 @@
+---
+title: "Sharing & permissions"
+description: "Control who can see and edit each folder, and share individual entries with a public link."
+---
+
+Access in Studiograph is set per folder. Every folder starts private to the person who created it — a solo folder — and becomes shared the moment you add someone else. Solo folders are invisible to everyone but you, including the workspace Owner.
+
+Two rules make access easy to reason about:
+
+- **A grant covers the whole folder** — sharing a folder shares everything in it, including all its subfolders.
+- **Access only ever adds up** — moving a folder or sharing a parent can give people access, but it never silently takes access away.
+
+## The Share dialog
+
+Open a folder's **…** menu in the sidebar and choose **Share**, or open the folder under **Settings → Manage folders**. The **Share \{folder\}** panel has three parts:
+
+- **General access** — **Restricted** (only the people listed below) or **Everyone in \{workspace\}**.
+- **People** — everyone with direct access, each with a role dropdown (**Admin** or **Editor**) and a remove button. Use **Add a member** to bring someone in; new members join as Editor.
+- **Inherited access** — a read-only list of people who can already see this folder because a parent folder is shared with them.
+
+Only a folder Admin can manage members. Removing someone asks you to confirm, and the last Admin can't be removed or demoted — every folder always has at least one.
+
+## Admin vs Editor
+
+| Role | What they can do |
+| --- | --- |
+| **Editor** | Open, read, and edit entries in the folder |
+| **Admin** | Everything an Editor can, plus rename, move, archive, or delete the folder and manage who has access |
+
+## Sharing with everyone
+
+Setting **General access** to **Everyone in \{workspace\}** opens the folder to your whole team. A confirmation spells it out — "Everyone in \{workspace\} — N members — will be able to view and edit this folder" — before you click **Share with everyone**.
+
+<Warning>
+"Everyone in \{workspace\}" means everyone on your team — it does not publish the folder to the internet. Turning it off again shows a **Turn off sharing** warning: people who only had access through the Everyone setting lose it.
+</Warning>
+
+When a parent folder is shared with everyone, its subfolders show "Shared with everyone via \{ancestor\}" — inherited access you manage on the parent. Everyone-shared folders get a globe icon in the sidebar.
+
+## What the workspace Owner can and can't do
+
+The Owner can administer any folder in the workspace from **Settings → Manage folders** — rename, archive, delete, and manage members — even for folders they don't belong to.
+
+<Info>
+Administering a folder is not the same as reading it. An Owner who isn't a member of a folder sees only its member list and entry counts — they cannot open or read the entries inside, and other people's solo folders don't appear in their sidebar at all.
+</Info>
+
+## Public share links
+
+You can share a single entry with someone outside the workspace — no account or sign-in needed.
+
+<Steps>
+  <Step title="Create the link">
+    Open the entry's **Share** dialog and click **Create public link**. The link is copied for you automatically.
+  </Step>
+  <Step title="Send it">
+    Anyone with the link gets a read-only, printable view of the entry — its title, its body, and the images embedded in it.
+  </Step>
+  <Step title="Revoke it when you're done">
+    Click **Stop sharing**. The confirmation — "Stop sharing? Anyone with the link loses access." — takes effect immediately.
+  </Step>
+</Steps>
+
+Each entry can have one active public link at a time, and creating one requires edit access to the entry's folder. Links use a long, unguessable address; if you stop sharing and later share again, the entry gets a brand-new URL, so the old one stays dead.
+
+<Warning>
+A public link works for anyone on the internet who has it. Share it only where you'd be comfortable with the entry being seen, and use **Stop sharing** the moment it should go dark.
+</Warning>

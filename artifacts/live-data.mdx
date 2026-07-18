@@ -1,0 +1,27 @@
+---
+title: "Live data in artifacts"
+description: "Build dashboards and charts that read a dataset live, so the artifact always shows current numbers."
+---
+
+An artifact can read a [dataset](/artifacts/datasets) live. A dashboard or chart deck built this way always shows the current numbers: edit the dataset, and the artifact picks up the new values the next time it renders — no re-export, no rebuilding.
+
+To set this up, ask the agent to build an artifact from a dataset — for example, "Build a dashboard from the Q3 sales dataset."
+
+<Note>
+The artifact reads the dataset's full underlying data, not the filtered or sorted view. Filters and sorting in the grid don't change what a chart sees.
+</Note>
+
+## Access follows folders
+
+Reading a dataset live requires access to the dataset's folder, checked every time the artifact renders. Someone who can open the artifact but isn't a member of the dataset's folder sees a notice in place of the data:
+
+> No access to this data
+> This artifact reads a dataset in a folder you're not a member of.
+
+The rest of the artifact still renders normally.
+
+When you move an entry between folders, Studiograph warns you if people in the destination folder wouldn't be able to see the datasets it depends on. The warning never blocks the move — it's there so you can adjust folder access if you need to.
+
+## Public share links
+
+You can share an artifact with a public link like any other entry — see [Sharing](/workspace/sharing) — but live data stays inside your workspace. Public viewers see the artifact's design and embedded media; its live dataset reads don't run for people outside the workspace, so charts that depend on live data won't show it on a public link. To publish current numbers, export the artifact as a PDF or image instead.

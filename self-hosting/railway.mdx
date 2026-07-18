@@ -1,0 +1,51 @@
+---
+title: "Railway"
+description: "Provision and deploy a managed Studiograph instance on Railway with one command."
+---
+
+The CLI can provision and deploy a Studiograph instance on [Railway](https://railway.app):
+
+```bash
+studiograph deploy railway --name "My Studio"
+```
+
+This creates the Railway project and service, provisions secrets, and deploys the server. You can also pass a provider, model, and API key at deploy time (`--provider`, `--model`, `--api-key`).
+
+## Updating a deployment
+
+```bash
+studiograph redeploy
+```
+
+`redeploy` pins the exact `@studiograph/server` version in the service's start command (`npx --yes @studiograph/server@<version> serve`) and sets a fresh `DEPLOY_TS`, which forces a clean build rather than reusing a cached one.
+
+## Auto-provisioned secrets
+
+Deploying generates two secrets on the service:
+
+| Variable | Purpose |
+| --- | --- |
+| `STUDIOGRAPH_JWT_SECRET` | Signs session tokens |
+| `STUDIOGRAPH_MASTER_KEY` | Encrypts the secrets store |
+
+<Warning>
+Keep a copy of `STUDIOGRAPH_MASTER_KEY` outside Railway. It encrypts the secrets database — if it is lost, the stored credentials are unrecoverable. See [Configuration](/self-hosting/configuration).
+</Warning>
+
+## Artifact PDF and PNG export
+
+Exporting artifacts to PDF or PNG requires Playwright Chromium on the server. These variables are **not** set automatically — add them to the Railway service yourself:
+
+```bash
+STUDIOGRAPH_INSTALL_PLAYWRIGHT=1
+PLAYWRIGHT_BROWSERS_PATH=/workspace/.ms-playwright
+```
+
+Placing the browsers under `/workspace` keeps them on the persistent volume. To verify, check `/api/health` — it reports the renderer status under `render.playwright.state`.
+
+## Optional: GitHub-backed config bootstrap
+
+The server can bootstrap its configuration from a GitHub repository:
+
+1. Set `STUDIOGRAPH_CONFIG_REPO` to the repository and `GITHUB_TOKEN` to a token that can read it.
+2. To pick up changes automatically, point a GitHub webhook at `POST /webhooks/github` on your instance and set the same secret in the `WEBHOOK_SECRET` variable.

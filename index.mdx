@@ -1,49 +1,39 @@
 ---
-title: "Introduction"
-description: "Studiograph is a team-based AI agent platform with a Git-backed knowledge graph — organize people, projects, meetings, and decisions in structured, connected folders."
+title: "What is Studiograph"
+description: "Studiograph is your team's shared workspace where people, projects, notes, tasks, meetings, and files live as connected entries."
 ---
 
-## What is Studiograph?
+Studiograph is your team's shared workspace. Everything you know about your work — people, projects, notes, tasks, meetings, documents — lives here as **entries**. Every entry has a type (a task has a status and a due date, a person has a role and an organization), and entries link to each other, so opening a project can lead you to its client, its tasks, and the meetings where it came up.
 
-Studiograph turns your team's scattered information into a connected knowledge graph and gives AI agents direct access to it. Every person, project, meeting, decision, and deliverable becomes a structured entity that links to everything related, stored as Markdown with YAML frontmatter and tracked in Git.
+Entries are organized into **folders**, and folders decide who sees what. A folder you create starts private — only you can see it — and you can share it with specific teammates or with everyone in the workspace. There is one workspace per team, and it holds all of your folders. See [Folders](/workspace/folders) and [Sharing](/workspace/sharing).
 
-The result: AI work that reflects your real team context, not generic output.
+Files have a home here too. Images, video, audio, and fonts you add become **assets**, and the **library** shows every asset in folders you can access. Two entry formats go beyond text: **datasets** are spreadsheet entries you can filter, sort, and chart, and **artifacts** are visual work — slide decks, graphics, prototypes, and print documents — built and edited on a canvas.
+
+The **agent** is the built-in AI in the chat panel on the right side of the app. It can search and read your entries, create and edit them, work with datasets and artifacts, and import files — always acting as you, so it only sees the folders you can see. See [Chatting with the agent](/agent/chat).
+
+## Learn the app
 
 <Columns cols={2}>
-  <Card
-    title="Quickstart"
-    icon="rocket"
-    href="/quickstart"
-  >
-    Install the CLI and stand up your first workspace.
+  <Card title="Your account" icon="user" href="/getting-started/your-account">
+    Signing in, roles, onboarding, and your starter folder.
   </Card>
-  <Card
-    title="Concepts"
-    icon="diagram-project"
-    href="/concepts/knowledge-graph"
-  >
-    Knowledge graph, folders, entities, and access control.
+  <Card title="Folders" icon="folder" href="/workspace/folders">
+    Organize entries and control who can see them.
   </Card>
-  <Card
-    title="CLI reference"
-    icon="terminal"
-    href="/cli/overview"
-  >
-    Manage workspaces, sync, and integrations from the command line.
+  <Card title="Entries" icon="file-lines" href="/workspace/entries">
+    Create, edit, and connect the pages your work lives in.
   </Card>
-  <Card
-    title="API reference"
-    icon="code"
-    href="/api-reference/introduction"
-  >
-    REST, WebSocket, MCP, and embedded Git HTTP.
+  <Card title="Library" icon="photo-film" href="/library/overview">
+    Every asset in folders you can access, in one place.
+  </Card>
+  <Card title="Artifacts" icon="shapes" href="/artifacts/overview">
+    Decks, graphics, prototypes, and print documents on a canvas.
+  </Card>
+  <Card title="The agent" icon="message" href="/agent/chat">
+    Chat with an AI that knows your workspace.
   </Card>
 </Columns>
 
-## How it fits together
+## For developers
 
-- **Workspaces** are root directories containing config and folders. Each workspace runs a single multi-user server.
-- **Folders** are Git repos within a workspace — one per project, function, or shared resource.
-- **Entities** are typed Markdown files with YAML frontmatter, connected via wikilinks.
-- **The agent** reads, writes, and traverses the graph through built-in tools and skills, and can call out to external services via MCP connectors.
-- **MCP** exposes the same graph to Claude Code, Claude Desktop, Cursor, and any other MCP client through Streamable HTTP or stdio.
+Studiograph also ships a [command-line interface](/cli/overview) and can be [self-hosted](/self-hosting/overview) on your own infrastructure.

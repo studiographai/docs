@@ -1,0 +1,42 @@
+---
+title: "Giving the agent context"
+description: "How the agent knows what you're looking at, and how to hand it files and selections."
+---
+
+The more the agent knows about what you're working on, the less you have to explain. Most of the time, it already knows.
+
+## The agent knows where you are
+
+The agent always sees which folder or entry you have open. If you're looking at a task, "change the status of this task" works — no need to say which one. The same goes for "summarize this document" or "add a row to this dataset".
+
+## Selecting inside an artifact
+
+When you're viewing an artifact, click a frame or an element inside it. A context pill appears above the composer showing what you've selected, and your next message targets it — "make this bigger", "change this to blue", "rewrite this headline".
+
+## Attaching files
+
+To hand the agent a file for the conversation:
+
+<Steps>
+<Step title="Open the + menu in the composer">
+Choose **Upload** to pick a file from your device, or **Choose asset** to pick one from your [library](/library/overview).
+</Step>
+<Step title="Or drag a file onto the composer">
+Drop it anywhere on the chat — the agent will read it.
+</Step>
+</Steps>
+
+Then ask what you want: "summarize this", "pull the totals from this spreadsheet", "match this style".
+
+### What you can attach
+
+| Kind | Formats | Limits |
+| --- | --- | --- |
+| Images | PNG, JPEG, GIF, WebP | Up to 8 MB each, up to 8 per message |
+| Documents | PDF, Word, Excel, text, Markdown, CSV | Up to 10 MB each |
+
+PDFs are read visually: the agent sees the first page right away and can look at more pages when it needs them. That means scanned documents work too — no selectable text required.
+
+<Note>
+Attachments are just for the conversation — they aren't imported into your workspace. To add a file to your library or turn it into entries, use [Import](/library/importing-files) instead. Removing an attachment chip (✕) only detaches it from the message; it doesn't delete anything.
+</Note>

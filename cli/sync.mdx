@@ -1,227 +1,48 @@
 ---
-title: "Sync"
-description: "Keep your knowledge graph up to date with external sources."
+title: "Sync & local checkouts"
+description: "Clone a hosted workspace to your machine and move content with pull and push."
 ---
 
-## Overview
+A workspace is one Git repository: every folder's content lives in it, with configuration alongside in `.studiograph/`. That means an owner can keep a full local checkout of the workspace and sync it with the server. This is owner-oriented tooling — day-to-day collaboration happens in the web app.
 
-Studiograph sync is **folder-scoped** — each folder can have sync rules that pull entities from external data sources via MCP connectors. The system supports API-based extraction, file-based extraction, and entity derivation, all without requiring LLM calls.
-
-## Architecture
-
-Three layers work together:
-
-1. **Connectors** — MCP servers that provide access to external services (Granola, Linear, Pipedrive, Obsidian, etc.)
-2. **Source definitions** — describe how to extract entities from a connector (field mappings, pagination, transforms)
-3. **Sync rules** — assigned to folders, linking a source definition to a folder and optionally filtering by entity type
-
-```
-Connector (MCP server)
-  └─ Source Definition (field maps, extraction config)
-       └─ Sync Rule (on a folder)
-```
-
-## How sync works
-
-When you run sync on a folder:
-
-1. **Extract** — fetch records from the external source via the connector's MCP tools
-2. **Map** — apply field mappings and transforms to build entity frontmatter
-3. **Deduplicate** — skip records that already exist (by `source_ref` or `dedupe_field`)
-4. **Write** — create new entities in the folder and commit as a batch
-5. **Derive** — generate secondary entities from primary records (e.g., people from meeting attendees)
-
-## Extraction modes
-
-### Structured API extraction
-
-For API-based sources (Linear, Pipedrive, Granola). Uses MCP tools to list and fetch records, then maps fields.
-
-Supports:
-- **Pagination** — offset-based (Pipedrive) and cursor-based (Linear)
-- **Detail fetching** — list records, then fetch full details per record
-- **Array fields** — extract from nested arrays with JQ filters
-- **Field transforms** — `kebab-case`, `date-iso`, `wikilink`, `clean-html`
-
-### File-based extraction
-
-For file sources (Obsidian vaults). Discovers `.md` files via MCP tools, parses YAML frontmatter, and applies field mappings.
-
-Supports:
-- **Directory patterns** — filter by path (e.g., `Projects/`)
-- **File patterns** — filter by name
-- **Max depth** — limit directory traversal
-- **Frontmatter mapping** — map source fields to entity fields
-
-### Entity derivation
-
-Secondary entities generated from primary records — zero LLM calls. For example, syncing meetings from Granola can automatically derive `person` entities from the attendees list and `organization` entities from client references.
-
-Derived entities get synthetic source references (e.g., `granola:#person/jane-smith`) for deduplication.
-
-## Source definitions
-
-Source definitions live in `.studiograph/sources/<name>.json` and describe how to extract entities from a connector:
-
-```json
-{
-  "connector": "granola",
-  "entities": {
-    "meeting": {
-      "primary": true,
-      "list_tool": "list_granola_documents",
-      "read_tool": "get_granola_document",
-      "field_map": {
-        "name": "title",
-        "date": { "from": "created_at", "transform": "date-iso" },
-        "attendees": { "from": "participants", "transform": "wikilink" }
-      },
-      "content_from": "content"
-    },
-    "person": {
-      "derive_from": "meeting",
-      "field_map": {
-        "name": { "from": "attendees[]", "transform": "kebab-case" }
-      }
-    }
-  }
-}
-```
-
-Manage source definitions:
+## Clone a workspace
 
 ```bash
-studiograph sync source list
-studiograph sync source add <name>
-studiograph sync source remove <name>
+studiograph clone <server-url>
 ```
 
-Or via the API:
+`clone` signs in with your owner email and password (via the `STUDIOGRAPH_EMAIL` and `STUDIOGRAPH_PASSWORD` environment variables), downloads the full workspace, and stores an `sg_` token in `~/.studiograph/user.json` so later syncs don't need credentials.
 
-| Method | Path | Description |
-|---|---|---|
-| `GET` | `/api/sources` | List all sources |
-| `GET` | `/api/sources/:name` | Get source definition |
-| `POST` | `/api/sources/:name` | Create or update |
-| `DELETE` | `/api/sources/:name` | Delete |
-
-## Sync rules
-
-Sync rules are assigned to folders in `workspace.json`:
-
-```json
-{
-  "repos": [
-    {
-      "name": "meetings",
-      "sync": [
-        {
-          "source": "granola-meetings",
-          "entity_type": "meeting"
-        }
-      ]
-    }
-  ]
-}
-```
-
-Each rule specifies:
-- `source` — name of a source definition
-- `entity_type` — optional filter for a specific entity type
-- `filter` — optional JQ filter expression
-
-## Source references
-
-Every synced entity tracks its provenance via a `source_ref` field:
-
-```
-sourceName:externalId
-```
-
-For example: `granola:meeting/m-123` or `granola:#person/jane-smith` (derived).
-
-Source references enable:
-- **Deduplication** — skip records already imported
-- **Refresh** — re-fetch a single entity from its source
-- **Provenance** — trace where an entity came from
-
-## Connectors
-
-Connectors are MCP servers configured at two layers:
-
-- **Workspace layer** — `.studiograph/connectors/<name>.json` (committed, secrets use `$ENV_VAR` references)
-- **Home layer** — `~/.studiograph/connectors/<name>.json` (local only, mode `0600`, full credentials)
-
-Home config fields override workspace fields.
-
-### Connector types
-
-| Type | Description | Example |
-|---|---|---|
-| `http` | Remote MCP server with Bearer token | Linear, Pipedrive |
-| `oauth` | Remote MCP with OAuth + PKCE | Figma |
-| `stdio` | Local child process | Granola, Obsidian |
-
-### Managing connectors
+## Pull and push
 
 ```bash
-# Interactive setup for known connectors
-studiograph connector add granola
-studiograph connector add linear
-
-# Manual configuration
-studiograph connector add my-source --url https://example.com/mcp --token $TOKEN
-studiograph connector add my-tool --command npx --args my-mcp-server
-
-# List and remove
-studiograph connector list
-studiograph connector remove <name>
+studiograph pull
+studiograph push
 ```
 
-Or via the API:
+Both commands move two things:
 
-| Method | Path | Description |
-|---|---|---|
-| `GET` | `/api/connectors` | List connectors (secrets masked) |
-| `GET` | `/api/connectors/:name/config` | Get config |
-| `POST` | `/api/connectors/:name/config` | Create or update |
-| `DELETE` | `/api/connectors/:name/config` | Delete |
+- **Content** — entries and folder structure, transferred as Git over the server's embedded Git endpoint at `<server>/git`.
+- **Configuration** — workspace settings such as the team name and description.
 
-## Running sync
+Pass `--remote <url>` to target a specific server and `--token <token>` to override the stored token (`STUDIOGRAPH_TOKEN` also works).
 
-### Full folder sync
+## What doesn't sync
 
-```bash
-studiograph sync <folder>
-```
+The Git repository holds text content only. These live outside it and are not moved by `pull`/`push`:
 
-Or via the API:
+| Not synced | What it is |
+| --- | --- |
+| Uploaded files and assets | Local asset storage or an R2 bucket |
+| User accounts database | Who can sign in |
+| Secrets | API keys and connector credentials, stored encrypted |
 
-```
-POST /api/repos/:repo/sync
-{ "sourceName": "granola-meetings" }
-```
+Back these up separately — see [Storage and backups](/self-hosting/storage-and-backups).
 
-Broadcasts a `sync_complete` WebSocket event on success.
+## Diverged copies
 
-### Single-entity refresh
+If the local checkout and the server have both changed since the last sync, `pull` and `push` fail with a clear error and a non-zero exit code. Resolve the divergence manually with Git, then sync again.
 
-Preview what would change, then optionally apply:
-
-```bash
-# Show diff
-studiograph sync refresh <entity-id> -c <folder>
-
-# Auto-apply without prompting
-studiograph sync refresh <entity-id> -c <folder> -y
-```
-
-Refresh only updates **source-mapped fields** — user-added fields and custom body content are never overwritten.
-
-### Sync status
-
-```bash
-studiograph sync status [folder]
-```
-
-Or via `GET /api/repos/:repo/sync/status`.
+<Note>
+If you pull into a workspace that's currently being served, restart `studiograph serve` so the server picks up the new content.
+</Note>

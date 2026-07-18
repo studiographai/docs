@@ -1,308 +1,293 @@
 ---
 title: "Commands"
-description: "Complete reference for all Studiograph CLI commands."
+description: "Reference for every studiograph CLI command, grouped by task."
 ---
+
+All commands run as `studiograph <command>` from a workspace directory unless noted.
 
 ## Getting started
 
-### `init`
+### init
 
-Create a new workspace.
+Create a new workspace: a single Git repository at the root, a `.studiograph/` config directory, and a baseline commit.
 
 ```bash
 studiograph init <team-name> [directory]
 ```
 
-| Argument | Description |
-|---|---|
-| `team-name` | Display name for your team (e.g. "Acme Studios") |
-| `directory` | Directory to create (defaults to slugified team name; use `.` for current dir) |
+The optional `directory` controls where the workspace is created; by default it's a new directory named after the team.
 
-| Option | Description |
-|---|---|
-| `--demo` | Scaffold the `meridian-rebrand` example project |
-| `--github` | Provision matching GitHub repos as part of init |
-| `--github-org <org>` | Use this GitHub org when creating repos |
+### clone
 
-Without `--demo`, `init` creates a bare workspace and the interview agent drives onboarding from the chat panel.
-
-### `join`
-
-Join an existing workspace by connecting to a running server.
-
-```bash
-studiograph join <server-url> [directory]
-```
-
-Prompts for email and password, fetches the workspace metadata, and clones every folder you have access to via the embedded Git HTTP server. Admins additionally receive sources, connector configs, and `ABOUT.md` via the config bundle endpoint.
-
-### `clone`
-
-Clone an entire workspace with full admin setup — includes LLM and connector configuration.
+Clone a hosted workspace into a full local copy. Owner-oriented: it signs in with your email and password (the `STUDIOGRAPH_EMAIL` and `STUDIOGRAPH_PASSWORD` environment variables) and stores an `sg_` token in `~/.studiograph/user.json` for later `pull`/`push`.
 
 ```bash
 studiograph clone <server-url> [directory]
 ```
 
----
-
 ## Daily workflow
 
-### `start`
+### pull
 
-Launch the interactive agent chat in the terminal.
-
-```bash
-studiograph start [--verbose]
-```
-
-### `pull`
-
-Pull latest changes across all folders.
+Fetch content and configuration from the server into the local checkout. If the local and remote copies have diverged, `pull` exits non-zero with a clear error — resolve manually. After pulling into a workspace that's being served, restart `serve`.
 
 ```bash
-studiograph pull [--remote <url>] [--data] [--api-key <key>]
+studiograph pull [--remote <url>] [--token <token>]
 ```
 
-Without `--remote`, runs `git pull` against each folder's existing remote. With `--remote <url>`, pulls workspace config (auth seed, workspace.json, ABOUT.md, sources, connectors) from the API. Add `--data` to also pull folder markdown via the embedded Git HTTP server.
+- `--remote` (alias `--server`) — server URL to pull from
+- `--token` — auth token; falls back to `STUDIOGRAPH_TOKEN`, then the stored token
 
-### `push`
+### push
 
-Push local commits across folders.
+Send local content and configuration to the server. Same flags and divergence behavior as `pull`.
 
 ```bash
-studiograph push [folder] [--remote <url>] [--data] [--api-key <key>]
+studiograph push [--remote <url>] [--token <token>]
 ```
 
-Without `--remote`, runs `git push` against each folder's existing remote. With a server set in `workspace.json` (via `studiograph join`), it pushes via the embedded Git HTTP server, creating the folder server-side if needed.
+### commit
 
-The `--remote <url> --data` form pushes both config and all non-personal folder markdown to the named server. Personal folders are always skipped.
-
-### `commit`
-
-Git commit entity changes across all folders.
+Commit local workspace changes to Git.
 
 ```bash
-studiograph commit [--message <prefix>] [--config]
+studiograph commit [--message <message>] [--config]
 ```
 
-| Option | Description |
-|---|---|
-| `--message` | Commit message prefix (default: `update`) |
-| `--config` | Also commit `.studiograph/` changes |
+- `--message` — commit message
+- `--config` — also commit changes in the `.studiograph/` config directory
 
-`commit` calls `reconcileRepos()` first — adds folders that exist on disk but aren't registered, removes entries for deleted folders.
+### about
 
----
-
-## Data sync
-
-### `sync`
-
-Pull new entities from configured sources.
+Display or edit the workspace's `ABOUT.md` — the team profile the agent uses for context.
 
 ```bash
-studiograph sync <folder>
+studiograph about [-e|--edit] [-i|--interactive] [-s|--set <file>]
 ```
 
-### `sync refresh`
+- `-e, --edit` — open `ABOUT.md` in `$EDITOR`
+- `-i, --interactive` — step through each section interactively
+- `-s, --set <file>` — replace `ABOUT.md` with the contents of a file
 
-Refresh a single entity from its source.
+## Server
 
-```bash
-studiograph sync refresh <entity-id> [-c <folder>] [-y]
-```
+### serve
 
-Refresh updates only source-mapped fields — user-added fields and custom body content are never overwritten.
-
-### `sync status`
-
-Show sync configuration and last sync time.
-
-```bash
-studiograph sync status [folder]
-```
-
-### `sync source`
-
-Manage source definitions.
-
-```bash
-studiograph sync source list
-studiograph sync source add <name>
-studiograph sync source remove <name>
-```
-
----
-
-## Workspace management
-
-### `about`
-
-Display or edit workspace identity (`ABOUT.md`).
-
-```bash
-studiograph about [-e] [-i] [-s <file>]
-```
-
-| Option | Description |
-|---|---|
-| `-e, --edit` | Open in `$EDITOR` |
-| `-i, --interactive` | Step through sections interactively |
-| `-s, --set <file>` | Set from file |
-
-### `folder`
-
-Manage folders.
-
-```bash
-studiograph folder add <name> [-d <desc>] [--graph-type project|function|shared-resource]
-studiograph folder list
-studiograph folder rename <old> <new>
-studiograph folder remove <name>
-```
-
-### `index`
-
-Build search index (full-text and optional semantic search).
-
-```bash
-studiograph index [--repo <name>]
-```
-
-### `lint`
-
-Check entity completeness against schemas.
-
-```bash
-studiograph lint [--fix]
-```
-
-### `orphans`
-
-Find entities with zero inbound references.
-
-```bash
-studiograph orphans [--entity-types <types>] [--min-age <days>] [--repos <repos>] [--tombstone] [--delete] [--dry-run]
-```
-
-### `config`
-
-Manage user configuration (`~/.studiograph/user.json`).
-
-```bash
-studiograph config                  # Interactive menu
-studiograph config set <key> <val>  # Set value
-studiograph config get <key>        # Get value
-studiograph config list             # Show all
-```
-
-Supported keys: `model_provider`, `model_id`, `api_key`, `voyage_api_key`, `vector_db_path`, `enrichment_model_id`.
-
----
-
-## Server and deployment
-
-### `serve`
-
-Start the HTTP server (Graph API, chat, WebSocket, embedded Git, MCP, webhooks).
+Start the server from the workspace directory. Defaults to port 8000 on host 0.0.0.0; if the port is busy, it auto-increments. Opens the web UI in a browser unless `STUDIOGRAPH_NO_OPEN=1` is set.
 
 ```bash
 studiograph serve [-p <port>] [-H <host>] [--verbose]
 ```
 
-Default port: `8000`. Honors `PORT` and `HOST` environment variables. Run **from inside the workspace directory** — the server uses `process.cwd()` as the workspace root.
+### deploy railway
 
-### `user`
-
-Manage user accounts.
+Deploy the workspace to Railway. Auto-provisions `STUDIOGRAPH_JWT_SECRET` and `STUDIOGRAPH_MASTER_KEY`.
 
 ```bash
-studiograph user add <email> [--name <n>] [--password <p>] [--role admin|member]
-studiograph user list
-studiograph user remove <email>
+studiograph deploy railway [-n <name>] [-p <project>] [-s <service-name>] [--provider <provider>] [--model <model>] [--api-key <key>]
 ```
 
-`user add` provisions the user's personal **My Entries** folder automatically. The first user created becomes the workspace owner.
+- `-n, --name` — Railway project name (ignored when `--project` is given)
+- `-p, --project` — existing Railway project ID or dashboard URL; adds the service to it instead of creating a new project
+- `-s, --service-name` — Railway service name (defaults to the workspace name slug)
+- `--provider`, `--model`, `--api-key` — AI provider configuration; skips the interactive prompts (`STUDIOGRAPH_DEPLOY_API_KEY` also works for the key)
 
-### `deploy railway`
+### redeploy
 
-Deploy the workspace to Railway.
-
-```bash
-studiograph deploy railway [-n <name>]
-```
-
-The wizard prompts for Railway credentials, sets required environment variables, and pushes config + data to the new deployment. Credentials are saved to `~/.studiograph/user.json`.
-
-### `redeploy`
-
-Trigger redeployment of an existing Railway service. Updates the start command to the exact npm version (e.g. `npx --yes studiograph@1.3.3-next.11 serve`) to bypass tag caching, and sets a `DEPLOY_TS` env var to force a fresh build.
+Redeploy an existing Railway deployment, pinning the exact npm version currently installed.
 
 ```bash
 studiograph redeploy [project]
 ```
 
----
+## Admin
+
+Administrative commands live under `admin`. The old top-level `user`, `folder`, `secrets`, `settings`, and `audit` forms print a deprecation warning and will be dropped in a future release.
+
+### admin token issue
+
+Mint an `sg_` API token against a running server and store it for CLI use.
+
+```bash
+studiograph admin token issue <server-url> [--email <email>] [--password <password>] [--name <name>]
+```
+
+Reads `STUDIOGRAPH_EMAIL` / `STUDIOGRAPH_PASSWORD` when the flags are omitted.
+
+### admin user
+
+Add or remove user accounts.
+
+```bash
+studiograph admin user add [--role owner|member] [--if-empty]
+studiograph admin user remove
+```
+
+- `--role` — `owner` or `member`
+- `--if-empty` — only create the user when no users exist yet (used for first-boot provisioning)
+
+### admin folder
+
+Manage folders.
+
+```bash
+studiograph admin folder <add|list|rename|remove>
+```
+
+- `remove --delete-files` — also delete the folder's files on disk
+
+### admin secrets
+
+Manage stored credentials in the encrypted secrets store.
+
+```bash
+studiograph admin secrets <list|get|set|remove|test>
+```
+
+### admin settings
+
+Read and write workspace settings.
+
+```bash
+studiograph admin settings <list|get|set|clear|describe>
+```
+
+### admin audit
+
+List audit records.
+
+```bash
+studiograph admin audit list
+```
+
+### admin migrate
+
+Bulk regex find-and-replace across the workspace's content files, producing one commit per folder. Refuses to run if anything targeted has uncommitted changes.
+
+```bash
+studiograph admin migrate <regex> <replace> [--dry-run] [--also-rename-files] [--repos <folders>] [--commit-message <msg>]
+```
+
+- `--dry-run` — report matches without writing
+- `--also-rename-files` — also rename files whose names match the regex
+- `--repos` — limit to specific folders
+
+### admin backup
+
+Create a passphrase-wrapped `.sgbackup` bundle of the workspace.
+
+```bash
+studiograph admin backup
+```
+
+### admin restore
+
+Restore a workspace from a `.sgbackup` bundle.
+
+```bash
+studiograph admin restore <bundle>
+```
+
+### admin transfer-ownership
+
+Transfer workspace ownership to another user.
+
+```bash
+studiograph admin transfer-ownership <email>
+```
+
+### admin audit-workspace
+
+Audit the workspace for integrity problems.
+
+```bash
+studiograph admin audit-workspace
+```
+
+### admin audit-orphan-attachments
+
+Find attachments no entry references; `--apply` acts on the findings.
+
+```bash
+studiograph admin audit-orphan-attachments [--apply]
+```
 
 ## Integrations
 
-### `mcp`
+### mcp
 
-Start the stdio MCP server for AI tool integrations.
+Run a stdio MCP server for AI clients that spawn subprocesses. Requires `STUDIOGRAPH_MCP_TOKEN`; proxies to the local server's `/mcp` endpoint and fails loudly on auth errors. See [Connect AI tools](/cli/mcp).
 
 ```bash
 studiograph mcp [workspace]
 ```
 
-See [MCP integration](/cli/mcp) for client configuration.
+### connector
 
-### `connector`
-
-Manage external MCP connectors. Connectors give the agent access to remote services (Linear, Asana, Slack, Granola, etc.).
+List or remove external connectors.
 
 ```bash
-studiograph connector add <name> [--url <url>] [--command <cmd>] [--args <args...>]
-studiograph connector list
-studiograph connector remove <name>
+studiograph connector <list|remove>
 ```
 
-For named connectors (`slack`, `linear`, `granola`, `asana`, `figma`), `add` runs an interactive setup wizard. Custom MCP servers can also be added by pasting a JSON config block in **Settings → Connectors → External Connectors**.
+### r2
 
-### `r2`
-
-Manage Cloudflare R2 asset storage.
+Configure Cloudflare R2 asset storage and move assets to it.
 
 ```bash
-studiograph r2 setup                          # Configure bucket
-studiograph r2 upload <dir> [--prefix <p>]    # Upload directory
-studiograph r2 sync                           # Upload and rewrite asset URLs
+studiograph r2 <setup|upload|sync|rewrite>
 ```
-
----
 
 ## Maintenance
 
-### `reset`
+### index
 
-Reset workspace by removing all entity data (keeps configuration).
+Rebuild the workspace index.
 
 ```bash
-studiograph reset [--yes] [--keep-sync-state]
+studiograph index [--repo <folder>]
 ```
 
-### `clear`
+### lint
 
-Clear agent sessions, memory, or both.
+Check workspace content for problems.
 
 ```bash
-studiograph clear [sessions|memory|all]
+studiograph lint
 ```
 
-### `update`
+### orphans
 
-Check for and install the latest version.
+List orphaned entries; optionally delete them.
 
 ```bash
-studiograph update [--check] [--force]
+studiograph orphans [--entity-types <types>] [--min-age <age>] [--repos <folders>] [--delete] [--dry-run]
+```
+
+### repair-folders
+
+Detect and repair inconsistencies in folder records.
+
+```bash
+studiograph repair-folders [--repo <folder>] [--dry-run]
+```
+
+### reset
+
+Reset workspace state — entities, sessions, or memory.
+
+```bash
+studiograph reset <entities|sessions|memory> [--remote]
+```
+
+<Warning>
+`reset` and `admin folder remove --delete-files` are destructive. Take a backup with `admin backup` first.
+</Warning>
+
+### config
+
+Manage the CLI's stored tokens: list them and drop the ones you no longer need.
+
+```bash
+studiograph config
 ```

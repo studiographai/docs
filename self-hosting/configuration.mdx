@@ -1,0 +1,55 @@
+---
+title: "Configuration"
+description: "Environment variables for a self-hosted Studiograph server, and where settings live."
+---
+
+Most day-to-day configuration — model provider, API keys, storage — is done in the web app under **Settings → Providers**, not through environment variables. Env vars matter mainly at deploy time: ports, security keys, and bootstrap values.
+
+## Server basics
+
+| Variable | Purpose |
+| --- | --- |
+| `PORT` | Port to listen on (default 8000) |
+| `HOST` | Host to bind (default `0.0.0.0`) |
+| `STUDIOGRAPH_VERBOSE` | Verbose server logging |
+| `STUDIOGRAPH_NO_OPEN` | Set to `1` to skip opening the browser on start |
+
+## Security and auth
+
+| Variable | Purpose |
+| --- | --- |
+| `STUDIOGRAPH_JWT_SECRET` | Signs session tokens |
+| `STUDIOGRAPH_MASTER_KEY` | Encrypts the secrets store (`secrets.db`) |
+| `STUDIOGRAPH_MASTER_KEY_PREVIOUS` | Previous master key, for key rotation |
+| `API_KEYS` | **Additional** API bearer tokens. The workspace-managed key is the primary one — this only adds extras |
+| `WEBHOOK_SECRET` | Verifies GitHub webhook deliveries to `/webhooks/github` |
+
+<Warning>
+Losing `STUDIOGRAPH_MASTER_KEY` means permanently losing everything in the encrypted secrets store — there is no recovery path. Keep a copy somewhere safe outside the server.
+</Warning>
+
+## Model provider
+
+| Variable | Purpose |
+| --- | --- |
+| `ANTHROPIC_API_KEY` | Anthropic key for the agent |
+| `MODEL_PROVIDER` | Provider name, for non-Anthropic providers |
+| `MODEL_ID` | Model to use |
+| `MODEL_API_KEY` | API key for that provider |
+
+Set either `ANTHROPIC_API_KEY` alone, or the `MODEL_PROVIDER` / `MODEL_ID` / `MODEL_API_KEY` trio. Both can also be configured after boot in **Settings → Providers**.
+
+## Rendering
+
+| Variable | Purpose |
+| --- | --- |
+| `STUDIOGRAPH_INSTALL_PLAYWRIGHT` | Set to `1` to install Playwright Chromium (needed for artifact PDF/PNG export) |
+| `PLAYWRIGHT_BROWSERS_PATH` | Where to install the browsers — use a persistent path, e.g. `/workspace/.ms-playwright` |
+
+See [Railway](/self-hosting/railway) for how these fit a managed deployment.
+
+## Where settings live
+
+- **`workspace.json`** (in `.studiograph/`) — committed workspace metadata: team name, storage layout, model provider and model, R2 bucket metadata, search settings, server URL.
+- **The encrypted secrets store** (`secrets.db`) — authoritative for credentials. Manage it via the web app's Settings UI, or from the CLI with `studiograph admin secrets set` and `studiograph admin settings set`.
+- **`~/.studiograph/user.json`** — a local fallback and mirror for credentials on the machine running the CLI.

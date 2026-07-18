@@ -1,0 +1,69 @@
+---
+title: "Entries"
+description: "Everything in Studiograph is an entry — create, edit, move, and organize them by type."
+---
+
+Everything in Studiograph is an entry: a person, a project, a task, a note, a meeting, a document. Every entry lives in a [folder](/workspace/folders) and connects to other entries through [links](/workspace/connections). Each entry has a type, which determines the fields it carries — a task has a status and a due date, a deal has a stage and a value.
+
+## Built-in types
+
+The **New entry** picker leads with five primary types, with the rest under **More**.
+
+| Type | What it's for | Key fields |
+| --- | --- | --- |
+| Note | Freeform writing — also created automatically to hold imported media | Name only |
+| Event | A meeting, call, workshop, review, presentation, or conference | Attendees, location, start and end date |
+| Task | A piece of work to track | Status, priority, assignee, due date |
+| Dataset | A spreadsheet you edit in place — see [Datasets](/artifacts/datasets) | Columns you define |
+| Artifact | A designed canvas — see [Artifacts](/artifacts/overview) | — |
+
+Under **More**:
+
+| Type | What it's for | Key fields |
+| --- | --- | --- |
+| Person | Someone you work with | Role, category, status, email, location, organization |
+| Organization | A company or group | Category, status, industry, website |
+| Position | A role you're hiring for | Department, category, status |
+| Deal | A sales opportunity | Stage, value, close date, client, contact |
+| Project | A body of work | Client, services, status, start and end date |
+| Deliverable | Something a project ships | Project, status, due date |
+| Document | A proposal, contract, brief, memo, or report | Category, status |
+| Deck | A presentation | Audience, status |
+| Publication | Something published externally | Platform, status, URL |
+| Case study | A story about past work | Client, services, date range, status |
+| Service | An offering, with dependencies on other services | Depends on, enables, deliverables, status |
+| Skill | Instructions the agent follows — the body is the prompt | Description, applies to |
+| Reference | A pointer to outside material | Source, link |
+
+Workspace owners can customize this catalog — add types, adjust fields, or disable types — in [Settings → Entry types](/settings/entry-types).
+
+## Creating an entry
+
+Open the picker from the **+** button, the **+** next to the **ENTRIES** heading in the sidebar, or **New Entry** in a folder's **…** menu (which pre-selects that folder).
+
+For most types, clicking the type card creates an "Untitled" entry immediately and drops you into the editor with the name ready to type. Datasets and artifacts show a short create form first. The **Create in [Folder]** selector at the bottom of the dialog controls where the new entry lands.
+
+## The editor
+
+- The entry's **name** sits at the top; type it like a headline.
+- The **properties panel** shows the entry's fields — click a field to edit it.
+- The **body** is text with live formatting: headings, lists, and links style themselves as you write, and checkboxes are clickable.
+- While you're writing, a **formatting palette** offers bold, italic, headings, links, code, lists, and image embeds.
+
+Type `[[` anywhere in the body to link another entry — see [Links, search & the graph](/workspace/connections).
+
+## Changing an entry's type
+
+Change the type from the entry's properties. As the dialog puts it: changing the entry type may remove fields specific to the old type — the body text stays the same.
+
+## Moving and copying
+
+- **Move to...** shows a folder tree to pick the destination. If the entry links to things that wouldn't be visible from there, you get a heads-up — "N references won't be visible from [destination]" with the affected list — but it never blocks the move.
+- **Copy to...** duplicates the entry into any folder (including the same one), naming the copy "[Name] (copy)".
+
+## Deleting an entry
+
+Deleting is permanent — "This cannot be undone." The confirmation dialog is explicit about side effects:
+
+- It lists any attached files that will be deleted along with the entry.
+- If the entry uses assets from the [library](/library/overview), those stay in the library by default; the dialog lets you tick individual assets to delete too. Assets used by other entries, or ones you can't manage, stay put.

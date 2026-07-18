@@ -1,0 +1,65 @@
+---
+title: "Settings"
+description: "A map of every Settings section — what lives where, and which sections are owner-only."
+---
+
+Settings is where you manage your own preferences and, if you're a workspace owner, the workspace itself. Everyone can open Settings; sections marked **Owner** only work for owners.
+
+| Section | What's there | Who |
+| --- | --- | --- |
+| **Manage organization** | Workspace name and description | Owner |
+| **Manage team** | Add members, manage accounts and folder access | Owner |
+| **Manage folders** | Every folder in the workspace, including archived ones | Owner |
+| **Entry types** | The catalog of entry types | Owner edits, members view |
+| **Providers** | AI model, web search, semantic search, asset storage | Owner |
+| **External connectors** | Outside services the agent can use | Everyone connects; owner adds |
+| **Studiograph MCP** | Personal tokens for connecting AI tools | Everyone |
+| **Agents** | Your thinking level for the agent | Everyone |
+| **Profile** | Your account and the onboarding interview | Everyone |
+
+## Manage organization
+
+The workspace's name and description. Only an owner can edit these.
+
+## Manage team
+
+Owners add members here with a name, email, and password, and choose a role: **Member** or **Owner**. Owners have full studio control — they manage members, settings, and connectors, and can administer any folder.
+
+Opening a member shows their details: edit their name or email, reset their password, add or remove them from folders (with a per-folder **Admin** or **Editor** role), or delete the account. Deleting a member is handled safely: their personal folder transfers to you (renamed "Archive: …"), and you inherit admin on any shared folder where they were the only admin. You can't delete yourself or the last owner.
+
+## Manage folders
+
+A complete list of the workspace's folders — including archived ones, which you can restore or permanently delete (permanent deletion is gated behind a type-to-confirm step).
+
+<Info>
+An owner can administer any folder here — rename, archive, delete, manage members — but still can't read the content of folders they're not a member of. Administration shows only metadata such as the member list and entry counts. See [Sharing](/workspace/sharing).
+</Info>
+
+## Entry types
+
+The catalog of entry types your workspace uses — rename them, restyle them, turn them off, or add your own. Owners edit; members see a read-only view. See [Entry types](/settings/entry-types).
+
+## Providers
+
+Owner-only. Four panels:
+
+- **AI Provider** — the model that powers the agent. Choose Anthropic, OpenAI, Google, xAI, Groq, or OpenRouter, pick a model, and paste your own API key. **Test connection** confirms it works.
+- **Web Search** — optionally let the agent search the web.
+- **Semantic Search** — optionally add a Voyage AI key so search understands meaning, not only keywords.
+- **Asset Storage** — where uploaded files live.
+
+## External connectors
+
+Connect outside services — the agent can then use them on your behalf. Anyone can connect their own account to an existing connector; adding a new connector is an admin action. See [Connectors](/agent/connectors).
+
+## Studiograph MCP
+
+Mint a personal token to connect AI tools like Claude to your workspace. The token acts as you and sees only the folders you can see. See [Connect AI tools](/cli/mcp).
+
+## Agents
+
+Your personal **Thinking level** for the agent — how much it deliberates before answering. It applies from your next message onward.
+
+## Profile
+
+Your own account details. If you skipped the onboarding interview when you joined, you can resume it from here.

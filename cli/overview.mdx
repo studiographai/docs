@@ -1,68 +1,55 @@
 ---
 title: "CLI overview"
-description: "The Studiograph CLI manages workspaces, folders, sync, and integrations from the command line."
+description: "Install the studiograph command-line tool and get a workspace running in three commands."
 ---
 
-## Overview
+The `studiograph` command-line tool creates and serves workspaces, syncs a local checkout with a server, and handles administration and integrations.
 
-The `studiograph` CLI is the primary interface for managing your knowledge graph. It covers workspace setup, daily workflow, data sync, server operations, and integrations.
+## Install
 
-The CLI uses **folder** as the user-facing term for a Git repo within a workspace. Older docs and APIs may still call these "repos."
+```bash
+npm install -g @studiograph/server
+```
+
+The npm package is `@studiograph/server`; the command it installs is `studiograph`. It requires Node.js 22.19 or later and Git.
+
+## Quickstart
+
+```bash
+studiograph init "My Studio"
+cd my-studio
+studiograph serve
+```
+
+`init` creates a workspace — a single Git repository with a `.studiograph/` config directory. `serve` starts the server on port 8000 and opens the web UI; the first visit shows a setup page where you create the owner account.
 
 ## Command groups
 
-### Getting started
+| Group | Commands |
+| --- | --- |
+| Workspace basics | `init`, `clone`, `serve` |
+| Sync | `pull`, `push`, `commit` |
+| Admin | `admin token`, `admin user`, `admin folder`, `admin secrets`, `admin settings`, `admin audit`, `admin backup`, `admin restore`, and more |
+| Integrations | `mcp`, `connector`, `r2` |
+| Maintenance | `index`, `lint`, `orphans`, `repair-folders`, `reset` |
 
-| Command | Description |
-|---|---|
-| `init <team-name> [dir]` | Create a new workspace (`--demo` for example data, `--github` to push to GitHub) |
-| `join <server-url> [dir]` | Join a workspace hosted on a Studiograph server |
-| `clone <server-url> [dir]` | Clone a workspace with full admin setup |
+<Note>
+The `user`, `folder`, `secrets`, `settings`, and `audit` commands moved under `admin` (for example, `studiograph admin user add`). The old top-level forms still run but print a deprecation warning and will be removed in a future release.
+</Note>
 
-### Daily workflow
+## Where next
 
-| Command | Description |
-|---|---|
-| `start` | Launch the agent chat interface |
-| `pull` | Pull latest changes across folders (add `--remote <url>` for config sync) |
-| `push [folder]` | Push local commits (add `--remote <url> --data` for full sync) |
-| `commit` | Git commit entity changes across all folders |
-
-### Workspace management
-
-| Command | Description |
-|---|---|
-| `about` | Display or edit workspace identity (`ABOUT.md`) |
-| `folder add/list/rename/remove` | Manage folders |
-| `index` | Build search index (FTS + optional semantic) |
-| `lint` | Check entity completeness against schemas |
-| `orphans` | Find entities with zero inbound references |
-| `config` | Manage user configuration (`~/.studiograph/user.json`) |
-| `sync <folder>` | Pull new entities from configured sources |
-
-### Server and deployment
-
-| Command | Description |
-|---|---|
-| `serve` | Start the HTTP server (Graph API, chat, webhooks, collab) |
-| `user add/list/remove` | Manage user accounts |
-| `deploy railway` | Guided Railway deployment |
-| `redeploy [project]` | Trigger a redeploy with a fresh build |
-
-### Integrations
-
-| Command | Description |
-|---|---|
-| `mcp [workspace]` | Start the stdio MCP server for local AI tools |
-| `connector add/list/remove` | Manage external MCP connectors |
-| `r2 setup/upload/sync` | Manage Cloudflare R2 asset storage |
-
-### Maintenance
-
-| Command | Description |
-|---|---|
-| `reset` | Reset workspace data (keeps configuration) |
-| `clear` | Clear agent sessions, memory, or both |
-| `update` | Check for and install updates |
-
-See [Commands](/cli/commands) for full options on each command.
+<Columns cols={2}>
+  <Card title="Commands" href="/cli/commands">
+    Reference for every command and its flags.
+  </Card>
+  <Card title="Sync & local checkouts" href="/cli/sync">
+    Clone a hosted workspace and move content with pull and push.
+  </Card>
+  <Card title="Connect AI tools (MCP)" href="/cli/mcp">
+    Point Claude Code, Claude Desktop, or Cursor at your workspace.
+  </Card>
+  <Card title="Self-hosting" href="/self-hosting/overview">
+    Run Studiograph on your own server, Docker, or Railway.
+  </Card>
+</Columns>

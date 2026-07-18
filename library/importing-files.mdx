@@ -1,0 +1,83 @@
+---
+title: "Importing files"
+description: "Supported file types, size limits, and where your files are stored."
+---
+
+Files come into Studiograph in one of two ways, depending on what they are:
+
+- **Media** — images, video, audio, and fonts — is stored as-is in your [library](/library/overview), inside the folder you choose.
+- **Documents and data** — PDFs, Word documents, spreadsheets, text files — are converted into [entries](/workspace/entries) you can read, edit, and search. The original file stays attached to the entry for download.
+
+## How to import
+
+<Steps>
+  <Step title="Start an import">
+    Drag files onto the library (or into a folder view), click the **+** button in the lower right and choose **Import files**, or use **Import files** in any folder's **…** menu.
+  </Step>
+  <Step title="Pick a destination folder">
+    The **Add to a folder** dialog shows what will happen to each file — which ones are added as media, which become entries, and which aren't supported — and lets you pick one folder for the batch. You can also create a **New folder** from here.
+  </Step>
+  <Step title="Add to folder">
+    Click **Add to folder**. Media appears in your library right away; documents appear as new entries in the folder.
+  </Step>
+</Steps>
+
+<Info>
+Who can see an imported file follows the folder you put it in. See [Sharing & permissions](/workspace/sharing).
+</Info>
+
+## Supported file types
+
+| Type | Extensions | What happens |
+|---|---|---|
+| Notes | `md`, `mdx` | Become entries directly |
+| Text & data | `txt`, `csv`, `tsv`, `json`, `yaml`, `xml`, `html`, and code files (`css`, `js`, `ts`, `py`, …) | Converted to note or dataset entries |
+| Documents | `pdf`, `docx`, `xlsx` | Converted to document or dataset entries; the original file stays attached |
+| Images | `jpg`, `jpeg`, `png`, `gif`, `webp`, `heic`, `avif`, `svg` | Stored in your library; searchable by AI |
+| Video | `mp4`, `mov`, `webm`, `avi`, `mkv`, `m4v` | Stored as-is in your library |
+| Audio | `mp3`, `wav`, `m4a`, `ogg`, `flac`, `aac` | Stored as-is in your library |
+| Fonts | `woff2`, `woff`, `ttf`, `otf` | Stored as-is; usable in [artifacts](/artifacts/overview) |
+| Other documents | `doc`, `ppt`, `pptx`, `xls`, `key`, `pages`, `numbers` | Not supported — export as PDF and import that instead |
+| Design files | `psd`, `ai`, `sketch`, `fig`, `indd`, `idml` | Not supported |
+| Archives | `zip`, `tar`, `gz`, `7z`, `rar` | Not supported — unpack and import the files inside |
+
+Anything not listed is not supported. Unsupported files are listed by name in the import dialog with the reason, and nothing is stored for them.
+
+## What conversion means
+
+When a document or data file becomes an entry:
+
+- A **PDF or Word document** becomes a document entry containing the extracted text, with the original file attached at the top for download.
+- An **Excel workbook** becomes one [dataset](/artifacts/datasets) per sheet (up to 20 sheets). Every sheet keeps a link to the original workbook.
+- A **CSV or TSV file** becomes a dataset with the data as-is.
+- A **text or code file** becomes a note.
+- A **Markdown file** becomes an entry directly — no conversion needed.
+
+Conversion keeps the content, not the file's formatting: layout, signatures, annotations, tracked changes, and spreadsheet formulas aren't preserved (computed values are kept). For anything that can't produce an honest entry — a corrupt, password-protected, or over-limit file — the import is rejected with a clear message and nothing is stored.
+
+<Note>
+Deleting an imported entry also deletes its attached original file, unless a copy of the entry still points to it. The delete dialog tells you exactly what goes.
+</Note>
+
+## Size limits
+
+| What | Limit |
+|---|---|
+| Media uploads (images, video, audio, fonts) | 100 MB per file |
+| Documents and data files converted to entries | 25 MB per file |
+| Excel workbooks | 20 sheets per workbook |
+
+Files over these limits are rejected at import — nothing partial is stored. Attaching a file to an [agent chat](/agent/context-and-attachments) has its own, smaller limits, because chat attachments aren't imports.
+
+## Where your files are stored
+
+Uploaded files live in your workspace's file storage — either on the server that runs your workspace or in cloud storage (Cloudflare R2), depending on how your workspace is set up. Entries are text; uploaded files are stored separately and referenced by permanent links, so renaming a file, moving it to another folder, or moving the entries that use it never breaks anything.
+
+If you run your own instance, see [Storage & backups](/self-hosting/storage-and-backups) for how to configure and back up file storage.
+
+## Who can see a file
+
+- The **library** only shows you files in folders you can access.
+- **Images, video, audio, and fonts** embedded in an entry display for any signed-in member of your workspace who views that entry — so a picture someone with access placed in a shared entry always renders.
+- **Documents and data files** open only for people with access to the folder they live in.
+- A [public share link](/workspace/sharing#public-share-links) exposes only the files embedded in that one shared entry.

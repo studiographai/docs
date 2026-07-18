@@ -1,0 +1,55 @@
+---
+title: "Datasets"
+description: "Work with spreadsheet data in Studiograph: edit cells, write formulas, format columns, filter, sort, and export."
+---
+
+A dataset is a spreadsheet entry. It opens as a full-width grid where you edit cells directly, write formulas, and set up filters and sorting — and artifacts can read its data live (see [Live data in artifacts](/artifacts/live-data)).
+
+## Creating a dataset
+
+There are three ways to create one:
+
+- **Import a file.** Import an Excel or CSV file — each sheet in an Excel file becomes its own dataset, and the original file stays attached so you can download it later. See [Importing files](/library/importing-files).
+- **Start blank.** Pick dataset in the **New entry** picker.
+- **Ask the agent.** Describe the data you want and the agent creates and fills the dataset for you.
+
+## The grid
+
+Click any cell to edit it directly, or use the formula bar at the top. A new dataset starts at 26 columns (A–Z) and 1,000 rows and grows as you need:
+
+- Use the **Add 1000 more rows** banner at the bottom of the grid to extend it.
+- Use **Insert column** to add columns.
+
+You can also drag the fill handle to extend a value or formula across neighboring cells, and apply fill colors to cells.
+
+## Formulas
+
+A formula starts with `=`, like a spreadsheet:
+
+- `=A2*B2` — arithmetic between cells
+- `=SUM(C2:C10)` — a function over a range
+
+Supported functions are `SUM`, `AVERAGE`, `MIN`, `MAX`, `COUNT`, and `PRODUCT`, plus arithmetic and date math. Suggestions appear as you type after `=`. The formula itself is stored in the cell; the grid shows the computed result.
+
+## Column formats
+
+Set a column's format to control how values display: **Text**, **Number**, **Currency**, **Percentage**, or **Date** (with a choice of date styles). Formats change display only — the underlying value in the cell stays exactly as entered, so switching formats never alters your data.
+
+## Filters and sorting
+
+Each column can have a filter suited to its type — number comparisons, text matching, date ranges, or picking from the values that appear in the column. The dataset can also have one sort, ascending or descending, which follows its column if you reorder or rename columns.
+
+<Info>
+Sort, filters, and column formats are shared view settings: everyone who opens the dataset sees the same setup. Changing a filter changes it for the whole team, not only your own view.
+</Info>
+
+## Exporting
+
+**Export (.csv)** downloads the grid as a CSV file with formulas turned into their computed values.
+
+## Limits
+
+| Limit | Value |
+| --- | --- |
+| Maximum rows | 1,000,000 |
+| Maximum columns | 702 (A–ZZ) |

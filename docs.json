@@ -11,23 +11,57 @@
   "navigation": {
     "tabs": [
       {
-        "tab": "Guides",
+        "tab": "Guide",
         "groups": [
           {
-            "group": "Getting started",
+            "group": "Get started",
             "pages": [
               "index",
-              "quickstart"
+              "getting-started/your-account",
+              "getting-started/tour"
             ]
           },
           {
-            "group": "Concepts",
+            "group": "Your workspace",
             "pages": [
-              "concepts/knowledge-graph",
-              "concepts/workspaces",
-              "concepts/folders",
-              "concepts/entities",
-              "concepts/access"
+              "workspace/folders",
+              "workspace/sharing",
+              "workspace/entries",
+              "workspace/views",
+              "workspace/connections",
+              "workspace/collaboration"
+            ]
+          },
+          {
+            "group": "Your library",
+            "pages": [
+              "library/overview",
+              "library/importing-files",
+              "library/media-in-your-work"
+            ]
+          },
+          {
+            "group": "Artifacts & datasets",
+            "pages": [
+              "artifacts/overview",
+              "artifacts/datasets",
+              "artifacts/live-data"
+            ]
+          },
+          {
+            "group": "The AI agent",
+            "pages": [
+              "agent/chat",
+              "agent/context-and-attachments",
+              "agent/skills",
+              "agent/connectors"
+            ]
+          },
+          {
+            "group": "Settings",
+            "pages": [
+              "settings/overview",
+              "settings/entry-types"
             ]
           }
         ]
@@ -36,30 +70,27 @@
         "tab": "CLI",
         "groups": [
           {
-            "group": "CLI reference",
+            "group": "CLI",
             "pages": [
               "cli/overview",
-              "cli/installation",
-              "cli/commands"
-            ]
-          },
-          {
-            "group": "Workflows",
-            "pages": [
+              "cli/commands",
               "cli/sync",
-              "cli/mcp",
-              "cli/deployment"
+              "cli/mcp"
             ]
           }
         ]
       },
       {
-        "tab": "API Reference",
+        "tab": "Self-hosting",
         "groups": [
           {
-            "group": "API documentation",
+            "group": "Self-hosting",
             "pages": [
-              "api-reference/introduction"
+              "self-hosting/overview",
+              "self-hosting/docker",
+              "self-hosting/railway",
+              "self-hosting/configuration",
+              "self-hosting/storage-and-backups"
             ]
           }
         ]
@@ -75,6 +106,17 @@
       ]
     }
   },
+  "redirects": [
+    { "source": "/quickstart", "destination": "/getting-started/your-account" },
+    { "source": "/concepts/knowledge-graph", "destination": "/workspace/connections" },
+    { "source": "/concepts/workspaces", "destination": "/getting-started/tour" },
+    { "source": "/concepts/folders", "destination": "/workspace/folders" },
+    { "source": "/concepts/entities", "destination": "/workspace/entries" },
+    { "source": "/concepts/access", "destination": "/workspace/sharing" },
+    { "source": "/cli/installation", "destination": "/cli/overview" },
+    { "source": "/cli/deployment", "destination": "/self-hosting/overview" },
+    { "source": "/api-reference/introduction", "destination": "/cli/mcp" }
+  ],
   "logo": {
     "light": "/logo/light.svg",
     "dark": "/logo/dark.svg"
@@ -88,8 +130,8 @@
     ],
     "primary": {
       "type": "button",
-      "label": "Get Started",
-      "href": "/quickstart"
+      "label": "Get started",
+      "href": "/getting-started/your-account"
     }
   },
   "contextual": {
