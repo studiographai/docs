@@ -3,7 +3,7 @@ title: "Configuration"
 description: "Environment variables for a self-hosted Studiograph server, and where settings live."
 ---
 
-Most day-to-day configuration — model provider, API keys, storage — is done in the web app under **Settings → Providers**, not through environment variables. Env vars matter mainly at deploy time: ports, security keys, and bootstrap values.
+Most day-to-day configuration — model provider, API keys, storage — is done in the web app under **Settings → Providers**, not through environment variables (see [Providers](/self-hosting/providers)). Env vars matter mainly at deploy time: ports, security keys, and bootstrap values.
 
 ## Server basics
 
@@ -36,8 +36,10 @@ Losing `STUDIOGRAPH_MASTER_KEY` means permanently losing everything in the encry
 | `MODEL_PROVIDER` | Provider name, for non-Anthropic providers |
 | `MODEL_ID` | Model to use |
 | `MODEL_API_KEY` | API key for that provider |
+| `IMAGE_MODEL_PROVIDER` | Provider for image generation (OpenRouter) |
+| `IMAGE_MODEL_ID` | Image model to use |
 
-Set either `ANTHROPIC_API_KEY` alone, or the `MODEL_PROVIDER` / `MODEL_ID` / `MODEL_API_KEY` trio. Both can also be configured after boot in **Settings → Providers**.
+Set either `ANTHROPIC_API_KEY` alone, or the `MODEL_PROVIDER` / `MODEL_ID` / `MODEL_API_KEY` trio. Everything here can also be configured after boot in **Settings → Providers** — see [Providers](/self-hosting/providers).
 
 ## Rendering
 

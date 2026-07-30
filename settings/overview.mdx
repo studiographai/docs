@@ -11,10 +11,10 @@ Settings is where you manage your own preferences and, if you're a workspace own
 | **Manage team** | Add members, manage accounts and folder access | Owner |
 | **Manage folders** | Every folder in the workspace, including archived ones | Owner |
 | **Entry types** | The catalog of entry types | Owner edits, members view |
-| **Providers** | AI model, web search, semantic search, asset storage | Owner |
+| **Providers** | AI model, image generation, web search, semantic search, asset storage | Owner |
 | **External connectors** | Outside services the agent can use | Everyone connects; owner adds |
-| **Studiograph MCP** | Personal tokens for connecting AI tools | Everyone |
-| **Agents** | Your thinking level for the agent | Everyone |
+| **Agents** | Thinking level, MCP endpoint, and personal access tokens | Everyone |
+| **Meeting capture** | Transcription settings — shown in the desktop app only | Everyone |
 | **Profile** | Your account and the onboarding interview | Everyone |
 
 ## Manage organization
@@ -41,24 +41,33 @@ The catalog of entry types your workspace uses — rename them, restyle them, tu
 
 ## Providers
 
-Owner-only. Four panels:
+Owner-only. Five panels:
 
 - **AI Provider** — the model that powers the agent. Choose Anthropic, OpenAI, Google, xAI, Groq, or OpenRouter, pick a model, and paste your own API key. **Test connection** confirms it works.
-- **Web Search** — optionally let the agent search the web.
+- **Image generation** — the model the agent generates images with, via OpenRouter, independent of the chat provider. Defaults to Nano Banana (Gemini 2.5 Flash Image).
+- **Web Search** — optionally let the agent search the web: through your model provider's native search, or with a Brave, Tavily, or Google key.
 - **Semantic Search** — optionally add a Voyage AI key so search understands meaning, not only keywords.
-- **Asset Storage** — where uploaded files live.
+- **Asset Storage** — where uploaded files live: the server's disk by default, or Cloudflare R2.
+
+See [Providers](/self-hosting/providers) for the full guide to every panel.
 
 ## External connectors
 
 Connect outside services — the agent can then use them on your behalf. Anyone can connect their own account to an existing connector; adding a new connector is an admin action. See [Connectors](/agent/connectors).
 
-## Studiograph MCP
-
-Mint a personal token to connect AI tools like Claude to your workspace. The token acts as you and sees only the folders you can see. See [Connect AI tools](/cli/mcp).
-
 ## Agents
 
-Your personal **Thinking level** for the agent — how much it deliberates before answering. It applies from your next message onward.
+Three things live here:
+
+- **Thinking** — your personal thinking level for the agent: how much it deliberates before answering. It applies from your next message onward.
+- **MCP Access** — the workspace's MCP endpoint URL. Paste it into Claude Desktop, claude.ai, or Claude Code and approve access in your browser to connect that tool to your workspace.
+- **Advanced** — personal access tokens for headless clients (scripts, CI, Codex). A token acts as you and sees only the folders you can see.
+
+See [Connect Claude Code, Codex & other AI tools](/cli/mcp) for client-by-client setup.
+
+## Meeting capture
+
+Only visible in the Studiograph desktop app, where meeting transcription runs: the transcription provider, its key, and the default folder for captured meetings.
 
 ## Profile
 
