@@ -9,7 +9,8 @@ Studiograph runs as a single server process. One process serves the web app, the
 
 - **Node.js 22.19 or later** — or Docker, which bundles it.
 - **A model provider API key** for the agent: Anthropic, OpenAI, Google, xAI, Groq, or OpenRouter. You can set it during first boot or later in the web app under Settings.
-- **Optionally, Cloudflare R2** for uploaded file storage. By default files are stored on the server's disk — see [Storage & backups](/self-hosting/storage-and-backups).
+
+Everything else — image generation, web search, semantic search, and Cloudflare R2 file storage — is optional, bring-your-own-key, and configured after boot in **Settings → Providers**. See [Providers](/self-hosting/providers).
 
 ## Three ways to run it
 
@@ -40,6 +41,9 @@ Use `--port`/`--host` (or the `PORT`/`HOST` env vars) to change the bind address
   </Card>
   <Card title="Railway" href="/self-hosting/railway">
     Provision and deploy a managed instance with one command.
+  </Card>
+  <Card title="Providers" href="/self-hosting/providers">
+    Set up the AI model, image generation, search, and storage.
   </Card>
   <Card title="Configuration" href="/self-hosting/configuration">
     Environment variables and where settings live.

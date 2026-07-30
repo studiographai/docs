@@ -1,40 +1,126 @@
 ---
-title: "Connect AI tools (MCP)"
-description: "Point Claude Code, Claude Desktop, Cursor, and other MCP clients at your Studiograph workspace."
+title: "Connect Claude Code, Codex & other AI tools (MCP)"
+description: "Use Studiograph as an MCP server for Claude Code, Codex, Claude Desktop, Cursor, and headless agent sessions."
 ---
 
-Studiograph exposes an MCP (Model Context Protocol) server, so AI tools like Claude Code, Claude Desktop, and Cursor can search, read, and edit your workspace. There are two ways to connect.
+Studiograph exposes an MCP (Model Context Protocol) server at your workspace's `/mcp` endpoint. Any MCP-compatible tool — Claude Code, Codex, Claude Desktop, claude.ai, Cursor — can search, read, and edit your workspace through it, with the same folder access you have in the app.
 
-## Hosted workspace (HTTP)
+There are two ways to authenticate, and which one you want depends on whether a browser is available:
+
+| Method | Best for | How it works |
+| --- | --- | --- |
+| **Sign in through the browser (OAuth)** | Interactive tools: Claude Desktop, claude.ai, Claude Code on your machine | Paste the endpoint URL; the tool opens a browser page where you approve access. No token to manage. |
+| **Personal access token** | Headless sessions: CI, scripts, autonomous agents, Codex, servers without a browser | Mint an `sg_` token once and pass it as a Bearer header or environment variable. |
+
+Either way, the connection acts as **you** — the connected tool sees exactly the folders you can see, nothing more.
+
+## Find your endpoint URL
+
+In the web app, open **Settings → Agents**. The **MCP Access** section shows your workspace's endpoint URL (it ends in `/mcp`) with a copy button. This page is available to everyone, not just owners.
+
+## Mint a token (for headless clients)
 
 <Steps>
-  <Step title="Mint a personal token">
-    In the web app, open **Settings → Connectors → Studiograph MCP** and mint a token. It starts with `sg_` and is shown once — copy it immediately.
+  <Step title="Open Settings → Agents → Advanced">
+    The **Advanced** disclosure below MCP Access holds your personal access tokens.
   </Step>
-  <Step title="Add the server to your client's config">
-    ```json
-    {
-      "mcpServers": {
-        "studiograph": {
-          "type": "streamable-http",
-          "url": "https://<your-workspace>/mcp",
-          "headers": {
-            "Authorization": "Bearer sg_your_token_here"
-          }
-        }
-      }
-    }
-    ```
+  <Step title="Create a token">
+    Click **New token**, give it a name (for example "claude-code"), and create it. The token starts with `sg_` and is **shown once**, together with a ready-to-paste client config — copy both now.
   </Step>
 </Steps>
 
-<Info>
-The token acts as you. The connected tool sees exactly the folders you can see — nothing more.
-</Info>
+## Claude Code
+
+For an interactive session, add the server over HTTP and sign in through the browser:
+
+```bash
+claude mcp add --transport http studiograph https://<your-workspace>/mcp
+```
+
+Then run `/mcp` inside Claude Code and pick **studiograph** to complete the browser sign-in.
+
+For a **headless** session — CI, `claude -p`, or any machine where the browser flow isn't an option — pass a personal access token instead:
+
+```bash
+claude mcp add --transport http studiograph https://<your-workspace>/mcp \
+  --header "Authorization: Bearer sg_your_token_here"
+```
+
+To share the server with everyone working in a project, commit a `.mcp.json` at the project root (keep the token out of it — use an environment variable):
+
+```json
+{
+  "mcpServers": {
+    "studiograph": {
+      "type": "http",
+      "url": "https://<your-workspace>/mcp",
+      "headers": {
+        "Authorization": "Bearer ${STUDIOGRAPH_MCP_TOKEN}"
+      }
+    }
+  }
+}
+```
+
+A one-off headless run can also load the config directly:
+
+```bash
+claude -p "Summarize this week's meeting notes from Studiograph" \
+  --mcp-config .mcp.json
+```
+
+## Codex
+
+Add the server to `~/.codex/config.toml`. Recent Codex versions connect to HTTP servers directly:
+
+```toml
+[mcp_servers.studiograph]
+url = "https://<your-workspace>/mcp"
+bearer_token_env_var = "STUDIOGRAPH_MCP_TOKEN"
+```
+
+Export `STUDIOGRAPH_MCP_TOKEN=sg_your_token_here` in the shell that launches Codex.
+
+If your Codex version doesn't support URL-based servers, spawn the Studiograph CLI as a stdio server instead (requires the [CLI](/cli/overview) and a local workspace — see [Local workspace](#local-workspace-stdio) below):
+
+```toml
+[mcp_servers.studiograph]
+command = "studiograph"
+args = ["mcp", "/absolute/path/to/your/workspace"]
+env = { "STUDIOGRAPH_MCP_TOKEN" = "sg_your_token_here" }
+```
+
+## Claude Desktop and claude.ai
+
+Both use the browser sign-in — no token needed:
+
+1. Copy the endpoint URL from **Settings → Agents → MCP Access**.
+2. In Claude, add a custom connector (or "MCP server") and paste the URL.
+3. Approve access in the browser window that opens.
+
+## Cursor and other MCP clients
+
+Any client that accepts a streamable-HTTP MCP server works with the same config shape:
+
+```json
+{
+  "mcpServers": {
+    "studiograph": {
+      "type": "streamable-http",
+      "url": "https://<your-workspace>/mcp",
+      "headers": {
+        "Authorization": "Bearer sg_your_token_here"
+      }
+    }
+  }
+}
+```
+
+This is exactly the snippet Studiograph hands you when you mint a token — with your workspace URL already filled in.
 
 ## Local workspace (stdio)
 
-For clients that spawn a subprocess instead of calling a URL, run the CLI as a stdio MCP server:
+If you run Studiograph locally, clients can spawn the CLI as a stdio MCP server instead of calling a URL:
 
 ```json
 {
@@ -42,6 +128,7 @@ For clients that spawn a subprocess instead of calling a URL, run the CLI as a s
     "studiograph": {
       "command": "studiograph",
       "args": ["mcp"],
+      "cwd": "/absolute/path/to/your/workspace",
       "env": {
         "STUDIOGRAPH_MCP_TOKEN": "sg_your_token_here"
       }
@@ -50,7 +137,7 @@ For clients that spawn a subprocess instead of calling a URL, run the CLI as a s
 }
 ```
 
-`studiograph mcp` requires `STUDIOGRAPH_MCP_TOKEN` and proxies to the local server, so the same per-user folder access applies.
+`studiograph mcp` runs against the workspace in its working directory (or a path passed as an argument). When a local server is running for that workspace, it transparently proxies to it — so edits made over MCP merge live into any open editor. When no server is running, it falls back to operating on the workspace directly. Either way `STUDIOGRAPH_MCP_TOKEN` is required, and the same per-user folder access applies.
 
 ## What connected tools can do
 
@@ -72,6 +159,6 @@ Around 53 tools are available, covering most of what you can do in the app:
 Permanently deleting a folder is a human-only action in the web app; no MCP tool can do it.
 </Note>
 
-## Revoking a token
+## Revoking access
 
-Your minted tokens are listed in the same place they're created — **Settings → Connectors → Studiograph MCP**. Open a token and revoke it there; the connected tool loses access immediately.
+Your minted tokens are listed under **Settings → Agents → Advanced**. Open a token and revoke it there; any client using it stops working immediately. The raw token value is never shown again after minting — if you lose it, revoke and mint a fresh one.

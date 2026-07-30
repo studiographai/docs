@@ -89,6 +89,7 @@
               "self-hosting/overview",
               "self-hosting/docker",
               "self-hosting/railway",
+              "self-hosting/providers",
               "self-hosting/configuration",
               "self-hosting/storage-and-backups"
             ]
