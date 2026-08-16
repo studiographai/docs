@@ -47,6 +47,7 @@ Set either `ANTHROPIC_API_KEY` alone, or the `MODEL_PROVIDER` / `MODEL_ID` / `MO
 | --- | --- |
 | `STUDIOGRAPH_INSTALL_PLAYWRIGHT` | Set to `1` to install Playwright Chromium (needed for artifact PDF/PNG export) |
 | `PLAYWRIGHT_BROWSERS_PATH` | Where to install the browsers — use a persistent path, e.g. `/workspace/.ms-playwright` |
+| `STUDIOGRAPH_LIB_CDN_BASE` | Optional mirror for artifact render libraries (three.js/D3/Motion). The server normally fetches these once from jsDelivr at boot, verifies them against pinned hashes, and serves them itself; on an egress-restricted network, point this at an internal mirror of the same files — the hash check still applies |
 
 See [Railway](/self-hosting/railway) for how these fit a managed deployment.
 
