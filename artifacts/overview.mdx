@@ -63,7 +63,20 @@ Use a public link to share an artifact with people outside your workspace. The l
 
 ## Fonts
 
-Artifacts use fonts uploaded to your library — the agent can apply any font family you've added there. External font URLs are blocked, so a font must be in the library before an artifact can use it. See [Media in your work](/library/media-in-your-work).
+Artifacts get fonts two ways:
+
+- **Google Fonts, by link.** A standard Google Fonts stylesheet link (`fonts.googleapis.com`) just works — ask the agent for any Google font by name. Exports embed the font files, so a downloaded deck or PDF keeps the exact typeface, even offline.
+- **Your library, for brand fonts.** Upload licensed or custom font files (`woff2`, `woff`, `ttf`, `otf`) to your [library](/library/media-in-your-work) and the agent can apply them by family name. Library fonts also render for viewers automatically and are bundled into exports.
+
+Other external font hosts are not supported — import the files into your library instead.
+
+## Libraries and external resources
+
+Artifacts run in a locked-down sandbox, with a small, pinned set of trusted sources allowed in:
+
+- **Curated libraries** — three.js (3D), D3 (data visualization), and Motion (animation) are built in: the agent requests them per artifact and Studiograph serves verified copies from your workspace's own server. No third party is involved when someone views your work.
+- **Other JavaScript libraries** — the agent can use any library published on `cdnjs.cloudflare.com` or jsDelivr's npm mirror (`cdn.jsdelivr.net/npm/…`), always pinned to an exact version so your artifact never changes behavior when a library updates. HTML exports embed these too.
+- **Everything else stays out.** Arbitrary external scripts, images, trackers, and network calls are blocked by the sandbox. For an image or file hosted elsewhere, import it into your library.
 
 ## Next
 
