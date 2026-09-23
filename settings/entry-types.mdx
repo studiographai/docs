@@ -1,52 +1,74 @@
 ---
 title: "Entry types"
-description: "Shape the catalog of entry types your workspace uses — rename, restyle, disable, or add your own."
+description: "Shape the catalog of entry types your workspace uses — rename, restyle, turn off, or add your own."
 ---
 
-Every entry has a type — note, task, project, and so on — and the catalog of types belongs to your workspace. Owners shape it under **Settings → Entry types**; members see the same catalog read-only. Each type shows a count of the entries you can access.
+Every entry has a type — note, task, project, and so on — and the catalog of types belongs to your workspace. Owners shape it under **Settings → Entries**, which only Owners can open.
+
+## The catalog
+
+Types are grouped into sections:
+
+| Section | What's in it |
+| --- | --- |
+| **Core** | Studiograph's own building blocks: note, task, event, dataset, skill, and the four artifact types — presentation, artboard, app, and publication. They're always available and can't be turned off or deleted. |
+| **Extended** | Built-in types that hold fields and text, with no special behavior: person, organization, position, deal, project, deliverable, document, case study, service, and reference. Turn any of them on or off. |
+| **Custom** | Types your workspace added. Each shows how many entries use it. |
+| **Unregistered** | Only appears when some of your entries use a type the workspace has no definition for. See [Unregistered types](#unregistered-types). |
 
 ## Restyle any type
 
-For every type in the catalog you can:
+Open a type to change its **Appearance**:
 
-- Rename its label and plural label
-- Write or edit its description
-- Pick an icon from the icon set
-- Pick an accent color
+- **Name** — how the type is labeled everywhere.
+- **Description** — one line shown in the New entry picker and to the agent.
+- An icon and an accent color.
 
-These changes apply everywhere the type appears — the New entry picker, views, and entry pages.
+Click **Save appearance** to apply. Changes show up everywhere the type appears — the New entry picker, views, and entry pages.
 
 ## Turn a type off
 
-Each type has a switch. Turning a type off removes it from the New entry picker, so no one creates new entries of that type. Existing entries keep working exactly as before — nothing is hidden or deleted.
+Every type outside **Core** has an **Available for new entries** switch. Turning it off removes the type from the New entry picker and the **New** menu, so no one creates new entries of that type. Existing entries keep working exactly as before — nothing is hidden or deleted. A turned-off type shows a **Disabled** badge in the catalog.
 
-<Note>
-Core types — note, task, event, dataset, and artifact — can't be turned off or deleted.
-</Note>
+## Show a type on the calendar
+
+The **Show on calendar** switch decides whether entries of that type are plotted on the **Calendar** view by their date.
+
+## Set a starting template
+
+**New entry scaffold** is the text a new entry of that type starts with — headings or prompts your team fills in. Edit it and click **Save scaffold**.
 
 ## Add a custom type
 
-Add your own types for the things your studio tracks — a "Campaign" or a "Vendor", for example. A custom type is a regular markdown entry type: give it a name, icon, color, and description, then add the fields it needs (text, dates, statuses, connections to other entries).
+Add your own types for the things your team tracks — a "Campaign" or a "Vendor", for example. In the **Custom** section, click **New type**, then give it a **Name**, a **Description**, an icon and color, and the **Fields** it needs.
 
-### Put a custom type on Calendar or Kanban
+Each field has a key and a type:
 
-Views pick up custom types through field roles. When you edit a field, you can give it a role:
-
-| Role | What it unlocks |
+| Field type | Holds |
 | --- | --- |
-| Date (primary or start) | The type's entries appear on **Calendar** (a start date makes the entry span from start to finish) |
-| Connection | The field links to entries of another type |
-| Grouping | The field becomes a **Kanban** column axis and a group-by option |
+| **Text** | A line of text |
+| **Number** | A number, formatted as a plain number, currency, or percent |
+| **Yes / No** | A yes-or-no value |
+| **Select (one option)** | One choice from a list of options you define |
+| **Multi-select** | Any number of choices from a list |
+| **List of text** | Several lines of text |
+
+Mark a field **Required field** if every entry must fill it in.
 
 ## Edit fields
 
-- On built-in types, the built-in fields are fixed — you can't change or remove them. Fields you added yourself are editable.
-- Once a field holds values on real entries, its name and type lock.
+- On built-in types, the built-in fields are fixed.
+- On fields you add, the key and type are fixed once the field is saved. You can still edit its other settings — for example, add options to a select field. An option that entries already use can't be removed.
 
-## Adopt a type
+## Unregistered types
 
-If your workspace contains entries whose type isn't in the catalog — for example, from imported content — the page offers to adopt it. Adopting registers the type so you can style it and manage it like any other.
+If some of your entries use a type your workspace has no definition for — for example, from imported content — they're listed under **Unregistered**. For each one, choose **Register as custom type** to add it to the catalog, or **Retype…** to convert those entries to a type you already have.
 
-## Delete a custom type
+## Remove a custom type
 
-Deleting a custom type converts its existing entries to another type of your choice — note by default — so no entries are lost. Only custom types can be deleted; core types can't.
+A custom type's **Danger zone** offers two ways out:
+
+- **Unregister entry type** — removes the type's definition but leaves every entry untouched.
+- **Delete type** — converts the type's existing entries to another type of your choice (note by default), then removes the type, so no entries are lost. If some of those entries are in folders you can't access, the type can be turned off but not deleted.
+
+Only custom types can be deleted.

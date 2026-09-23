@@ -1,9 +1,9 @@
 ---
 title: "Chatting with the agent"
-description: "Open the chat panel, manage your conversations, and see what the agent can do for you."
+description: "Open the chat panel, manage your conversations, choose a model, and see what the agent can do for you."
 ---
 
-The agent lives in the chat panel on the right side of the workspace. Press <kbd>⌘</kbd>+<kbd>/</kbd> (or <kbd>Ctrl</kbd>+<kbd>/</kbd>) to open or close it, or press <kbd>Esc</kbd> to close it.
+The agent lives in the chat panel on the right side of the workspace. Press <kbd>⌘</kbd>+<kbd>/</kbd> (or <kbd>Ctrl</kbd>+<kbd>/</kbd>) to open or close it. While you're typing in the panel, <kbd>Esc</kbd> closes it too.
 
 ## Conversations
 
@@ -11,10 +11,30 @@ Each chat is a separate conversation, and your history is saved so you can come 
 
 - **New chat** (<kbd>⌘</kbd>+<kbd>J</kbd>) starts a fresh conversation.
 - **Chats** opens your history. Search it with **Search chats…**, and pin, rename, or delete any conversation. Pinned chats stay at the top, and a chat the agent is currently working in shows a live dot.
-- **Resume last chat** takes you straight back to your most recent conversation.
-- While the agent is working, the send button becomes **Stop** — click it to interrupt.
+- Above the message box, **Recent chat** takes you straight back to your most recent conversation. While the agent is still working in one, it reads **Working chat** instead.
+- An open chat's menu offers **Rename**, **Download chat (.md)**, and **Delete**.
 
-You don't have to wait for the agent to finish. Switch to another chat, or close the panel entirely — the agent keeps working in the background, and you can run several conversations at once.
+You don't have to wait for the agent to finish. Switch to another chat, or close the panel entirely — the agent keeps working in the background, and you can run several conversations at once. When a background chat finishes, a notice with an **Open** button takes you back to it.
+
+## Writing a message
+
+- Type your request and press Enter. While the message box is empty, the microphone button lets you dictate instead.
+- While the agent is working, the send button becomes **Stop** — click it to interrupt.
+- Start a message with **/** to pick one of your [skills](/agent/skills) for that request.
+- Write an entry's name in double brackets — `[[Acme Rebrand]]` — to point the agent at that entry.
+- Use the **+** button to attach files. See [Giving the agent context](/agent/context-and-attachments).
+
+Replies show the entries they were written from, so you can check the agent's sources.
+
+## Choosing a model
+
+The pill next to **+** in the message box picks the AI model. It lists every model your workspace can use, grouped by provider, with the workspace default first. Your choice applies from the next message you send and is remembered for next time.
+
+At the bottom of the same menu, the **Thinking** slider sets how much the agent reasons before it answers — **Off**, **Low**, **Medium**, **High**, or **Extra High**. Higher levels help with harder requests but take longer.
+
+Some models can't read images. While images are attached, those models are unavailable in the menu.
+
+Which models are available depends on your workspace's [AI plan](/settings/ai-plan). If the workspace runs one fixed model, the pill is locked and says **Model is set by Studiograph Cloud**.
 
 ## What the agent can do
 
@@ -24,25 +44,27 @@ Ask in plain language; the agent picks the right action.
 
 - Search and read anything you can access — entries, folders, and everything linked to them.
 - Follow connections: "what's related to this project?"
+- Read files in your [library](/library/overview), including PDFs page by page.
+- Look through an entry's history and bring back an earlier version or a deleted entry.
 
 **Create and edit**
 
 - Create entries, edit them, rename them (links update automatically), move them between folders, and delete them.
-- Build and edit [artifacts](/artifacts/overview) — decks, graphics, and documents — frame by frame.
+- Build and edit [artifacts](/artifacts/overview) — presentations, artboards, apps, and publications — frame by frame.
 - Work with [datasets](/artifacts/datasets): look up answers, add rows, and update cells.
-- Generate images — "make a hero image for this case study" — when image generation is set up under [Settings → Providers](/settings/overview#providers).
+- Generate images — "make a hero image for this case study". Image generation is part of your [AI plan](/settings/ai-plan).
 
 **Bring things in**
 
-- Import files into your workspace and attach assets from your [library](/library/overview) to entries.
-- Search the web, when web search is enabled in [Settings](/settings/overview).
+- Import files into your workspace, save images from a web page, and attach assets from your library to entries.
+- Search the web and read web pages. Web search is on by default; how it runs depends on your [AI plan](/settings/ai-plan).
 - Use your connected apps through [connectors](/agent/connectors).
 
 **Keep things organized**
 
 - Create, rename, and archive [folders](/workspace/folders).
 - Follow your saved [skills](/agent/skills) for repeatable tasks.
-- Run the onboarding interview to learn about you and your studio.
+- Run the onboarding interview to learn about you and your team.
 
 <Info>
 The agent acts as you. It can only see and change the folders you have access to — nothing more.
@@ -50,7 +72,11 @@ The agent acts as you. It can only see and change the folders you have access to
 
 ## Long conversations
 
-In a long chat, the agent summarizes older messages to stay focused — you'll see a **Compacted** divider where that happened. If a conversation grows too large to continue, the agent asks you to start a new chat.
+In a long chat, the agent summarizes older messages to stay focused — you'll see a **Compacted** divider where that happened. If a conversation grows too large for the model, the agent asks you to start a new chat.
+
+## When the AI isn't available
+
+If the agent can't reach its model — for example, because the workspace has run out of AI credits — the chat says so and offers a way to fix it. See [Your AI plan](/settings/ai-plan#when-the-ai-isnt-available).
 
 <Warning>
 Deleting a chat also deletes the files you attached to it. Attachments live only in the conversation — anything you imported into your workspace is unaffected.

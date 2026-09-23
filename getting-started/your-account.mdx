@@ -1,45 +1,69 @@
 ---
 title: "Your account"
-description: "How accounts are created, how you sign in, and what happens the first time you use Studiograph."
+description: "Signing up for Studiograph Cloud, joining a team, signing in, roles, and what happens the first time you use Studiograph."
 ---
 
-## Getting an account
+Studiograph runs on **Studiograph Cloud**: your team gets its own hosted workspace, and your account, your team, and your AI plan are managed at [studiograph.com](https://studiograph.com). Studiograph Cloud calls a workspace a **studio** — it's the same thing.
 
-There is no self-service signup. A workspace Owner adds you as a member and sets your name, email, and a starting password. Once that's done, you can sign in right away.
+## Creating a workspace
+
+Studiograph Cloud is in private alpha. Click **Request alpha access** on [studiograph.com](https://studiograph.com) to join the list. When your invitation arrives, its link takes you through creating an account and setting up your workspace in four steps:
+
+1. **Create studio** — name your workspace.
+2. **Activate access** — start your plan.
+3. **Connect AI** — choose whether Studiograph runs the AI for you or you bring your own provider keys. See [Your AI plan](/settings/ai-plan).
+4. **Open studio** — go to your new workspace.
+
+The person who creates the workspace is its first **Owner**.
+
+## Joining a team
+
+You don't create your own account on an existing workspace — someone on the team invites you. An Owner or Admin opens the Studiograph Cloud console, goes to **Team**, and clicks **Invite**, entering your email address and a role. Accept the invitation from the email you receive, and you're in.
 
 ## Signing in
 
-Go to your workspace URL and sign in with your email and password. You stay signed in for seven days before you're asked to sign in again.
+Go to your workspace's address (it looks like `https://<your-workspace>.studiograph.ai`). Studiograph sends you to Studiograph Cloud to sign in, then brings you back. You can also sign in at [studiograph.com](https://studiograph.com) and click **Open studio**.
 
-<Note>
-After 5 failed sign-in attempts, your account is locked for 15 minutes before you can try again.
-</Note>
+You stay signed in for seven days. To sign out, open the account menu (your avatar in the top-right corner) and choose **Sign out**.
 
-## The first account on a new workspace
+## Roles
 
-A brand-new workspace with no users shows a setup page instead of the sign-in page: **Create your admin account to get started**. Enter a name, email, and password (at least 8 characters). The person who completes this step becomes the workspace Owner. The page never appears again once the first account exists.
+Studiograph Cloud has three roles:
 
-## Workspace roles
+| Role | In Studiograph Cloud | In the workspace |
+| --- | --- | --- |
+| **Owner** | Manages billing, the team, and the AI plan, and can make other people Owners | Everything a Member can do, plus the owner-only settings: **Workspace**, **Team**, **Entries**, and **AI & services** |
+| **Admin** | Invites teammates and manages the AI plan | The same as a Member |
+| **Member** | — | Full everyday use: create folders and entries, share folders you administer, and use the agent |
 
-Every account has one of two workspace roles:
+Owners change a teammate's role, or remove them, on the console's **Team** page. Changes reach the workspace automatically.
 
-| Role | What it can do |
-| --- | --- |
-| **Owner** | Everything a Member can, plus manage team members, workspace settings, and connectors, administer any folder, and transfer ownership. |
-| **Member** | Full everyday use — create folders and entries, share folders they administer, and use the agent. |
+Access to individual folders is separate from your role: within a folder you're either an **Admin** or an **Editor**. See [Sharing](/workspace/sharing).
 
-Access to individual folders is separate from your workspace role: within a folder you're either an Admin or an Editor. See [Sharing](/workspace/sharing).
+## Your profile
+
+Your name and email belong to your Studiograph Cloud account. In the workspace, **Settings → Preferences** shows them under **Member details**, with a **Manage profile in Studiograph Cloud** link for changing them. The **Account** item in the account menu opens the Studiograph Cloud console in a new tab.
 
 ## The onboarding interview
 
-The first time you sign in, the agent greets you in the chat panel with a short interview to get to know you and your work. Owners get a longer interview that also sets up the workspace; members get a short one.
+The first time you sign in, the agent greets you in the chat panel with a short interview to get to know you and your work. Owners get a longer interview that also sets up the workspace, starting with your organization's website; members get five questions about themselves and their role.
 
-You can answer at your own pace, use **Skip** to pass on a question, or close the interview entirely and resume it later from your **Profile** settings. See [Chatting with the agent](/agent/chat).
-
-<Note>
-The onboarding interview can be turned off by your deployment's configuration, so you may not see it.
-</Note>
+Answer at your own pace. To pass on a question, type "skip" and the agent moves on. To stop for now, click the **×** on the **Onboarding Interview** pill above the message box and choose **Pause**. Resume any time from **Settings → Preferences** with **Resume onboarding interview**.
 
 ## Your starter folder
 
-Every new member gets one private folder, named **{"{First name}"}'s Folder**. It's an ordinary folder — rename it, move things into it, share it, or delete it if you don't want it. It stays private until you share it, and if you delete it, it isn't recreated. See [Folders](/workspace/folders).
+Every new member gets one private folder, named **{"{First name}"}'s Folder** (or with your full name, if a teammate shares your first name). It's an ordinary folder — rename it, move things into it, share it, or delete it if you don't want it. It stays private until you share it, and if you delete it, it isn't recreated. See [Folders](/workspace/folders).
+
+## The Getting Started folder
+
+A new Studiograph Cloud workspace comes with a **Getting Started** folder, shared with everyone. It holds a **Start here** entry plus templates, examples, and [skills](/agent/skills) for presentations, publications, diagrams, infographics, landing pages, social media, working with data, and your brand. Use it as a starting point, change it to suit your team, or archive it once you no longer need it.
+
+<Accordion title="On a self-hosted workspace">
+A few teams run Studiograph on their own server instead of Studiograph Cloud. There, accounts work differently:
+
+- An Owner adds each member in **Settings → Team** with a name, email, starting password, and role. There is no invitation email.
+- You sign in at the workspace's address with your email and password. After five failed attempts within 15 minutes, sign-in is locked until that window ends.
+- A brand-new workspace shows a setup page — **Create your admin account to get started** — and whoever completes it becomes the Owner.
+- There are two roles, Owner and Member. Owners change a member's role in **Settings → Team**.
+- You change your own name, email, and password in **Settings → Preferences**.
+</Accordion>

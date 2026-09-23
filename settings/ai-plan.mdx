@@ -1,0 +1,55 @@
+---
+title: "Your AI plan"
+description: "Choose whether Studiograph runs the AI for your workspace or you bring your own provider keys — configured in the Studiograph Cloud console."
+---
+
+The agent, image generation, web search, and meaning-aware search all run on AI services. On Studiograph Cloud you choose how those services are paid for and configured, on the **AI** page of the Studiograph Cloud console. Owners and Admins can change it.
+
+To get there from your workspace, an Owner can open **Settings → AI & services**. You can also open the account menu's **Account** item and choose **AI**.
+
+## How it runs
+
+The **How it runs** section offers two plans.
+
+### Studiograph runs it
+
+The default. Model, search, and storage are included, and you pay per use from your credit wallet:
+
+| Service | What you get |
+| --- | --- |
+| AI model | Claude Sonnet 5 by default. Members can switch models inside the workspace. Usage is metered to your wallet. |
+| Image generation | Hosted image generation, metered per image. |
+| Web search | Live web search for the agent, metered per search. |
+| Semantic search | Search that understands meaning, not only keywords — included with your plan. |
+| Storage | Storage for your uploaded files — included with your plan. |
+
+Check your balance and buy credits on the console's **Billing** page.
+
+### Bring your own keys
+
+Use your own provider accounts instead. When you switch, choose a model provider and paste its API key, then click **Verify and switch**. The page then offers:
+
+- **Model providers** — one API key per provider: OpenAI, Anthropic, Google Gemini, xAI, or OpenRouter. Add, replace, or remove keys at any time.
+- **Default model** — the model the agent uses unless someone picks another.
+- **Image generation** — the model used to generate images, running on one of your provider keys.
+- **Service keys** — optional keys for other services:
+  - **Web search** — Tavily, Brave Search, or Google. Without a key, the agent uses your model provider's built-in web search.
+  - **Semantic search** — Voyage AI. Without a key, search matches on keywords only.
+  - **Transcription** — Deepgram, for meeting recordings. Without a key, meetings are transcribed on each person's Mac (macOS 26 or later).
+- **Storage** — comes with your workspace, with no key and no extra cost.
+
+<Note>
+Switching back from your own keys to **Studiograph runs it** removes your API keys from the workspace. Studiograph doesn't keep a copy, so switching back later means entering them again.
+</Note>
+
+## Choosing a model in the workspace
+
+Inside the workspace, the message box has a model picker. It lists the models your plan makes available, grouped by provider, with the default first. Your choice applies to the message you send and is remembered for next time. The same menu has a **Thinking** slider for how much the agent reasons before it answers. See [Chatting with the agent](/agent/chat#choosing-a-model).
+
+## When the AI isn't available
+
+If the agent can't reach its model, the chat panel says why — for example "AI is not connected for this workspace yet" or "This workspace has run out of AI credits or provider quota." These messages include an **Open Studiograph Cloud** button that takes you to the place to fix it: add credits on **Billing**, or check your keys on **AI**.
+
+## Your MCP endpoint
+
+The **AI** page also shows your workspace's **MCP endpoint**, the address other AI tools use to connect to your workspace. See [Connect AI tools](/ai-tools/mcp).
