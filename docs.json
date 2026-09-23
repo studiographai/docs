@@ -26,7 +26,8 @@
           "workspace/entries",
           "workspace/views",
           "workspace/connections",
-          "workspace/collaboration"
+          "workspace/collaboration",
+          "workspace/archive-and-recovery"
         ]
       },
       {

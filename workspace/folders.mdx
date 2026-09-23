@@ -1,6 +1,6 @@
 ---
 title: "Folders"
-description: "Organize your work into folders and subfolders, and manage them from the sidebar or Settings."
+description: "Organize your work into folders and subfolders — create, rename, move, archive, and delete them."
 ---
 
 Folders are how you organize work in Studiograph — one per project, client, or team function. Every entry lives in a folder, and folders nest as deep as you like. Each folder also controls who can see what's inside it; see [Sharing & permissions](/workspace/sharing).
@@ -11,41 +11,58 @@ Anyone in the workspace can create a folder. You automatically become its Admin,
 
 Where you start decides where the folder goes:
 
-- **New folder** (from the **+** button) creates a top-level folder.
-- **New subfolder** (from a folder's **…** menu) creates a folder inside that one — the dialog is titled **New subfolder in [folder]** so there's no doubt.
+- **New folder** (from **New** in the top bar) creates a top-level folder.
+- **New subfolder…** (from a folder's **…** menu, or by right-clicking the background of a folder's view) creates a folder inside that one — the dialog is titled **New subfolder in [folder]** so there's no doubt.
 
-You can also add top-level folders from **Settings → Manage folders** with the **Add Folder** button.
+## The folder menu
+
+Each folder's **…** menu — in the sidebar, or in the folder's own toolbar — holds:
+
+- **Share** — who has access, and a link to the folder. See [Sharing](/workspace/sharing).
+- **New entry**, **New subfolder…**, and **Import files…**
+- **Move to…** and **Settings…** — for folder admins on a top-level folder, and for anyone who can edit a subfolder.
+
+A workspace Owner who finds a folder with no admin at all sees **Adopt folder**, which makes them its admin.
+
+## Inside a folder
+
+A folder's view lists its entries, with subfolders first. When the folder holds files, the **Assets** button in its toolbar switches to them. The up arrow takes you to the parent folder. See [Views](/workspace/views) and [Library](/library/overview#a-folders-files).
+
+Drop files onto a folder — its view, or its row in the sidebar — to import them straight into it. See [Importing files](/library/importing-files).
 
 ## Renaming a folder
 
-Open the folder's **…** menu in the sidebar and choose **Rename**. The **Rename Folder** dialog updates the folder's name everywhere it appears.
+Choose **Settings…** from the folder's **…** menu. The **Folder settings** dialog has the folder's **Name**; edit it and press Enter or click away to save. Links to the folder keep working after a rename.
 
 ## Nesting subfolders
 
 Folders can contain subfolders at any depth — the sidebar shows them as an expandable tree. Sharing a folder covers everything nested inside it, so a subfolder is a good way to group work that should travel with its parent's access.
 
+A subfolder can also be shared on its own, with people who can't see its parent. For them, it shows up as its own row in the sidebar.
+
 ## Moving a folder
 
-Choose **Move to...** from the folder's **…** menu. The **Move Folder** dialog shows a tree of possible destinations.
+Choose **Move to…** from the folder's **…** menu, and pick a destination in the **Move folder** dialog — the first row, named after your workspace, makes the folder top-level. You can also drag a folder onto another one in the sidebar; Studiograph asks before it moves anything.
 
-Moving a folder adds its new parent's access on top of its own — no one loses access. If you move a private folder into a shared one, the people who can see the destination can now see the moved folder too.
+A folder keeps the people it's shared with directly, but access it inherited from its old parent can change. When a move changes who can see the folder, a confirmation tells you how many people will gain access and how many will lose it before you click **Move folder**.
 
 ## Archiving a folder
 
-Archiving is a reversible way to tidy up finished work. A folder Admin can choose **Archive** from the folder's **…** menu, or from the folder's page in **Settings → Manage folders**.
+Archiving is a reversible way to tidy up finished work, for top-level folders. A folder admin opens **Settings…** from the folder's **…** menu and chooses **Archive folder** under **Danger zone**. The confirmation says how many entries and subfolders it holds.
 
-An archived folder disappears from the sidebar and from search results, but nothing inside it is lost — its name stays reserved and your saved view setups are kept. To bring it back, go to **Settings → Manage folders**, find it in the archived list, and click **Restore**.
+An archived folder disappears from the sidebar, search, and the library, but nothing inside it is lost. To bring it back, go to **Settings → Archive**, open the folder's **…** menu, and choose **Restore**. See [Archive & recovery](/workspace/archive-and-recovery).
 
 ## Deleting a folder
 
-Deleting is permanent. The **Delete Folder** confirmation shows exactly what you're about to remove — the folder and everything inside it, with a count of entries and subfolders — and warns that it cannot be undone.
+**Delete folder** is under **Danger zone** in the folder's **Settings…** dialog. What happens depends on where the folder sits:
 
-To delete from Settings, open the folder in **Settings → Manage folders** and use the **Danger zone** → **Delete permanently** action, which asks you to type the folder's name to confirm.
+- **A subfolder** — its entries can be restored from **Settings → Archive** for 30 days, and its files move to the parent folder instead of being deleted.
+- **A top-level folder** — deleting is permanent. The confirmation lists how many entries, subfolders, and files will go, and asks you to type the folder's name. Its files are deleted too, and anything already deleted from the folder can no longer be restored.
 
 <Warning>
-Deleting a folder removes every entry and subfolder inside it. This cannot be undone — if you might need the work later, archive instead.
+Deleting a top-level folder can't be undone. If you might need the work later, archive it instead.
 </Warning>
 
 ## Your starter folder
 
-When you join a workspace, you get one folder of your own, named **\{First name\}'s Folder**. It's an ordinary folder: private until you share it, renameable, and deletable. If you delete it, it's gone for good — Studiograph won't recreate it.
+When you join a workspace, you get one folder of your own, named **\{First name\}'s Folder**. It's an ordinary folder: private until you share it with specific people, renameable, and deletable. It can't be shared with everyone in the workspace. If you delete it, it's gone for good — Studiograph won't recreate it.

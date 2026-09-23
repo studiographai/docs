@@ -1,21 +1,43 @@
 ---
 title: "Views"
-description: "See a folder or type as a list, gallery, kanban board, calendar, or graph — and save the setups you use often."
+description: "See your entries as a list, gallery, board, calendar, or graph — and shape them with filters and arrangement."
 ---
 
-Every folder (and every type) can be viewed five different ways. Pick one from the **View ▾** dropdown, then shape it with the **Filters**, **Sort**, and **Group** controls in the toolbar. Your current setup is remembered per device, so each folder reopens the way you left it.
+Every folder can be seen five different ways, and so can **Recent** and the full search results. Pick a view from the row of view icons in the toolbar, then shape it with **Filters** and **Arrange**.
+
+The view you pick follows you: switch to Board in one folder, and the next folder you open is a board too. Your choice is remembered on this device, and each browser tab keeps its own — handy for a calendar in one tab and a list in another. Filters stay on as you move between folders in the same tab; the dot on **Filters** and the "hidden" count at the bottom of the screen tell you when some entries are filtered out.
 
 ## The five views
 
-- **List** — a table of [entries](/workspace/entries), with subfolders listed first. Sort and group by any field.
-- **Gallery** — an image grid, best for visual work. Each entry shows its image; sorting is available.
-- **Kanban** — entries as cards in columns, grouped by a field like status, priority, stage, category, or assignee. Entries without a value gather in a leading **(empty)** column. Includes entries from subfolders.
-- **Calendar** — plots each entry on its main date (see the table below), in week or month layout. An entry with a start date spans the days from start to finish. Drag an entry to a different day to reschedule it.
-- **Graph** — entries as connected nodes, drawn from the links between them. See [Links, search & the graph](/workspace/connections).
+- **List** — a table of [entries](/workspace/entries) in this folder, with subfolders listed first. The columns come from the entry type. Sort by clicking a column header, or group rows by a field.
+- **Gallery** — an image grid, best for visual work. It shows the entries that have an image; the others are counted as hidden. If nothing has an image, **View as list** switches back.
+- **Board** — entries as cards in lanes, grouped by a field like status, stage, priority, category, or assignee. Drag a card to another lane to change that field; cards without a value gather in a leading **(Empty)** lane. You can also right-click a card and choose **Change lane**.
+- **Calendar** — plots each entry on its main date (see below), in month or week layout. An entry with a start date spans the days from start to finish. Drag an entry to a different day to reschedule it, or click an empty spot to add a new event there. In week view, drag across the hours to add a timed event, or drag an event's bottom edge to change how long it lasts.
+- **Graph** — entries as connected nodes, drawn from the links between them. See [Links, search & the graph](/workspace/connections#the-graph).
+
+Board, Calendar, and Graph include entries from subfolders; List and Gallery show the folder's own entries, with its subfolders.
+
+## Filters and arrangement
+
+**Filters** narrows what's shown: by **Entry type**, by the type's own fields (status, client, and so on), by **Tags**, by when entries were **Created** or by their dates, and by **Created by**. People fields include a **Me** option. **Clear all** removes every filter.
+
+On a board, the **Entry type** filter also decides which type's lanes you see — filter to one type for its full set of lanes.
+
+**Arrange** sets the order:
+
+- **Sort by** a field, **Ascending** or **Descending**.
+- **Group by** a field, in List.
+- **Lanes** — the field a Board groups by.
+
+On Calendar, the same spot switches between month and week, and **‹ Today ›** moves between periods.
+
+## Working with several entries
+
+Tick the checkboxes on rows, tiles, or cards to select several entries. The selection bar offers **Edit fields…** (in List and Gallery), **Change lane** (in Board), **Move to…**, **Copy to…**, **Download**, and **Delete**.
 
 ## Which date the calendar uses
 
-Each type has one main date, and Calendar always plots it — there's nothing to configure.
+Each type has one main date, and Calendar plots it:
 
 | Type | Date plotted |
 | --- | --- |
@@ -25,20 +47,4 @@ Each type has one main date, and Calendar always plots it — there's nothing to
 | Project | End date |
 | Event | End date (spans from the start date) |
 
-## Saved views
-
-When you've set up a view you'll want again — say, Kanban of open tasks grouped by assignee — save it.
-
-<Steps>
-  <Step title="Save it">
-    Open **View ▾** and choose **Save this view…** at the bottom of the menu, then name it.
-  </Step>
-  <Step title="Find it in your sidebar">
-    The saved view is pinned in your sidebar, above the folder tree. It's yours alone, but it follows you across all your devices.
-  </Step>
-  <Step title="Keep it current">
-    If you change filters or layout while using a saved view, **Update this view…** appears in the **View ▾** menu so you can save the new setup over the old one.
-  </Step>
-</Steps>
-
-From a pin's menu you can **Rename**, **Duplicate**, or **Delete** the saved view, and you can drag pins to reorder them. Saved views survive renaming or moving the folder they point at.
+An Owner can put another type on the calendar — or take one off — with **Show on calendar** in [Settings → Entries](/settings/entry-types#show-a-type-on-the-calendar).
