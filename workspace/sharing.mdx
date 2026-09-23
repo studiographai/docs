@@ -3,33 +3,40 @@ title: "Sharing & permissions"
 description: "Control who can see and edit each folder, and share individual entries with a public link."
 ---
 
-Access in Studiograph is set per folder. Every folder starts private to the person who created it — a solo folder — and becomes shared the moment you add someone else. Solo folders are invisible to everyone but you, including the workspace Owner.
+Access in Studiograph is set per folder. Every folder starts private to the person who created it and becomes shared the moment you add someone else. In the app, a private folder is invisible to everyone but you, including the workspace Owner.
 
 Two rules make access easy to reason about:
 
 - **A grant covers the whole folder** — sharing a folder shares everything in it, including all its subfolders.
-- **Access only ever adds up** — moving a folder or sharing a parent can give people access, but it never silently takes access away.
+- **Sharing only adds access** — sharing a folder or its parent never takes access away from anyone. Moving a folder can, and Studiograph tells you who gains and who loses access before it happens. See [Moving a folder](/workspace/folders#moving-a-folder).
 
 ## The Share dialog
 
-Open a folder's **…** menu in the sidebar and choose **Share**, or open the folder under **Settings → Manage folders**. The **Share \{folder\}** panel has three parts:
+Choose **Share** from a folder's **…** menu — in the sidebar, in the folder's toolbar, or by right-clicking the folder in a list. The **Share \{folder\}** dialog has:
 
-- **General access** — **Restricted** (only the people listed below) or **Everyone in \{workspace\}**.
-- **People** — everyone with direct access, each with a role dropdown (**Admin** or **Editor**) and a remove button. Use **Add a member** to bring someone in; new members join as Editor.
+- **Link** — the folder's address, to paste anywhere. It opens only for people with access.
+- **General access** — **Restricted** (only the people listed) or **Everyone in \{workspace\}**.
+- **People** — everyone with direct access, each with a role (**Admin** or **Editor**) and a remove button. Use **Add a member** to bring someone in; new members join as Editor.
 - **Inherited access** — a read-only list of people who can already see this folder because a parent folder is shared with them.
 
-Only a folder Admin can manage members. Removing someone asks you to confirm, and the last Admin can't be removed or demoted — every folder always has at least one.
+Everyone who can open a folder sees its link. Only its admins see and change the rest.
+
+**Add a member** lists people already in your workspace. To share with someone new, invite them to the workspace first from the Studiograph Cloud console (**Team → Invite**) — see [Your account](/getting-started/your-account#joining-a-team) — then add them here.
+
+Removing someone asks you to confirm, and the last Admin can't be removed or demoted — every folder always has at least one.
 
 ## Admin vs Editor
 
 | Role | What they can do |
 | --- | --- |
-| **Editor** | Open, read, and edit entries in the folder |
-| **Admin** | Everything an Editor can, plus rename, move, archive, or delete the folder and manage who has access |
+| **Editor** | Open, create, edit, move, copy, and delete entries; import files; create, rename, move, and delete subfolders |
+| **Admin** | Everything an Editor can, plus rename, move, archive, or delete the top-level folder, and manage who has access |
+
+An admin of a folder is also an admin of every subfolder inside it.
 
 ## Sharing with everyone
 
-Setting **General access** to **Everyone in \{workspace\}** opens the folder to your whole team. A confirmation spells it out — "Everyone in \{workspace\} — N members — will be able to view and edit this folder" — before you click **Share with everyone**.
+Setting **General access** to **Everyone in \{workspace\}** opens the folder to your whole team, to view and edit. A confirmation spells it out — "Everyone in \{workspace\} — N members — will be able to view and edit this folder" — before you click **Share with everyone**. Personal starter folders can't be shared with everyone.
 
 <Warning>
 "Everyone in \{workspace\}" means everyone on your team — it does not publish the folder to the internet. Turning it off again shows a **Turn off sharing** warning: people who only had access through the Everyone setting lose it.
@@ -39,11 +46,13 @@ When a parent folder is shared with everyone, its subfolders show "Shared with e
 
 ## What the workspace Owner can and can't do
 
-The Owner can administer any folder in the workspace from **Settings → Manage folders** — rename, archive, delete, and manage members — even for folders they don't belong to.
+Being a workspace Owner doesn't make you an admin of every folder. In the app, an Owner sees only the folders they belong to or that are shared with everyone, like anyone else. What Owners do get:
 
-<Info>
-Administering a folder is not the same as reading it. An Owner who isn't a member of a folder sees only its member list and entry counts — they cannot open or read the entries inside, and other people's solo folders don't appear in their sidebar at all.
-</Info>
+- **Adopt folder** — on a folder that no longer has any admin, an Owner can take it over.
+- **Settings → Archive** — Owners see every archived folder, and can restore or permanently delete it.
+- **Member management** — Owners can manage who has access to top-level folders they can see.
+
+On Studiograph Cloud, only a Cloud **Owner** is a workspace Owner; a Cloud **Admin** has the same folder access as a Member.
 
 ## Public share links
 
@@ -51,17 +60,19 @@ You can share a single entry with someone outside the workspace — no account o
 
 <Steps>
   <Step title="Create the link">
-    Open the entry's **Share** dialog and click **Create public link**. The link is copied for you automatically.
+    Open the entry's **…** menu, choose **Share**, and click **Create public link**. The link is copied for you automatically.
   </Step>
   <Step title="Send it">
-    Anyone with the link gets a read-only, printable view of the entry — its title, its body, and the images embedded in it.
+    Anyone with the link gets a read-only, printable page with the entry's title, its body, and when it was last updated. Fields, comments, and the author aren't shown, and search engines don't index the page.
   </Step>
   <Step title="Revoke it when you're done">
-    Click **Stop sharing**. The confirmation — "Stop sharing? Anyone with the link loses access." — takes effect immediately.
+    Choose **Stop sharing** in the same dialog. The confirmation — "Stop sharing? Anyone with the link loses access." — takes effect immediately, and the link then shows **This link is no longer available**.
   </Step>
 </Steps>
 
-Each entry can have one active public link at a time, and creating one requires edit access to the entry's folder. Links use a long, unguessable address; if you stop sharing and later share again, the entry gets a brand-new URL, so the old one stays dead.
+The public page updates automatically every time the entry is saved. A [dataset](/artifacts/datasets) appears as a read-only sheet with the team's filters and sort, and an [artifact](/artifacts/overview#sharing) opens the way **Show** does, with its [live data](/artifacts/live-data#public-share-links). Files embedded in the entry are included; files from other folders only if the person who last saved the entry can open them.
+
+Each entry can have one active public link at a time, and creating one requires edit access to the entry's folder. A dot beside **Share** in the menu means the entry has a link. Links don't expire and have no password; they use a long, unguessable address. If you stop sharing and later share again, the entry gets a brand-new URL, so the old one stays dead.
 
 <Warning>
 A public link works for anyone on the internet who has it. Share it only where you'd be comfortable with the entry being seen, and use **Stop sharing** the moment it should go dark.

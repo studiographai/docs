@@ -1,0 +1,162 @@
+---
+title: "Connect Claude, ChatGPT, Codex & other AI tools"
+description: "Use your Studiograph workspace from Claude, ChatGPT, Claude Code, Codex, Cursor, and any other MCP client."
+---
+
+Every Studiograph workspace has an MCP (Model Context Protocol) server at its `/mcp` endpoint. Any MCP-compatible tool — Claude, Claude Code, ChatGPT, Codex, Cursor, VS Code — can search, read, and edit your workspace through it.
+
+There are two ways to connect. Which one you use depends on whether the tool can open a browser:
+
+| Method | Best for | How it works |
+| --- | --- | --- |
+| **Sign in through the browser** | Claude (web, desktop, and Cowork), ChatGPT, Claude Code, Cursor, VS Code | Paste the endpoint URL. The tool opens a browser page where you approve access. No token to manage. |
+| **Personal access token** | Headless sessions: CI, scripts, `claude -p`, Codex | Create an `sg_` token once and pass it as a Bearer header or an environment variable. |
+
+Either way, the connection acts as **you**. The connected tool sees exactly the folders you can see in the app, and nothing more.
+
+## Find your endpoint URL
+
+Open the account menu (your avatar in the top-right corner), choose **Studio**, then **MCP access**. The **Endpoint URL** field shows your workspace's address with a copy button. On Studiograph Cloud it looks like `https://<your-workspace>.studiograph.ai/mcp`.
+
+Every member can open this page — you don't need to be an Owner.
+
+## Create a token (for headless clients)
+
+<Steps>
+  <Step title="Open Studio → MCP access → Advanced">
+    The **Advanced** section below the endpoint URL holds your personal access tokens.
+  </Step>
+  <Step title="Create a token">
+    Click **New token**, give it a name (for example "claude-code"), and click **Create token**.
+  </Step>
+  <Step title="Copy the token and the client config">
+    The token starts with `sg_`. It's shown **once**, together with a ready-to-paste client config — copy both before you leave the page.
+  </Step>
+</Steps>
+
+## Claude (claude.ai, Claude Desktop, and Cowork)
+
+Claude on the web, the desktop app, the mobile apps, and Cowork all use the same connector, with browser sign-in — no token needed.
+
+1. Copy your endpoint URL from **Studio → MCP access**.
+2. In Claude, open **Customize → Connectors**, click **+**, choose **Add custom connector**, and paste the URL.
+3. Approve access in the browser window that opens.
+
+On Claude Team and Enterprise plans, an organization owner adds the connector once under **Organization settings → Connectors**, and everyone else clicks **Connect**. Claude connects from Anthropic's cloud rather than from your computer, so the endpoint must be reachable from the internet — Studiograph Cloud workspaces are.
+
+## ChatGPT
+
+The ChatGPT desktop app connects to MCP servers directly:
+
+1. Copy your endpoint URL from **Studio → MCP access**.
+2. In the ChatGPT desktop app, open **Settings → MCP servers → Add server**.
+3. Give it a name, choose **Streamable HTTP**, paste the URL, and save.
+
+On ChatGPT on the web, custom MCP servers are added as connectors through developer mode, and availability depends on your ChatGPT plan.
+
+## Claude Code
+
+For an interactive session, add the server over HTTP and sign in through the browser:
+
+```bash
+claude mcp add --transport http studiograph https://<your-workspace>.studiograph.ai/mcp
+```
+
+Then run `/mcp` inside Claude Code and pick **studiograph** to finish the browser sign-in.
+
+For a **headless** session — CI, `claude -p`, or any machine where the browser flow isn't an option — pass a personal access token instead:
+
+```bash
+claude mcp add --transport http studiograph https://<your-workspace>.studiograph.ai/mcp \
+  --header "Authorization: Bearer sg_your_token_here"
+```
+
+To share the server with everyone working in a project, commit a `.mcp.json` at the project root. Keep the token out of the file by using an environment variable:
+
+```json
+{
+  "mcpServers": {
+    "studiograph": {
+      "type": "http",
+      "url": "https://<your-workspace>.studiograph.ai/mcp",
+      "headers": {
+        "Authorization": "Bearer ${STUDIOGRAPH_MCP_TOKEN}"
+      }
+    }
+  }
+}
+```
+
+A one-off headless run can load the config directly:
+
+```bash
+claude -p "Summarize this week's meeting notes from Studiograph" \
+  --mcp-config .mcp.json
+```
+
+## Codex
+
+Codex authenticates with a personal access token. Add the server to `~/.codex/config.toml`:
+
+```toml
+[mcp_servers.studiograph]
+url = "https://<your-workspace>.studiograph.ai/mcp"
+bearer_token_env_var = "STUDIOGRAPH_MCP_TOKEN"
+```
+
+Then export the token in the shell that launches Codex:
+
+```bash
+export STUDIOGRAPH_MCP_TOKEN=sg_your_token_here
+```
+
+## Cursor, VS Code, and other MCP clients
+
+Cursor, VS Code, and other clients that support browser sign-in need only the endpoint URL: add it as a remote (HTTP) MCP server and approve access when the browser opens.
+
+A client that can't sign in through the browser takes a token instead, with this config shape:
+
+```json
+{
+  "mcpServers": {
+    "studiograph": {
+      "type": "streamable-http",
+      "url": "https://<your-workspace>.studiograph.ai/mcp",
+      "headers": {
+        "Authorization": "Bearer sg_your_token_here"
+      }
+    }
+  }
+}
+```
+
+This is the same snippet Studiograph shows you when you create a token, with your workspace URL already filled in.
+
+## What connected tools can do
+
+More than 50 tools are available, covering most of what you can do in the app:
+
+| Area | Tools cover |
+| --- | --- |
+| Search & read | Search across folders, list and read entries, find related entries, look up an entry type's fields, validate links |
+| Entries | Create, update, patch, copy, move, convert to another type, and delete entries |
+| Folders | List, create, archive, and unarchive folders; create and delete subfolders |
+| Datasets | Query data; add, insert, and delete rows and columns; set cells, filters, sorts, and formats |
+| Artifacts | Create artifacts, read a whole artifact or one part of it, edit frame by frame, inspect and export them, and act on the frame you have selected in the canvas |
+| Files & images | List library assets, read a file's contents, attach files to entries, upload files, save images from web links, and generate images |
+| History & restore | Browse file and folder history, list recent deletions, read past versions, restore |
+| Comments | List comment threads on an entry, reply, resolve, and re-anchor comments after the text they point at is rewritten |
+| Skills | List and load your saved skills |
+
+<Note>
+Deleting a whole top-level folder is something only a person can do, in the web app. Connected tools can archive a folder, which you can undo, and delete subfolders. A subfolder that still has content is only deleted when the tool explicitly asks for it, and deleted entries stay recoverable from history.
+</Note>
+
+## Revoking access
+
+Both kinds of connection are listed under **Studio → MCP access**:
+
+- **Browser sign-ins** appear under **Connected apps**. Click **Disconnect** next to one to end its access.
+- **Tokens** are listed under **Advanced**. Open a token and click **Revoke token**.
+
+Either way, any client using that connection stops working immediately. A token's value is never shown again after you create it — if you lose it, revoke it and create a new one.

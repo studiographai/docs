@@ -7,20 +7,30 @@ Studiograph is a connected workspace: entries link to each other, and those link
 
 ## Linking entries
 
-Type `[[` anywhere in an entry's body and an autocomplete opens, searching entries across your folders by name. Pick one and the link is in place.
+Type `[[` anywhere in an entry's body and an autocomplete opens, searching entries across your folders by name — and folders too. Pick one and the link is in place. You can also select some text and click **Link** on the formatting palette.
 
-Links render as colored text: accent-colored when they point to an existing entry, dimmed when the target doesn't exist (yet).
+Links render as colored text: accent-colored when they point to an existing entry, dimmed when the target doesn't exist (yet). A link to a folder keeps working when the folder is renamed.
 
-Many fields are links too — a task's assignee points at a person, a person's organization points at a company, a deal's client points at an organization. Setting these fields connects the entries the same way a link in the body does.
+Many fields are links too — a person's organization, a deal's client and contact, a deliverable's project. Setting these fields connects the entries the same way a link in the body does. A task's assignee is different: it points to a workspace member, not to a person entry.
 
 ## Backlinks
 
-Links work in both directions. When other entries link to the one you're reading, they appear in the **Connections** panel in the entry's info rail — so from a person you can see every task assigned to them, and from a project every note that mentions it.
+Links work in both directions. When other entries link to the one you're reading, they're listed in the **Connections** row of its **Fields** panel — open it with the type button at the left of the entry's toolbar. From a project, for example, you can see every note that mentions it.
 
 ## The graph
 
-The Graph view in the **View ▾** menu draws these links as a picture: entries as nodes, links as edges, filterable by type and folder. It shines when the relationships are the point — for example, mapping services that depend on and enable one another. See [Views](/workspace/views).
+The **Graph** view draws these links as a picture: entries as nodes, colored by type, and links as edges. It shines when the relationships are the point — for example, mapping services that depend on and enable one another.
+
+- Open a folder and choose **Graph** from the view icons to see that folder and its subfolders; from **Recent**, the graph covers everything you can access.
+- Narrow it by type with **Filters → Entry type**. The legend lists the types with their counts.
+- Scroll or pinch to zoom, use **Fit to view** to see everything, and click a node to open its entry.
+
+See [Views](/workspace/views).
 
 ## Search
 
-Press **⌘K** (or **Ctrl+K**), or click the search field in the top toolbar. Search is full-text — it looks inside entry bodies, not just titles — and covers every folder you can access. Results respect permissions: you'll never see entries from folders you're not part of.
+Press **⌘K** (or **Ctrl+K**), or click the search field in the top bar. Search looks inside entry names, fields, and bodies, and covers every folder you can access. Chips at the top narrow results to one type.
+
+Press Enter, or choose **See all results**, for the full results page. There, search also matches by meaning when your [AI plan](/settings/ai-plan) includes semantic search — a search for "pricing" can find an entry about rates — and results are sorted by relevance. You can switch the results to any of the five [views](/workspace/views).
+
+Results respect permissions: you'll never see entries from folders you're not part of.

@@ -7,62 +7,88 @@ Everything in Studiograph is an entry: a person, a project, a task, a note, a me
 
 ## Built-in types
 
-The **New entry** picker leads with five primary types, with the rest under **More**.
+The **New entry** picker groups types into **Core**, **Extended**, and — if your workspace has added any — **Custom**.
+
+**Core** types are always available:
 
 | Type | What it's for | Key fields |
 | --- | --- | --- |
-| Note | Freeform writing — also created automatically to hold imported media | Name only |
-| Event | A meeting, call, workshop, review, presentation, or conference | Attendees, location, start and end date |
-| Task | A piece of work to track | Status, priority, assignee, due date |
+| Note | Freeform writing | Name only |
+| Event | A meeting, call, workshop, review, presentation, or conference | Type, attendees, location, start and end date |
+| Task | A piece of work to track | Status, priority, assignee, phase, due date, repeat |
 | Dataset | A spreadsheet you edit in place — see [Datasets](/artifacts/datasets) | Columns you define |
-| Artifact | A designed canvas — see [Artifacts](/artifacts/overview) | — |
+| Presentation, Artboard, App, Publication | Designed work on a canvas — see [Artifacts](/artifacts/overview) | — |
+| Skill | Instructions the agent follows — see [Skills](/agent/skills) | Description, applies to |
 
-Under **More**:
+**Extended** types can be turned off by an Owner:
 
 | Type | What it's for | Key fields |
 | --- | --- | --- |
 | Person | Someone you work with | Role, category, status, email, location, organization |
 | Organization | A company or group | Category, status, industry, website |
 | Position | A role you're hiring for | Department, category, status |
-| Deal | A sales opportunity | Stage, value, close date, client, contact |
-| Project | A body of work | Client, services, status, start and end date |
-| Deliverable | Something a project ships | Project, status, due date |
+| Deal | A sales opportunity | Client, contact, stage, value, close date |
+| Project | A body of work | Category, project type, client, services, status, start and end date |
+| Deliverable | Something a project ships | Project, status, phase, due date |
 | Document | A proposal, contract, brief, memo, or report | Category, status |
-| Publication | Something published externally | Platform, status, URL |
 | Case study | A story about past work | Client, services, date range, status |
 | Service | An offering, with dependencies on other services | Depends on, enables, deliverables, status |
-| Skill | Instructions the agent follows — the body is the prompt | Description, applies to |
 | Reference | A pointer to outside material | Source, link |
 
-Workspace owners can customize this catalog — add types, adjust fields, or disable types — in [Settings → Entry types](/settings/entry-types).
+Workspace Owners can customize this catalog — add types, restyle them, or turn types off — in [Settings → Entries](/settings/entry-types).
 
 ## Creating an entry
 
-Open the picker from the **+** button, the **+** next to the **ENTRIES** heading in the sidebar, or **New Entry** in a folder's **…** menu (which pre-selects that folder).
+The quickest way is **New** in the top bar: **New note** creates a note right away, and **New event** and **New task** open the **New entry** dialog ready for that type. **More types…** (or the **N** key) opens the full picker. You can also choose **New entry** from a folder's **…** menu, or right-click the background of a folder's view — both start in that folder.
 
-For most types, clicking the type card creates an "Untitled" entry immediately and drops you into the editor with the name ready to type. Datasets and artifacts show a short create form first. The **Create in [Folder]** selector at the bottom of the dialog controls where the new entry lands.
+In the **New entry** dialog:
 
-## The editor
+1. Give it a name at the top, or leave it blank for "Untitled". Next to the name, **in** shows the folder it will be created in — click it to pick another.
+2. Click a type to select it.
+3. Click **Create**. For a task, event, or skill, **Next** first shows a few optional fields worth setting now — a task's status, assignee, due date, and repeat; an event's kind, date, time, and location; a skill's description.
 
-- The entry's **name** sits at the top; type it like a headline.
-- The **properties panel** shows the entry's fields — click a field to edit it.
-- The **body** is text with live formatting: headings, lists, and links style themselves as you write, and checkboxes are clickable.
-- While you're writing, a **formatting palette** offers bold, italic, headings, links, code, lists, and image embeds.
+When you don't pick a folder, a new entry goes to the folder you're in, or else to your **Default folder** from **Settings → Preferences**.
 
-Type `[[` anywhere in the body to link another entry — see [Links, search & the graph](/workspace/connections).
+## The entry page
+
+The toolbar at the top of an entry holds, from left to right: a back button, the **type button** (colored, showing the entry's type), the folder it's in, and the entry's **name** — click it to rename. Arrows step to the previous and next entry in the folder. Further right are **Show** (for documents and artifacts), **Comments**, and the **…** menu.
+
+Renaming an entry asks you to confirm, because it updates every link that points to it.
+
+### Fields
+
+Click the type button to open the **Fields** panel on the right. It shows the entry's type, its fields, a **Connections** row listing the entries that link here, any fields you've added, and — for an imported entry — where it came from. Click a field to edit it.
+
+To add a field to just this entry, use **Add field**: a text, date, connection, link, tags, or list field. A **Select** or **Multi-select** field is added to the whole entry type.
+
+### The body
+
+The body is text with live formatting: headings, lists, tables, and links style themselves as you write, pasted web addresses become links, and checkboxes are clickable. A link to a task on a line of its own gets a round checkbox that completes the task.
+
+While you're writing, a **formatting palette** offers **Bold**, **Italic**, **Heading**, **Highlight color**, **Link**, **Code**, bulleted and numbered lists, a horizontal rule, and **Insert asset** for images and other files from your [library](/library/media-in-your-work). You can also drop or paste an image straight into the body.
+
+Type `[[` anywhere in the body to link another entry or a folder — see [Links, search & the graph](/workspace/connections).
+
+## Tasks
+
+A task's **assignee** is a member of your workspace — not a person entry. Tasks assigned to you appear on [Home](/getting-started/tour#home). A task can **Repeat** on a schedule, and its page shows a bar with who it's assigned to, its status, and its dates, each of which you can click to change.
 
 ## Changing an entry's type
 
-Change the type from the entry's properties. As the dialog puts it: changing the entry type may remove fields specific to the old type — the body text stays the same.
+In the **Fields** panel, click **Entry type** and pick another. You can switch between types that store their content the same way — among text-based types, or among the four artifact types — but a dataset stays a dataset. As the dialog puts it: changing the entry type may remove fields specific to the old type — the body text stays the same.
 
 ## Moving and copying
 
-- **Move to...** shows a folder tree to pick the destination. If the entry links to things that wouldn't be visible from there, you get a heads-up — "N references won't be visible from [destination]" with the affected list — but it never blocks the move.
-- **Copy to...** duplicates the entry into any folder (including the same one), naming the copy "[Name] (copy)".
+Both are in the entry's **…** menu, or in the right-click menu in a list.
+
+- **Move to…** shows a folder tree to pick the destination. If the entry is an artifact that reads datasets people in the destination couldn't see, you get a heads-up — "N references won't be visible from [destination]" — but it never blocks the move. Files embedded in the entry keep showing for readers in the new folder.
+- **Copy to…** duplicates the entry into any folder (including the same one), naming the copy "[Name] (copy)".
 
 ## Deleting an entry
 
-Deleting is permanent — "This cannot be undone." The confirmation dialog is explicit about side effects:
+Choose **Delete** from the entry's **…** menu. The confirmation is explicit about side effects:
 
-- It lists any attached files that will be deleted along with the entry.
-- If the entry uses assets from the [library](/library/overview), those stay in the library by default; the dialog lets you tick individual assets to delete too. Assets used by other entries, or ones you can't manage, stay put.
+- It lists any attached files that will be deleted along with the entry — for example, the original of an imported document.
+- Files from the [library](/library/overview) that only this entry uses stay by default; tick **Also delete** next to any you want gone. Files used elsewhere stay put.
+
+A deleted entry can be restored from **Settings → Archive** for 30 days — and up to 90 with **Show older**. Files deleted with it can't be recovered. See [Archive & recovery](/workspace/archive-and-recovery).

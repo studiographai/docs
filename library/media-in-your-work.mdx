@@ -1,37 +1,46 @@
 ---
 title: "Using media in your work"
-description: "Put images, video, audio, and fonts to work in entries and artifacts."
+description: "Put images, video, audio, and fonts to work in entries and artifacts — and keep your brand exact."
 ---
 
-Everything in your [library](/library/overview) is there to be used — embedded in entries, rendered in artifacts, or linked for teammates. Assets are referenced by permanent links, so a file you embed keeps displaying even if it's later renamed or moved to another folder.
+Everything in your [library](/library/overview) is there to be used — embedded in entries, rendered in artifacts, or linked for teammates. Files are referenced by permanent links, so a file you embed keeps displaying even if it's later renamed.
 
 ## Images in entries
 
 Two ways to place an image in an entry's body:
 
-- In the editor, use the **image** button on the formatting palette and pick from your library.
-- In the library, open the image and **Copy embed**, then paste into the entry.
+- In the editor, click **Insert asset** on the formatting palette. Pick files from the **Assets** tab, or add a new one from **Upload** — it's stored in the entry's folder — then click **Insert**.
+- In the library, open the image and choose **Copy embed**, then paste into the entry.
 
-Images display inline as part of the entry. When you import an image straight into a folder, Studiograph also creates a note entry that carries it, so it shows up alongside your other work — deleting that note doesn't delete the image.
+Images display inline as part of the entry. Importing an image into a folder only stores the file; nothing else is created. When the agent imports, saves, or generates an image for you, it also creates a note that shows the image, so you have an entry to open — deleting that note doesn't delete the image.
 
 ## Video, audio, and other files
 
-Video, audio, and attached documents appear in entries as links rather than inline players. Readers click through to view or download. Use **Copy embed** from the library, or **Copy link** for a plain link you can share in Slack or email (workspace members only).
+Video, audio, and attached documents appear in entries as links rather than inline players. Readers click through to view or download. Use **Copy embed** from the library, or **Copy link** for a plain link you can share in Slack or email — the link opens only for people who can open the file (see [Who can see a file](/library/importing-files#who-can-see-a-file)).
 
 ## Media in artifacts
 
-The agent can use your library when building [artifacts](/artifacts/overview) — "use the hero shot from the brand folder" works if you can access that folder. Assets render inside artifacts, in exports, and on public share links of the artifact.
+The agent can use your library when building [artifacts](/artifacts/overview) — "use the hero shot from the brand folder" works if you can access that folder. Files render inside artifacts, in downloads, and on public share links of the artifact. A viewer who can't open a file — for example, one added by someone who couldn't open it either — sees **A file couldn't load** in its place.
 
 ## Fonts
 
 Upload font files (`woff2`, `woff`, `ttf`, `otf`) to your library and they become available to artifacts:
 
 - Ask the agent to use the font by family name when it builds or edits an artifact.
-- Workspace fonts referenced in an artifact render automatically for viewers and are bundled into exports, so a deck set in your brand typeface looks right everywhere.
+- Fonts in the artifact's own folder, or in a folder shared with everyone, render automatically for viewers and are bundled into downloads, so a deck set in your brand typeface looks right everywhere. For a font kept anywhere else, the agent references the file directly.
 - In the library, a font shows a type specimen and offers **Copy @font-face** if you want the exact reference.
 
 Google Fonts also work in artifacts by direct link — no upload needed (see [Artifacts → Fonts](/artifacts/overview#fonts)). The library is the home for everything else: licensed brand fonts, custom faces, and any font you want guaranteed under your own control.
 
+## Your brand
+
+The agent treats identity as exact:
+
+- **Logos, signatures, and seals are never redrawn.** When a piece of work needs your logo, the agent looks for the original file in your library and embeds it as-is. If it can't find one, it stops and asks you for it — offering to save one you attached in chat, or one from your website — and can hold a clearly marked placeholder in the meantime.
+- **Brand fonts come from your library first.** When you ask for work carrying a brand's name, the agent checks your library for that brand's fonts before anything else. If they aren't there, it uses a close substitute and tells you which one, so you can upload the real font.
+
+Keep your logos and brand fonts in a folder your team's artifacts can reach — the folder the work lives in, or one shared with everyone. On Studiograph Cloud, the **Getting Started** folder includes a **Your brand** section to start from.
+
 ## Attach to chat vs. import
 
-Handing a file to the [agent in chat](/agent/context-and-attachments) is temporary — it's context for that conversation, not a file in your workspace. To keep a file, [import it](/library/importing-files) into a folder.
+Handing a file to the [agent in chat](/agent/context-and-attachments) is temporary — it's context for that conversation, not a file in your workspace. To keep a file, ask the agent to save it to a folder, or [import it](/library/importing-files) yourself.

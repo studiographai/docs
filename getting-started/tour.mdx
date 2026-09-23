@@ -1,41 +1,72 @@
 ---
 title: "A tour of the app"
-description: "A quick orientation to the sidebar, home screen, search, the agent, the library, and Settings."
+description: "A quick orientation to the top bar, the sidebar, home, search, the agent, and where settings live."
 ---
+
+## The top bar
+
+From left to right:
+
+- **New** — creates entries and folders. See [Creating things](#creating-things) below.
+- **Home**, **Recent**, and **Library** — the three places that aren't a folder. **Recent** lists entries from every folder you can access; the **Library** does the same for files. See [Library](/library/overview).
+- **Search** — see [Search](#search) below.
+- **Notifications** — the bell tells you when someone mentions you in a comment.
+- **The account menu** — your avatar in the top-right corner. See [Settings and the Studio](#settings-and-the-studio).
 
 ## The sidebar
 
-The left sidebar is your map of the workspace:
+The left sidebar lists every folder you can access. Folders nest, and a glyph beside each one shows whether it's private, shared with specific people, or open to everyone. See [Folders](/workspace/folders).
 
-- **Folder tree** — every folder you can access, under the **ENTRIES** heading. Folders nest, and glyphs show whether a folder is private, shared, or open to everyone. See [Folders](/workspace/folders).
-- **Saved views** — pinned above the folder tree, so the views you rely on are one click away. See [Views](/workspace/views).
-- **+ next to ENTRIES** — creates a new entry.
-- **Each folder's … menu** — **New entry…**, **New subfolder**, **Import files**, **Share**, **Rename**, **Move to...**, and **Archive**.
+Each folder's **…** menu holds **Share**, **New entry**, **New subfolder…**, and **Import files…**. Folder admins also see **Move to…** and **Settings…**, where a folder is renamed, archived, or deleted.
 
-## The home screen
+To choose how folders are ordered, open **Settings → Preferences → Sidebar folders**: **However I arrange them** lets you drag folders into place, and **Alphabetically** keeps them sorted.
 
-When you open the app you land on home: a greeting, **Today's Meetings** (today's events with their attendees), and your open tasks, sorted by priority and due date with overdue ones highlighted. Check a task's checkbox to complete it without leaving home.
+## Home
+
+Home opens on today's date with two lists:
+
+- **Meetings** — meetings for **Today**, the **Next two days**, or **This week**. Click one to open its entry.
+- **Tasks** — open tasks assigned to you for **Today**, **This week**, or everything **Upcoming**. Overdue tasks are grouped at the top and tasks with no date (**Any time**) at the bottom; within each group, tasks are sorted by priority.
+
+Each list starts with a **New meeting** or **New task** row, so you can add one without leaving home. Check a task's box to complete it, or set its due date right from the row.
 
 ## Search
 
-Search lives in the top toolbar. Press **⌘K** (Mac) or **Ctrl+K** (Windows/Linux) from anywhere to start typing. Results come from every folder you can access, and pressing Enter opens the full results page.
+Search lives in the top bar. Press **⌘K** (Mac) or **Ctrl+K** (Windows/Linux) from anywhere to start typing. Results come from every folder you can access, and chips at the top of the results narrow them to one entry type. Press Enter, or choose **See all results**, to open the full results page.
 
-## The + button
+## Creating things
 
-The **+** button in the lower right creates things anywhere in the app:
+Click **New** in the top bar:
 
-- **New entry** — opens the entry type picker. See [Entries](/workspace/entries).
-- **New folder** — creates a top-level folder. To nest one, use **New subfolder** in a folder's **…** menu.
-- **Import files** — brings documents and media into a folder. See [Importing files](/library/importing-files).
+- **New note** creates a note right away.
+- **New event** and **New task** open the new-entry dialog on the fields those entries need.
+- **More types…** opens the full entry type picker. You can also press **N** anywhere.
+- **New folder** creates a top-level folder. To nest one, use **New subfolder…** in a folder's **…** menu.
+
+To bring in files, use **Import files…** in a folder's menu, the **Import** button in the Library, or drag files onto a folder. See [Importing files](/library/importing-files).
+
+On a phone, a round **+** button in the lower right takes the place of **New**.
 
 ## The agent
 
-The chat panel on the right is the agent — the built-in AI that can search, read, create, and edit across everything you have access to. Press **⌘/** or **Ctrl+/** to open or close it. See [Chatting with the agent](/agent/chat).
+The chat panel on the right is the agent — the built-in AI that can search, read, create, and edit across everything you have access to. Press **⌘/** (**Ctrl+/**) to open or close it, or **⌘J** (**Ctrl+J**) to open it on a new chat. See [Chatting with the agent](/agent/chat).
 
-## The library
+## Keyboard shortcuts
 
-The library shows every asset — images, video, audio, and fonts — in folders you can access, with filters, groups, and search. See [Library](/library/overview).
+| Shortcut | What it does |
+| --- | --- |
+| **⌘K** / **Ctrl+K** | Search |
+| **N** | New entry |
+| **⌘/** / **Ctrl+/** | Open or close the agent |
+| **⌘J** / **Ctrl+J** | Open the agent on a new chat |
+| **⌘,** / **Ctrl+,** | Hide or show the sidebar |
+| **⌘.** / **Ctrl+.** | Hide or show both side panels |
 
-## Settings
+## Settings and the Studio
 
-Settings holds your profile and, for workspace Owners, team management, folder administration, connectors, and entry type configuration. See [Settings](/settings/overview).
+Everything about your account and workspace is in the account menu (your avatar in the top-right corner):
+
+- **Settings** — your **Preferences** and the **Archive** of archived folders and deleted entries. Owners also see the workspace settings. See [Settings](/settings/overview).
+- **Studio** — **Connectors** to outside tools the agent can use, and **MCP access** for connecting tools like Claude and Codex to your workspace. See [Connectors](/agent/connectors) and [Connect AI tools](/ai-tools/mcp).
+- **Account** — opens your Studiograph Cloud account in a new tab.
+- **Theme** — **Light**, **Dark**, or **System**.

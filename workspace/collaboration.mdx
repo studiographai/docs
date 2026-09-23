@@ -7,27 +7,32 @@ Studiograph is built for teams working in the same entries at the same time — 
 
 ## Live editing
 
-When two people open the same entry, edits appear for both instantly. You can see other people's cursors as they type, and who else is viewing the entry.
+When two people open the same entry, edits appear for both instantly, and you see each other's cursors once they click into the text. Datasets and artifacts work the same way.
+
+To see who's around, look for avatars on list rows, cards, and folders in the sidebar, or open **Everyone here** at the bottom of the screen — it lists who's online and what each person has open.
+
+If the live connection drops, a notice appears above the entry and editing pauses until it's back — use **Retry** or **Reload** if it asks.
 
 ## Autosave
 
-Changes save as you type — there's no save button to remember. Press **⌘S** when you want to mark an explicit point in the entry's history, one you can find and return to later.
+Changes save as you type — there's no save button to remember. Studiograph records a version in the entry's history after a few quiet minutes, when you leave the entry, or when you press **⌘S** to mark an explicit point you can return to later.
 
 ## Comments
 
-Select any text in an entry — or a cell in a dataset — and click **Comment** to start a thread.
+Select any text in an entry and click **Comment** to start a thread on it. In a dataset, select a cell and choose **Comment**. To comment on the entry as a whole — the only kind of comment on an artifact — open the **Comments** panel and click **Add comment on entry**.
 
-- Threads live in the comment rail beside the entry, under **Open** and **Resolved** tabs.
-- Reply to keep a discussion going; resolve the thread when it's settled.
-- Mention [the agent](/agent/chat) in a comment and it replies right in the thread — useful for asking it to fix or explain the passage you selected.
+- The **Comments** button in the entry's toolbar opens the panel; a dot on it means the entry has comments. Switch between **Open** and **Resolved** threads at the top of the panel.
+- **Reply** to keep a discussion going; **Resolve** the thread when it's settled, and **Reopen** it if it isn't. Edit or delete your own comments from their **…** menu.
+- Type **@** to mention a teammate — they're notified under the **Notifications** bell in the top bar.
+- Mention **@Studio**, the [agent](/agent/chat), and it replies right in the thread — useful for asking it to fix or explain the passage you selected. Once it has replied, it follows the rest of the thread without being mentioned again.
 
 ## Version history
 
-The **History** tab in the entry's info rail lists the entry's saved versions (it appears once there's more than one).
+Open the entry's **…** menu and choose **Panels → History** to list the entry's saved versions, newest first, with who made each change.
 
 <Steps>
   <Step title="Preview a version">
-    Click a version to see the entry as it was then — a read-only preview with a "Viewing version" banner. Use the back control to return to the current version.
+    Click a version to see the entry as it was then — a read-only preview with a **Viewing version** banner. **Changes** shows what's different from now, and **Back to current** (or <kbd>Esc</kbd>) returns you to the current version.
   </Step>
   <Step title="Restore it">
     Click **Restore** and confirm to bring that version back as the entry's current state.
@@ -35,5 +40,7 @@ The **History** tab in the entry's info rail lists the entry's saved versions (i
 </Steps>
 
 <Note>
-Restoring is non-destructive: it adds the old version on top of the history rather than rewinding it, so the newer state stays in history and nothing is lost.
+Restoring is non-destructive: the current version is kept in history, so you can always restore back to it.
 </Note>
+
+To bring back a deleted entry, see [Archive & recovery](/workspace/archive-and-recovery).

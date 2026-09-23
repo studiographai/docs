@@ -1,74 +1,79 @@
 ---
 title: "Settings"
-description: "A map of every Settings section — what lives where, and which sections are owner-only."
+description: "A map of Settings and the Studio — what lives where, and which sections are owner-only."
 ---
 
-Settings is where you manage your own preferences and, if you're a workspace owner, the workspace itself. Everyone can open Settings; sections marked **Owner** only work for owners.
+Two places in the account menu (your avatar in the top-right corner) hold everything you can configure:
+
+- **Settings** — your own preferences, the archive, and, for Owners, the workspace itself.
+- **Studio** — connectors to outside tools, and MCP access for tools that connect to your workspace.
+
+Your account, your team, billing, and your AI plan live in the **Studiograph Cloud** console. The account menu's **Account** item opens it in a new tab.
+
+## Settings
+
+| Section | What's there | Who sees it |
+| --- | --- | --- |
+| [**Preferences**](#preferences) | Appearance, sidebar order, default folder, exporting your data, and your profile | Everyone |
+| [**Archive**](#archive) | Archived folders and recently deleted entries | Everyone |
+| [**Workspace**](#workspace) | The workspace's name, description, and time zone | Owners |
+| [**Team**](#team) | Who's in the workspace | Owners |
+| [**Entries**](#entries) | The catalog of entry types | Owners |
+| [**AI & services**](/settings/ai-plan) | Opens your AI plan in Studiograph Cloud | Owners |
+
+Members don't see the owner-only sections at all.
+
+### Preferences
+
+- **Accent color** and **Appearance** (**Light**, **Dark**, or **System**).
+- **Sidebar folders** — keep folders in the order you drag them into (**However I arrange them**), or **Alphabetically**.
+- **Default folder** — where new entries, imported files, and saved meetings go when you haven't picked a folder.
+- **Startup** — in the Studiograph desktop app only, whether Studiograph opens when you log in to your computer.
+- **Your data** — **Export** downloads a zip of every folder you can access, with its history.
+- **Member details** — your name and email, with a **Manage profile in Studiograph Cloud** link for changing them, and **Resume onboarding interview** if you paused it.
+
+### Archive
+
+Everything here can be brought back.
+
+- **Folders** — folders that have been archived. Choose **Restore** to put one back in the sidebar with all of its entries. Folder admins and Owners can also choose **Delete permanently**, which asks you to type the folder's name to confirm and can't be undone.
+- **Entries** — entries deleted recently, newest first. Choose **Restore** to put one back where it was; **Show older** reaches further back, up to 90 days. You can restore an entry if you can edit the folder it was in.
+
+See [Folders](/workspace/folders) for archiving and deleting folders.
+
+### Workspace
+
+The workspace's **Description** and **Time zone** — the zone schedules and dates are read in. The workspace's name is managed in Studiograph Cloud: renaming it there renames it here.
+
+### Team
+
+The workspace's **Members**, with each person's role. People are added, removed, and given roles in Studiograph Cloud — **Manage in Studiograph Cloud** takes you there, and changes sync to the workspace automatically. See [Your account](/getting-started/your-account#roles).
+
+To give someone access to a folder, use that folder's **Share** dialog. See [Sharing](/workspace/sharing).
+
+### Entries
+
+The catalog of entry types your workspace uses — rename and restyle them, turn them on or off, or add your own. See [Entry types](/settings/entry-types).
+
+### AI & services
+
+Opens the **AI** page of the Studiograph Cloud console, where you choose whether Studiograph runs the AI for you or you bring your own keys. See [Your AI plan](/settings/ai-plan).
+
+## Studio
 
 | Section | What's there | Who |
 | --- | --- | --- |
-| **Manage organization** | Workspace name and description | Owner |
-| **Manage team** | Add members, manage accounts and folder access | Owner |
-| **Manage folders** | Every folder in the workspace, including archived ones | Owner |
-| **Entry types** | The catalog of entry types | Owner edits, members view |
-| **Providers** | AI model, image generation, web search, semantic search, asset storage | Owner |
-| **External connectors** | Outside services the agent can use | Everyone connects; owner adds |
-| **Agents** | Thinking level, MCP endpoint, and personal access tokens | Everyone |
-| **Meeting capture** | Transcription settings — shown in the desktop app only | Everyone |
-| **Profile** | Your account and the onboarding interview | Everyone |
+| **Connectors** | Outside tools the agent can use on your behalf | Everyone connects their own account; Owners add connectors |
+| **MCP access** | Your workspace's MCP endpoint, the apps you've connected, and personal access tokens | Everyone |
 
-## Manage organization
+See [Connectors](/agent/connectors) and [Connect AI tools](/ai-tools/mcp).
 
-The workspace's name and description. Only an owner can edit these.
+<Accordion title="On a self-hosted workspace">
+A few teams run Studiograph on their own server instead of Studiograph Cloud. Their Settings differ in a few places:
 
-## Manage team
-
-Owners add members here with a name, email, and password, and choose a role: **Member** or **Owner**. Owners have full studio control — they manage members, settings, and connectors, and can administer any folder.
-
-Opening a member shows their details: edit their name or email, reset their password, add or remove them from folders (with a per-folder **Admin** or **Editor** role), or delete the account. Deleting a member is handled safely: their personal folder transfers to you (renamed "Archive: …"), and you inherit admin on any shared folder where they were the only admin. You can't delete yourself or the last owner.
-
-## Manage folders
-
-A complete list of the workspace's folders — including archived ones, which you can restore or permanently delete (permanent deletion is gated behind a type-to-confirm step).
-
-<Info>
-An owner can administer any folder here — rename, archive, delete, manage members — but still can't read the content of folders they're not a member of. Administration shows only metadata such as the member list and entry counts. See [Sharing](/workspace/sharing).
-</Info>
-
-## Entry types
-
-The catalog of entry types your workspace uses — rename them, restyle them, turn them off, or add your own. Owners edit; members see a read-only view. See [Entry types](/settings/entry-types).
-
-## Providers
-
-Owner-only. Five panels:
-
-- **AI Provider** — the model that powers the agent. Choose Anthropic, OpenAI, Google, xAI, Groq, or OpenRouter, pick a model, and paste your own API key. **Test connection** confirms it works.
-- **Image generation** — the model the agent generates images with, via OpenRouter, independent of the chat provider. Defaults to Nano Banana (Gemini 2.5 Flash Image).
-- **Web Search** — optionally let the agent search the web: through your model provider's native search, or with a Brave, Tavily, or Google key.
-- **Semantic Search** — optionally add a Voyage AI key so search understands meaning, not only keywords.
-- **Asset Storage** — where uploaded files live: the server's disk by default, or Cloudflare R2.
-
-See [Providers](/self-hosting/providers) for the full guide to every panel.
-
-## External connectors
-
-Connect outside services — the agent can then use them on your behalf. Anyone can connect their own account to an existing connector; adding a new connector is an admin action. See [Connectors](/agent/connectors).
-
-## Agents
-
-Three things live here:
-
-- **Thinking** — your personal thinking level for the agent: how much it deliberates before answering. It applies from your next message onward.
-- **MCP Access** — the workspace's MCP endpoint URL. Paste it into Claude Desktop, claude.ai, or Claude Code and approve access in your browser to connect that tool to your workspace.
-- **Advanced** — personal access tokens for headless clients (scripts, CI, Codex). A token acts as you and sees only the folders you can see.
-
-See [Connect Claude Code, Codex & other AI tools](/cli/mcp) for client-by-client setup.
-
-## Meeting capture
-
-Only visible in the Studiograph desktop app, where meeting transcription runs: the transcription provider, its key, and the default folder for captured meetings.
-
-## Profile
-
-Your own account details. If you skipped the onboarding interview when you joined, you can resume it from here.
+- **Team** is where Owners add members (name, email, starting password, and role). Opening a member shows their **Role**, their **Folders** (with a per-folder Admin or Editor role), **Reset password**, and **Delete member**. Deleting a member moves their personal folder to you, renamed "Archive: …", and makes you admin of any shared folder where they were the only admin.
+- **Workspace** also lets Owners rename the workspace.
+- **Providers** replaces **AI & services**. It holds the model provider keys (Anthropic, OpenAI, Google, xAI, or OpenRouter) with the **Default model** and **Image generation** model, plus **Asset storage**, **Web search**, and **Semantic search**.
+- **Meeting capture** appears in the Studiograph desktop app, for choosing the transcription engine — **Apple Intelligence** on your Mac, or **Deepgram** with an API key.
+- **Preferences → Member details** is where you change your own name, email, and password.
+</Accordion>

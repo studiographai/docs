@@ -9,103 +9,67 @@
   },
   "favicon": "/favicon.png",
   "navigation": {
-    "tabs": [
+    "groups": [
       {
-        "tab": "Guide",
-        "groups": [
-          {
-            "group": "Get started",
-            "pages": [
-              "index",
-              "getting-started/your-account",
-              "getting-started/tour"
-            ]
-          },
-          {
-            "group": "Your workspace",
-            "pages": [
-              "workspace/folders",
-              "workspace/sharing",
-              "workspace/entries",
-              "workspace/views",
-              "workspace/connections",
-              "workspace/collaboration"
-            ]
-          },
-          {
-            "group": "Your library",
-            "pages": [
-              "library/overview",
-              "library/importing-files",
-              "library/media-in-your-work"
-            ]
-          },
-          {
-            "group": "Artifacts & datasets",
-            "pages": [
-              "artifacts/overview",
-              "artifacts/datasets",
-              "artifacts/live-data"
-            ]
-          },
-          {
-            "group": "The AI agent",
-            "pages": [
-              "agent/chat",
-              "agent/context-and-attachments",
-              "agent/skills",
-              "agent/connectors"
-            ]
-          },
-          {
-            "group": "Settings",
-            "pages": [
-              "settings/overview",
-              "settings/entry-types"
-            ]
-          }
+        "group": "Get started",
+        "pages": [
+          "index",
+          "getting-started/your-account",
+          "getting-started/tour"
         ]
       },
       {
-        "tab": "CLI",
-        "groups": [
-          {
-            "group": "CLI",
-            "pages": [
-              "cli/overview",
-              "cli/commands",
-              "cli/sync",
-              "cli/mcp"
-            ]
-          }
+        "group": "Your workspace",
+        "pages": [
+          "workspace/folders",
+          "workspace/sharing",
+          "workspace/entries",
+          "workspace/views",
+          "workspace/connections",
+          "workspace/collaboration",
+          "workspace/archive-and-recovery"
         ]
       },
       {
-        "tab": "Self-hosting",
-        "groups": [
-          {
-            "group": "Self-hosting",
-            "pages": [
-              "self-hosting/overview",
-              "self-hosting/docker",
-              "self-hosting/railway",
-              "self-hosting/providers",
-              "self-hosting/configuration",
-              "self-hosting/storage-and-backups"
-            ]
-          }
+        "group": "Your library",
+        "pages": [
+          "library/overview",
+          "library/importing-files",
+          "library/media-in-your-work"
+        ]
+      },
+      {
+        "group": "Artifacts & datasets",
+        "pages": [
+          "artifacts/overview",
+          "artifacts/datasets",
+          "artifacts/live-data"
+        ]
+      },
+      {
+        "group": "The AI agent",
+        "pages": [
+          "agent/chat",
+          "agent/context-and-attachments",
+          "agent/skills",
+          "agent/connectors"
+        ]
+      },
+      {
+        "group": "Connect AI tools",
+        "pages": [
+          "ai-tools/mcp"
+        ]
+      },
+      {
+        "group": "Settings",
+        "pages": [
+          "settings/overview",
+          "settings/ai-plan",
+          "settings/entry-types"
         ]
       }
-    ],
-    "global": {
-      "anchors": [
-        {
-          "anchor": "GitHub",
-          "href": "https://github.com/studiographai",
-          "icon": "github"
-        }
-      ]
-    }
+    ]
   },
   "redirects": [
     { "source": "/quickstart", "destination": "/getting-started/your-account" },
@@ -114,9 +78,13 @@
     { "source": "/concepts/folders", "destination": "/workspace/folders" },
     { "source": "/concepts/entities", "destination": "/workspace/entries" },
     { "source": "/concepts/access", "destination": "/workspace/sharing" },
-    { "source": "/cli/installation", "destination": "/cli/overview" },
-    { "source": "/cli/deployment", "destination": "/self-hosting/overview" },
-    { "source": "/api-reference/introduction", "destination": "/cli/mcp" }
+    { "source": "/cli/installation", "destination": "/" },
+    { "source": "/cli/deployment", "destination": "/" },
+    { "source": "/api-reference/introduction", "destination": "/ai-tools/mcp" },
+    { "source": "/cli/mcp", "destination": "/ai-tools/mcp" },
+    { "source": "/self-hosting/providers", "destination": "/settings/ai-plan" },
+    { "source": "/cli/:slug*", "destination": "/" },
+    { "source": "/self-hosting/:slug*", "destination": "/" }
   ],
   "logo": {
     "light": "/logo/light.svg",

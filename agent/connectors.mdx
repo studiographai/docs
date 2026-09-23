@@ -1,33 +1,33 @@
 ---
 title: "Connectors"
-description: "Let the agent work with your other tools — calendars, project trackers, CRMs, and more."
+description: "Let the agent work with your other tools — project trackers, docs, code, email, and more."
 ---
 
-Connectors give the agent access to the tools your studio already uses — calendars, project trackers, CRMs, design tools. Once connected, you can ask things like "what's on my calendar Thursday?" or "create a task in our tracker for this", and the agent does it in that tool.
+Connectors give the agent access to the tools your team already uses — Linear, Notion, Asana, GitHub, Superhuman, and more. Once connected, you can ask things like "create a Linear issue for this bug" or "find the Notion page about our pricing", and the agent does it in that tool.
 
-Connectors live in **Settings → External connectors**. No connectors are set up out of the box; a workspace owner adds them once, then each person connects their own account.
+Connectors live in the **Studio**: open the account menu (your avatar in the top-right corner), choose **Studio**, then **Connectors**. No connectors are set up out of the box. A workspace Owner adds each one once, then each person connects their own account.
 
-## Adding a connector (owners)
+## Adding a connector (Owners)
 
 <Steps>
-<Step title="Open Settings → External connectors">
-Only workspace owners can add connectors.
+<Step title="Open Studio → Connectors">
+Only workspace Owners can add connectors.
 </Step>
 <Step title="Add the tool">
-Choose **Add from catalog** to pick from supported tools, or **Add external connector** to paste a server address for a tool that isn't in the catalog (any MCP-compatible server works).
+Open **Add from catalog** to pick from supported tools, grouped by category. Click **Connect** on a tool that signs in through the browser — this adds it to the workspace and starts your own sign-in in one step. Tools that use an API key show **Add** instead.
+
+For a tool that isn't in the catalog, choose **Add External Connector** and paste its server address. Any MCP-compatible server works.
 </Step>
 </Steps>
 
-Adding a connector makes it available to the workspace — it doesn't connect anyone's account yet.
-
 ## Connecting your account
 
-Each person connects on their own, from the same **External connectors** page:
+Each person connects on their own, from the same **Connectors** page:
 
 - Click **Connect** next to the tool and sign in with your account in the browser.
-- If your studio has a shared connection for the tool (marked **Studio**), you'll see **Connect as me** instead — use it to sign in with your own account rather than the shared one.
+- If the tool has a shared connection (marked **Shared**), you'll see **Connect as me** instead — use it to sign in with your own account rather than the shared one.
 
-Once you're connected, the page shows the tool as connected and the agent acts as you in that tool — it sees what you can see there, and anything it creates is created by you. With a studio-wide connection, everyone shares one identity in the tool instead.
+Once you're connected, the tool shows **Connected (OAuth)**, and the agent acts as you in that tool — it sees what you can see there, and anything it creates is created by you. A tool connected with an API key shows **Connected (API key)**; with that kind of connection, everyone shares one identity in the tool.
 
 <Info>
 Your connection is yours. Signing in gives the agent access on your behalf only — it doesn't change what anyone else can do in that tool.
@@ -35,4 +35,8 @@ Your connection is yours. Signing in gives the agent access on your behalf only 
 
 ## Disconnecting
 
-Disconnect any time from the same **External connectors** page. This revokes the agent's access to that tool for your account; you can reconnect later.
+To disconnect, click the **Connected (OAuth)** badge. This revokes the agent's access to that tool for your account; you can reconnect later.
+
+If a connection stops working, the tool shows **Reconnect** — click it to sign in again — or **Not accepted** if the tool refused the sign-in. Both states also offer **Disconnect**.
+
+Owners can remove a connector from the whole workspace with **Remove connector**, in the connector's **Danger zone**.

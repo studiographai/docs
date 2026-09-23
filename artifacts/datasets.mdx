@@ -1,6 +1,6 @@
 ---
 title: "Datasets"
-description: "Work with spreadsheet data in Studiograph: edit cells, write formulas, format columns, filter, sort, and export."
+description: "Work with spreadsheet data in Studiograph: edit cells, write formulas, format columns, filter, sort, and download."
 ---
 
 A dataset is a spreadsheet entry. It opens as a full-width grid where you edit cells directly, write formulas, and set up filters and sorting — and artifacts can read its data live (see [Live data in artifacts](/artifacts/live-data)).
@@ -9,18 +9,25 @@ A dataset is a spreadsheet entry. It opens as a full-width grid where you edit c
 
 There are three ways to create one:
 
-- **Import a file.** Import an Excel or CSV file — each sheet in an Excel file becomes its own dataset, and the original file stays attached so you can download it later. See [Importing files](/library/importing-files).
-- **Start blank.** Pick dataset in the **New entry** picker.
-- **Ask the agent.** Describe the data you want and the agent creates and fills the dataset for you.
+- **Import a file.** Import an Excel or CSV file — each sheet in an Excel file becomes its own dataset, and the original file is kept so you can download it later. See [Importing files](/library/importing-files).
+- **Start blank.** Click **New** in the top bar, choose **More types…**, and pick **Dataset**.
+- **Ask the agent.** Describe the data you want and the agent creates and fills the dataset for you. It can also look up answers, add rows, and update cells in an existing one.
 
 ## The grid
 
-Click any cell to edit it directly, or use the formula bar at the top. A new dataset starts at 26 columns (A–Z) and 1,000 rows and grows as you need:
+Click any cell to edit it directly, or use the formula bar above the grid. A new dataset starts at 26 columns (A–Z) and 1,000 rows and grows as you need:
 
-- Use the **Add 1000 more rows** banner at the bottom of the grid to extend it.
-- Use **Insert column** to add columns.
+- At the bottom of the grid, **Add 1000 more rows at the bottom** extends it — change the number first if you want more or fewer.
+- **Insert column right** and **Insert row below** add a column or row next to the selection.
 
-You can also drag the fill handle to extend a value or formula across neighboring cells, and apply fill colors to cells.
+Selecting a whole row or column opens its toolbar, with **Bold**, **Cut**, **Copy**, **Paste**, clearing the values, inserting, and deleting. Drag rows and columns to reorder them. You can also drag the fill handle to extend a value or formula across neighboring cells, and apply a **Fill color** to cells.
+
+When a cell's text is too long to fit, rest the pointer on it to read the whole value.
+
+### Labels and totals
+
+- **Layout**, in the dataset's Fields panel, says where the labels are: in the first row, the first column, or neither. Studiograph guesses when you first open the dataset; change it if the guess is wrong.
+- **Pin to bottom**, on a row's toolbar, keeps a row — a totals row, say — at the bottom of the grid, outside sorting and filters.
 
 ## Formulas
 
@@ -29,23 +36,50 @@ A formula starts with `=`, like a spreadsheet:
 - `=A2*B2` — arithmetic between cells
 - `=SUM(C2:C10)` — a function over a range
 
-Supported functions are `SUM`, `AVERAGE`, `MIN`, `MAX`, `COUNT`, and `PRODUCT`, plus arithmetic and date math. Suggestions appear as you type after `=`. The formula itself is stored in the cell; the grid shows the computed result.
+Supported functions are `SUM`, `AVERAGE`, `MIN`, `MAX`, `COUNT`, and `PRODUCT`, plus arithmetic and date math. Suggestions appear as you type after `=`. The formula itself is stored in the cell; the grid shows the computed result, and the formula bar shows the formula.
+
+Functions over a range include rows hidden by a filter, like `SUM` in Excel. A formula that can't be computed shows an error value: `#REF!` (a cell reference that no longer exists), `#DIV/0!` (division by zero), `#CYCLE!` (a formula that depends on itself), `#NAME?` (an unknown function), `#VALUE!` (the wrong kind of value), or `#ERR`.
 
 ## Column formats
 
-Set a column's format to control how values display: **Text**, **Number**, **Currency**, **Percentage**, or **Date** (with a choice of date styles). Formats change display only — the underlying value in the cell stays exactly as entered, so switching formats never alters your data.
+Set a column's format to control how values display: **Text**, **Number**, **Currency**, **Percentage**, or **Date**, with choices for the currency, the **Date format**, and the number of **Decimal places**.
+
+Some formats also tidy the values themselves when you apply them:
+
+- **Date** rewrites dates it can read into the standard `YYYY-MM-DD` form.
+- **Number** and **Currency** turn text like `$1,234.00` into plain numbers.
+- **Percentage** changes only how values look.
+
+You can undo a format change like any other edit.
 
 ## Filters and sorting
 
-Each column can have a filter suited to its type — number comparisons, text matching, date ranges, or picking from the values that appear in the column. The dataset can also have one sort, ascending or descending, which follows its column if you reorder or rename columns.
+Each column can have a filter suited to its type:
+
+- **Numbers** — **Equals**, **Not equals**, **Greater than**, **Less than**, **At least**, **At most**, or **Between**.
+- **Dates** — **On**, **Before**, **After**, or **Between**.
+- **Text** — **Contains**, **Equals**, **Starts with**, **Ends with**, or **Is empty**.
+- **Values** — tick the values to keep, with **Select all** and **Deselect all**.
+
+Every filter has **Clear filter**. The dataset can also have one sort: click the sort icon on a column to cycle through ascending, descending, and off. The sort follows its column if you reorder or rename columns.
 
 <Info>
-Sort, filters, and column formats are shared view settings: everyone who opens the dataset sees the same setup. Changing a filter changes it for the whole team, not only your own view.
+Sort, filters, column formats, column widths, and the layout are shared view settings: everyone who opens the dataset sees the same setup. Changing a filter changes it for the whole team, not only your own view.
 </Info>
 
-## Exporting
+## Working together
 
-**Export (.csv)** downloads the grid as a CSV file with formulas turned into their computed values.
+Teammates can edit the same dataset at the same time and see each other's changes live. To discuss a value, select the cell and choose **Comment** — commented cells are tinted so they're easy to spot. The **History** panel shows earlier versions of the dataset, and **Restore** brings one back.
+
+## Downloading and sharing
+
+Open the **…** menu and choose **Download**:
+
+- **CSV (.csv)** — the whole dataset, with formulas turned into their computed values. It includes every row in its stored order, regardless of the current filters and sort.
+- **Markdown (.md)** — the dataset's source file, with formulas kept as written.
+- **Original file** — for an imported dataset, the spreadsheet it came from.
+
+A [public link](/workspace/sharing#public-share-links) shows the dataset as a read-only sheet, with the team's filters, sort, and formats applied.
 
 ## Limits
 
@@ -53,3 +87,4 @@ Sort, filters, and column formats are shared view settings: everyone who opens t
 | --- | --- |
 | Maximum rows | 1,000,000 |
 | Maximum columns | 702 (A–ZZ) |
+| Largest CSV or Excel file you can import | 25 MB |
