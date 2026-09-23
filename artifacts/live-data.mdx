@@ -3,25 +3,38 @@ title: "Live data in artifacts"
 description: "Build dashboards and charts that read a dataset live, so the artifact always shows current numbers."
 ---
 
-An artifact can read a [dataset](/artifacts/datasets) live. A dashboard or chart deck built this way always shows the current numbers: edit the dataset, and the artifact picks up the new values the next time it renders — no re-export, no rebuilding.
+An artifact can read a [dataset](/artifacts/datasets) live. A dashboard or chart deck built this way always shows the current numbers: edit the dataset, and the artifact picks up the new values the next time it's opened or reloaded — no rebuilding.
 
-To set this up, ask the agent to build an artifact from a dataset — for example, "Build a dashboard from the Q3 sales dataset."
+To set this up, ask the agent to build an artifact from a dataset — for example, "Build a dashboard from the Q3 sales dataset." A blank **App** offers this as one of its starting prompts.
 
-<Note>
-The artifact reads the dataset's full underlying data, not the filtered or sorted view. Filters and sorting in the grid don't change what a chart sees.
-</Note>
+## What the artifact reads
 
-## Access follows folders
+The artifact reads the dataset's stored data, not what you see in the grid:
 
-Reading a dataset live requires access to the dataset's folder, checked every time the artifact renders. Someone who can open the artifact but isn't a member of the dataset's folder sees a notice in place of the data:
+- **Filters and sorting** in the grid don't change what a chart sees.
+- **Column formats** aren't applied — the artifact gets the plain values.
+- **Formula cells** arrive as the formula itself (for example `=SUM(C2:C10)`), not the computed result. For totals a chart needs, ask the agent to compute them in the artifact, or keep them as plain values in the dataset.
+
+## Who sees the data
+
+The artifact checks access every time it loads data. A viewer sees a dataset's data when either is true:
+
+- They can open the dataset's folder.
+- The dataset was added to the artifact by someone who could read it. Anyone who can open the artifact then sees that data too, even without access to the dataset's folder.
+
+Anyone else sees a notice in place of the data, and the rest of the artifact renders normally:
 
 > No access to this data
 > This artifact reads a dataset in a folder you're not a member of.
 
-The rest of the artifact still renders normally.
+You'll also see this notice if the dataset was deleted, or if the artifact was last saved by someone who couldn't read it.
 
-When you move an entry between folders, Studiograph warns you if people in the destination folder wouldn't be able to see the datasets it depends on. The warning never blocks the move — it's there so you can adjust folder access if you need to.
+When you move an entry between folders, Studiograph warns you if the datasets it depends on might not be visible from the destination. The warning never blocks the move.
 
 ## Public share links
 
-You can share an artifact with a public link like any other entry — see [Sharing](/workspace/sharing) — but live data stays inside your workspace. Public viewers see the artifact's design and embedded media; its live dataset reads don't run for people outside the workspace, so charts that depend on live data won't show it on a public link. To publish current numbers, export the artifact as a PDF or image instead.
+Live data works on a [public link](/workspace/sharing#public-share-links) too, with tighter limits: a public page shows data from datasets in the artifact's own folder or in a folder shared with everyone, and only if the person who last saved the artifact can read them. Datasets in any other folder don't show on a public link. Public viewers see the current data; which datasets the page may show is updated each time the artifact is saved.
+
+## Downloads
+
+PDF and PNG downloads capture the data as it is when you download. HTML downloads can't load live data — charts that depend on it come out empty.

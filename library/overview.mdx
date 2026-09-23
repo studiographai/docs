@@ -3,57 +3,63 @@ title: "Your library"
 description: "Browse, organize, and reuse every file in the folders you can access."
 ---
 
-The library is one place to see every file — image, video, audio, font, or attached document — across the folders you can access. It isn't separate storage: assets live in folders, and the library is a view over them. A shared folder's assets are visible to everyone in that folder; a private folder's assets are visible only to you.
+The library is one place to see every file — image, video, audio, font, document, or anything else you've imported — across the folders you can access. It isn't separate storage: files live in folders, and the library is a view over them. A shared folder's files are visible to everyone in that folder; a private folder's files are visible only to you.
 
-Open the library from the sidebar. Each tile shows a preview, its media type, and a badge for the folder it lives in.
+Open it with **Library** in the top bar. Each tile shows a preview, the kind of file, and a badge for the folder it lives in — click the badge to open that folder.
+
+## A folder's files
+
+Every folder has the same view of its own files. When a folder holds files, its toolbar shows an **Assets** button (an image icon); click it to switch from the folder's entries to its files, and again to go back. It works just like the library, scoped to that one folder.
 
 ## Browsing and filtering
 
-The toolbar gives you one **Filters** control and a search box scoped to your results:
+The **Filters** button in the toolbar holds a search box (**Search assets…**) and the filters:
 
-- **Folder** — only assets from specific folders.
-- **Group** — only assets in a group you've made (see below).
-- **Media type** — images, video, audio, fonts, documents, and so on.
-- **Usage** — **All assets**, **Referenced** (used somewhere), or **Unreferenced** (not used in any entry).
+- **Folder** — only files from specific folders.
+- **Media type** — **Images**, **Documents**, **Fonts**, **Videos**, **Audio**, **Design files**, **Archives**, **Data**, **Text**, or **Other**.
+- **Usage** — **All assets**, **Embedded in an entry**, or **Not embedded in an entry**.
 
-Sort by **Name** or **Added**, in either direction.
+Search matches file names, the names of entries that use a file, and what's in an image — Studiograph describes each image when it's imported, including any text in it. A filter only appears when there's something to choose between, and **Clear all** resets them. Inside a single folder, only **Media type** applies.
+
+The **Arrange** menu sorts by **Name** or **Added**, **Ascending** or **Descending**. Newest first is the default.
 
 ## The asset view
 
-Click any asset to open it full-size. From here you can:
+Click any file to open it full-size. From here you can:
 
-- **Copy link** — a direct link you can paste in Slack or email. Only people in your workspace can open it.
-- **Copy embed** — ready to paste into an entry's body so the file displays there.
-- **Download** the file, or **Open in new tab** for types without a preview.
-- See where it's used — the references popover shows **Used in N entries**.
-- **Move to folder…** or **Delete** from the overflow menu.
+- **Copy link** — a direct link you can paste into Slack or email. It opens only for people who can open the file — see [Who can open a file](/library/importing-files#who-can-see-a-file).
+- **Copy embed** — ready to paste into an entry's body. An image displays in place; other files appear as a link.
+- **Download** the file. Files without a preview offer **Open in new tab**.
+- See where it's used — when an entry embeds the file, a button shows **Used in N entries**, and clicking an entry in the list opens it.
+- **Move to folder…** or **Delete**, from the **…** menu.
 
-Fonts show a type specimen instead of a preview, with a **Copy @font-face** action for use in [artifacts](/artifacts/overview).
+Fonts show a type specimen instead of a preview, and **Copy @font-face** in place of **Copy embed**, for use in [artifacts](/artifacts/overview#fonts). In the library, **Show all in** the file's folder narrows the grid to that folder, and the arrows step through the files you're browsing.
 
 ## Adding files
 
-Drop files anywhere on the library grid. The **Add to a folder** dialog sorts them for you — media is stored as-is, documents become entries — and asks which folder they belong to. For everything about supported types, size limits, and conversion, see [Importing files](/library/importing-files).
+Click **Import** in the toolbar, or drop files anywhere on the library. The **Import files** dialog asks which folder they belong in: media is stored as-is, and documents become entries. In a single folder's view, drop files on it to import them straight into that folder. For supported types, size limits, and conversion, see [Importing files](/library/importing-files).
 
-## Organizing with groups
+## Working with several files
 
-Groups collect related assets across folders — a brand kit, a photo shoot, approved logos. Select assets and choose **Add to group**, then pick an existing group or **New group…**. Groups are shared with your team, an asset belongs to at most one group, and **Ungroup** removes it. Grouping something doesn't change who can see it — permissions always come from the asset's folder.
+Tick the checkboxes on tiles to select several files. The selection bar offers **Move to folder…**, **Download** (several files arrive as one zip), and **Delete**.
 
-## Moving assets between folders
+## Moving files between folders
 
-Select assets and choose **Move to folder…** to re-home them into any folder you can edit. Links to the asset keep working — embeds in entries and artifacts never break when an asset moves.
+Choose **Move to folder…** — or drag a file onto a folder in the sidebar — to re-home it in any folder you can edit. A file's link never changes when it moves, but who can open it does, so the dialog tells you both sides before you move:
 
-<Warning>
-Moving an asset into a folder shared with **Everyone** makes it visible to your whole workspace — the dialog warns you before you do it.
-</Warning>
+- **Who gains access** — for example, moving into a folder shared with everyone means everyone in the workspace can open the file.
+- **Who loses access** — if entries outside the new folder use the file, people who can't open the new folder see a blank space where it was.
 
-## Deleting assets
+When a move would hide the file from someone, choose **Move anyway** — or, when it's offered, **Move and keep it visible**, which keeps the file showing in the entries that already use it.
 
-Deleting an asset is permanent and removes the file itself — anywhere it was embedded will show a missing-file note. The confirmation dialog warns you when references would break.
+## Deleting files
+
+Deleting a file is permanent and removes the file itself. The confirmation tells you how many entries use it; anywhere it was embedded shows a missing-file note afterward. You can delete a file if you can edit its folder.
 
 <Note>
-Deleting an *entry* is different: assets it used stay in the library unless you opt to delete them too. See [Entries](/workspace/entries).
+Deleting an *entry* is different: files it used stay in the library unless you tick **Also delete** for them in the delete dialog. See [Entries](/workspace/entries).
 </Note>
 
 ## Who sees what
 
-The library only ever lists assets from folders you can access. Archived folders drop out of the library (their files keep working wherever they're already embedded). For the full picture of how embedded media behaves for viewers, see [Importing files → Who can see a file](/library/importing-files#who-can-see-a-file).
+The library only ever lists files from folders you can access. Archived folders drop out of the library, while their files keep working wherever they're already embedded. For the full picture of who can open a file, see [Importing files → Who can see a file](/library/importing-files#who-can-see-a-file).

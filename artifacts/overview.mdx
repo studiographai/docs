@@ -1,9 +1,20 @@
 ---
 title: "Artifacts"
-description: "Create, view, edit, export, and share designed work like slide decks, documents, and dashboards."
+description: "Create, edit, show, share, and download designed work — presentations, artboards, apps, and publications."
 ---
 
-An artifact is a designed, rendered piece of work: a slide deck, a print-ready document, a graphic, a dashboard, an animation, a moodboard or diagram you can pan around, or an interactive prototype. Every artifact is made of frames — the slides, pages, or panels of the work — laid out on a canvas.
+An artifact is a designed, rendered piece of work: a slide deck, a moodboard, a diagram, an interactive prototype, a dashboard, a print-ready document. Every artifact is made of frames — the slides, pages, or panels of the work — laid out on a canvas.
+
+## Artifact types
+
+There are four kinds of artifact. The type decides the frame size and how the work is shown.
+
+| Type | For | A blank one starts with | When you show it |
+| --- | --- | --- | --- |
+| **Presentation** | Slide decks — fixed-size slides the viewer steps through | Two 1920×1080 slides | Steps through one slide at a time |
+| **Artboard** | Free-form canvases — graphics, boards, and diagrams | One 1440×900 frame | Opens fitted, and you pan and zoom around it |
+| **App** | Interactive apps, prototypes, and dashboards | One frame that fills the screen | Runs edge to edge |
+| **Publication** | Designed, paginated documents — print-ready pages | One letter-size (816×1056) page | Scrolls continuously, like a PDF |
 
 ## Creating an artifact
 
@@ -11,7 +22,7 @@ The main way to create an artifact is to ask the agent.
 
 <Steps>
 <Step title="Describe what you want">
-In the chat panel, tell the agent what to make — "Create a five-slide deck summarizing the Q3 review" or "Build a one-page poster for the launch event."
+In the chat panel, tell the agent what to make — "Create a five-slide deck summarizing the Q3 review" or "Build a one-page poster for the launch event." If the request leaves too much open, the agent asks a few questions first: what it's about, who it's for, what material to draw from.
 </Step>
 <Step title="Watch it build">
 The agent builds the artifact frame by frame, and the chat shows its progress as each frame is added.
@@ -21,62 +32,97 @@ When it's done, the artifact appears as a chip in the chat. Click it to open the
 </Step>
 </Steps>
 
-You can also create an empty artifact from the **New entry** picker, where artifact is one of the primary types. A blank artifact opens with example prompts — "Create a pitch deck with slides that step through a story," "Create a moodboard I can pan around," and more. Click one to drop it into the chat, edit it to fit, and send. The agent asks a few clarifying questions — what it's about, who it's for, what material to draw from — and then builds. There is no manual drawing tool; the agent builds all content.
+You can also start from a blank one: click **New** in the top bar, choose **More types…**, and pick **Presentation**, **Artboard**, **App**, or **Publication**. A blank artifact offers three example prompts suited to its type — for a presentation, "Build a pitch deck for a client: the problem, our approach, the team, the ask". Click one to send it to the agent, or describe what you want in the chat.
 
-## Editing with the agent
+On Studiograph Cloud, the **Getting Started** folder holds example presentations, publications, diagrams, infographics, landing pages, and social media posts to start from.
 
-Editing an artifact means asking the agent to change it. To point at a specific part:
+## Working on the canvas
 
-1. With the pointer tool active, click a frame — or an element inside a frame — to select it.
-2. Tell the agent what to change: "make this headline bigger," "swap this chart to a bar chart."
+Opening an artifact shows all of its frames on a canvas. Pan with the trackpad and pinch to zoom, or use the zoom controls. The canvas toolbar sets what a click does:
 
-The agent knows what you have selected and edits that frame.
+| Tool | Key | What it does |
+| --- | --- | --- |
+| **Select** | <kbd>V</kbd> | Click a frame, or an element inside one, to select it |
+| **Pan** | <kbd>H</kbd>, or hold <kbd>Space</kbd> | Drag to move around the canvas |
+| **Interact** | <kbd>I</kbd> | Clicks go to the artifact itself — use it to try out a prototype or app |
+| **Marquee select** | <kbd>M</kbd> | Drag a rectangle around an area |
+| **Lasso select** | <kbd>Q</kbd> | Draw around an area freehand |
 
-## Viewing an artifact
+**Reset view** fits everything back on screen, and <kbd>Esc</kbd> clears the selection.
 
-Opening an artifact shows all of its frames laid out on a canvas. You can pan with the trackpad and pinch to zoom, or use the zoom controls. Two tools switch how clicks behave:
+### Editing with the agent
 
-- **Pointer tool** — click frames and elements to select them for the agent.
-- **Hand tool** — drag to pan around the canvas.
+Most changes are a request to the agent. To point at a specific part, select a frame or an element — or draw a marquee or lasso around an area — then say what to change: "make this headline bigger," "swap this chart to a bar chart." The agent knows what you selected and edits that part.
 
-**Present mode** shows the work full-screen. A deck steps through one frame at a time, fitted to the screen; a document scrolls continuously, like a PDF; a large canvas — a moodboard or diagram — opens fitted, and you pan and zoom around it. On a phone, pinch to zoom and drag to pan work in present mode for these canvases.
+### Editing directly
 
-<Note>
-If an artifact can't render, you'll see "Artifact body could not be rendered — ask the agent to recreate this artifact." Asking the agent to recreate it resolves this.
-</Note>
+A few edits you can make yourself:
 
-## Exporting
+- **Edit text** — double-click a text element, or select it and press <kbd>Enter</kbd>. Press <kbd>Esc</kbd> when you're done.
+- **Delete** — select frames or elements and press <kbd>Delete</kbd> or <kbd>Backspace</kbd>. Studiograph asks you to confirm.
+- **Reorder frames** — drag a frame's label.
+- **Rename a frame** — double-click its label.
 
-Open the **…** menu and choose **Export**:
+There's no drawing tool; for anything new, ask the agent.
 
-| Option | What you get |
+### Working together
+
+When teammates have the same artifact open, you see their cursors and selections live, and a **Chat** button (<kbd>/</kbd>) lets you talk right on the canvas. The **Comments** panel holds comments on the artifact as a whole, and the **History** panel previews earlier versions — choose **Restore** to bring one back. The current version stays in History, so restoring never loses work.
+
+## Showing an artifact
+
+Click **Show** in the artifact's toolbar to open it in a new browser tab, without the rest of the app. How it behaves depends on the [type](#artifact-types). A presentation steps one slide at a time:
+
+| Key | Action |
 | --- | --- |
-| **Export as PDF** | A PDF with one page per frame |
-| **Export as PNG** | One image per frame |
-| **Export as HTML** | A single self-contained HTML file — images and fonts are bundled in, so it works offline |
+| <kbd>→</kbd>, <kbd>Space</kbd>, or <kbd>Page Down</kbd> | Next slide |
+| <kbd>←</kbd> or <kbd>Page Up</kbd> | Previous slide |
+| <kbd>Home</kbd> or <kbd>R</kbd> | Back to the first slide |
+| <kbd>End</kbd> | Last slide |
 
-One export runs at a time. There is no PowerPoint export.
+On a phone, pinch to zoom and drag to pan around an artboard.
 
 ## Sharing
 
-Use a public link to share an artifact with people outside your workspace. The link is read-only and opens the artifact in present mode. See [Sharing](/workspace/sharing) for how public links work.
+Open the **…** menu and choose **Share**. **Create public link** makes a read-only link anyone can open, and copies it for you. The public page opens the artifact the way **Show** does, and it updates automatically every time the artifact is saved. **Stop sharing** turns the link off. See [Sharing](/workspace/sharing#public-share-links).
+
+## Downloading
+
+Open the **…** menu and choose **Download**:
+
+| Option | What you get |
+| --- | --- |
+| **PDF** | One page per frame — or, for a publication, one page per laid-out page |
+| **PNG** | One image per frame. An artifact with several frames downloads as a zip. |
+| **HTML** | A self-contained HTML file that works offline, with fonts and libraries built in. If the artifact uses files from your library, you get a zip with the page and an `assets` folder. [Live data](/artifacts/live-data) doesn't load in the HTML version. |
+| **Markdown (.md)** | The artifact's source file |
+
+One download runs at a time. There is no PowerPoint export.
 
 ## Fonts
 
 Artifacts get fonts two ways:
 
-- **Google Fonts, by link.** A standard Google Fonts stylesheet link (`fonts.googleapis.com`) just works — ask the agent for any Google font by name. Exports embed the font files, so a downloaded deck or PDF keeps the exact typeface, even offline.
-- **Your library, for brand fonts.** Upload licensed or custom font files (`woff2`, `woff`, `ttf`, `otf`) to your [library](/library/media-in-your-work) and the agent can apply them by family name. Library fonts also render for viewers automatically and are bundled into exports.
+- **Your library, for brand fonts.** Upload licensed or custom font files (`woff2`, `woff`, `ttf`, `otf`) to your [library](/library/media-in-your-work) and the agent can apply them by family name. When you ask for work carrying a brand's name, the agent checks your library for that brand's fonts first, and if they aren't there yet, it uses a close substitute and tells you, so you can upload the real ones. Fonts in the artifact's own folder, or in a folder shared with everyone, render for viewers automatically and are bundled into downloads.
+- **Google Fonts, by link.** A standard Google Fonts stylesheet link (`fonts.googleapis.com`) just works — ask the agent for any Google font by name. Downloads embed the font files, so a PDF or HTML file keeps the exact typeface, even offline.
 
-Other external font hosts are not supported — import the files into your library instead.
+Other external font hosts aren't supported — import the files into your library instead.
 
 ## Libraries and external resources
 
 Artifacts run in a locked-down sandbox, with a small, pinned set of trusted sources allowed in:
 
-- **Curated libraries** — three.js (3D), D3 (data visualization), and Motion (animation) are built in: the agent requests them per artifact and Studiograph serves verified copies from your workspace's own server. No third party is involved when someone views your work.
-- **Other JavaScript libraries** — the agent can use any library published on `cdnjs.cloudflare.com` or jsDelivr's npm mirror (`cdn.jsdelivr.net/npm/…`), always pinned to an exact version so your artifact never changes behavior when a library updates. HTML exports embed these too.
-- **Everything else stays out.** Arbitrary external scripts, images, trackers, and network calls are blocked by the sandbox. For an image or file hosted elsewhere, import it into your library.
+- **Built-in libraries** — three.js (3D), D3 (data visualization), Motion (animation), and p5.js (generative and creative coding). The agent requests them per artifact, and Studiograph serves verified copies from your workspace's own server, so no third party is involved when someone views your work.
+- **Other JavaScript libraries** — the agent can use any library published on `cdnjs.cloudflare.com` or jsDelivr's npm mirror (`cdn.jsdelivr.net/npm/…`), always pinned to an exact version so your artifact never changes behavior when a library updates. HTML downloads include these too.
+- **Everything else stays out.** Arbitrary external scripts, images, trackers, and network calls are blocked by the sandbox. For an image or file hosted elsewhere, import it into your library — or ask the agent to save it from its web address.
+
+## When something doesn't show
+
+| Message | What it means |
+| --- | --- |
+| **Artifact body could not be rendered.** | Ask the agent to recreate the artifact. |
+| **A file couldn't load** | The artifact uses a file that was deleted, or that you don't have access to. |
+| **No access to this data** | The artifact reads a dataset you can't see. See [Live data](/artifacts/live-data#who-sees-the-data). |
 
 ## Next
 

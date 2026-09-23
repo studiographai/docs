@@ -6,23 +6,25 @@ description: "Supported file types, size limits, and where your files are stored
 Files come into Studiograph in one of two ways, depending on what they are:
 
 - **Media** — images, video, audio, and fonts — is stored as-is in your [library](/library/overview), inside the folder you choose.
-- **Documents and data** — PDFs, Word documents, spreadsheets, text files — are converted into [entries](/workspace/entries) you can read, edit, and search. The original file stays attached to the entry for download.
+- **Documents and data** — PDFs, Word documents, spreadsheets, text files — are converted into [entries](/workspace/entries) you can read, edit, and search. The original file is kept alongside the entry for download.
 
 ## How to import
 
 <Steps>
   <Step title="Open Import files">
-    Click the **+** button in the lower right and choose **Import files**, or use **Import files** in any folder's **…** menu.
+    Choose **Import files…** in a folder's **…** menu, or click **Import** in the [library](/library/overview). You can also drop files onto the library.
   </Step>
   <Step title="Stage your files">
-    Drag files — or whole folders — into the dialog, or use the **Browse files** and **Browse folders** links. Remove anything you didn't mean to include; unsupported files are skipped with a count.
+    Drag files — or whole folders — into the dialog, or use **Browse files** and **Browse folders**. Remove anything you didn't mean to include. Unsupported files are skipped, and the dialog tells you how many.
   </Step>
   <Step title="Pick a destination and import">
-    Click **Next**, choose the destination folder, and click **Import**. Media appears in your library right away; documents appear as new entries in the folder.
+    Click **Next**, choose the destination folder, and click the **Import** button. The folder you started from is picked for you — or, if you started from the library, your default folder from **Settings → Preferences**.
   </Step>
 </Steps>
 
-You can also drop files straight onto the library — the **Add to a folder** dialog shows what will happen to each file (added as media, converted to an entry, or not supported) and lets you pick one folder for the batch.
+The import runs in the background, with its progress shown in a notice you can cancel. When it's done, **View assets** opens the folder's files. Media appears there right away; documents appear as new entries in the folder.
+
+To skip the dialog, drop files straight onto a folder — its view, or its row in the sidebar — and they're imported into that folder at once. A dropped folder keeps its subfolders.
 
 <Info>
 Who can see an imported file follows the folder you put it in. See [Sharing & permissions](/workspace/sharing).
@@ -33,32 +35,42 @@ Who can see an imported file follows the folder you put it in. See [Sharing & pe
 | Type | Extensions | What happens |
 |---|---|---|
 | Notes | `md`, `mdx` | Become entries directly |
-| Text & data | `txt`, `csv`, `tsv`, `json`, `yaml`, `xml`, `html`, and code files (`css`, `js`, `ts`, `py`, …) | Converted to note or dataset entries |
-| Documents | `pdf`, `docx`, `xlsx` | Converted to document or dataset entries; the original file stays attached |
-| Images | `jpg`, `jpeg`, `png`, `gif`, `webp`, `heic`, `avif`, `svg` | Stored in your library; searchable by AI |
+| Text & data | `txt`, `csv`, `tsv`, `json`, `jsonl`, `yaml`, `yml`, `xml`, `html`, `toml`, `ini`, `sql`, and code files (`css`, `js`, `ts`, `jsx`, `tsx`, `py`, `rb`, `go`, `rs`, `java`, `c`, `cpp`, `sh`, …) | Converted to note or dataset entries |
+| Documents | `pdf`, `docx`, `xlsx` | Converted to document or dataset entries |
+| Images | `jpg`, `jpeg`, `png`, `gif`, `webp`, `heic`, `avif`, `svg` | Stored in your library, with an AI description that makes them searchable there |
 | Video | `mp4`, `mov`, `webm`, `avi`, `mkv`, `m4v` | Stored as-is in your library |
 | Audio | `mp3`, `wav`, `m4a`, `ogg`, `flac`, `aac` | Stored as-is in your library |
-| Fonts | `woff2`, `woff`, `ttf`, `otf` | Stored as-is; usable in [artifacts](/artifacts/overview) |
-| Other documents | `doc`, `ppt`, `pptx`, `xls`, `key`, `pages`, `numbers` | Not supported — export as PDF and import that instead |
+| Fonts | `woff2`, `woff`, `ttf`, `otf` | Stored as-is; usable in [artifacts](/artifacts/overview#fonts) |
+| Other office files | `doc`, `xls`, `pages`, `numbers`, `ppt`, `pptx`, `key` | Not supported — see below |
 | Design files | `psd`, `ai`, `sketch`, `fig`, `indd`, `idml` | Not supported |
 | Archives | `zip`, `tar`, `gz`, `7z`, `rar` | Not supported — unpack and import the files inside |
 
-Anything not listed is not supported. Unsupported files are listed by name in the import dialog with the reason, and nothing is stored for them.
+Anything not listed is not supported, and nothing is stored for it.
+
+For office files, convert first:
+
+- **Word `.doc`** — re-save it as `.docx`.
+- **Excel `.xls`** — re-save it as `.xlsx`; it imports as one dataset per sheet.
+- **Pages** — export it as `.docx`.
+- **Numbers** — export it as `.xlsx` or `.csv`.
+- **PowerPoint and Keynote** — export as PDF and import that.
 
 ## What conversion means
 
 When a document or data file becomes an entry:
 
-- A **PDF or Word document** becomes a document entry containing the extracted text, with the original file attached at the top for download.
-- An **Excel workbook** becomes one [dataset](/artifacts/datasets) per sheet (up to 20 sheets). Every sheet keeps a link to the original workbook.
+- A **PDF or Word document** becomes a document entry holding the extracted text.
+- An **Excel workbook** becomes one [dataset](/artifacts/datasets) per sheet, skipping empty sheets. A workbook with more than 20 sheets isn't imported at all — split it up first.
 - A **CSV or TSV file** becomes a dataset with the data as-is.
-- A **text or code file** becomes a note.
+- A **text file** becomes a note; a **code or JSON file** becomes a note holding the code.
 - A **Markdown file** becomes an entry directly — no conversion needed.
 
-Conversion keeps the content, not the file's formatting: layout, signatures, annotations, tracked changes, and spreadsheet formulas aren't preserved (computed values are kept). For anything that can't produce an honest entry — a corrupt, password-protected, or over-limit file — the import is rejected with a clear message and nothing is stored.
+The original file is kept with the entry. To download it, open the entry's **…** menu and choose **Download → Original file**, or use **Download original** next to **Imported from** in the entry's fields.
+
+Conversion keeps the content, not the file's formatting: layout, signatures, annotations, tracked changes, and spreadsheet formulas aren't preserved (computed values are kept). For anything that can't produce an honest entry — a corrupt, password-protected, empty, or over-limit file — the import is rejected with a clear message and nothing is stored.
 
 <Note>
-Deleting an imported entry also deletes its attached original file, unless a copy of the entry still points to it. The delete dialog tells you exactly what goes.
+Deleting an imported entry also deletes its original file, unless a copy of the entry still points to it. The delete dialog tells you exactly what goes.
 </Note>
 
 ## Size limits
@@ -73,11 +85,11 @@ Files over these limits are rejected at import — nothing partial is stored. At
 
 ## Where your files are stored
 
-Uploaded files live in your workspace's file storage — either on the server that runs your workspace or in cloud storage (Cloudflare R2), depending on how your workspace is set up. Entries are text; uploaded files are stored separately and referenced by permanent links, so renaming a file, moving it to another folder, or moving the entries that use it never breaks anything.
+Entries are text; uploaded files are stored separately, in storage that comes with your workspace — on Studiograph Cloud, dedicated object storage set up with your workspace, with nothing to configure. Files are referenced by permanent links, so renaming a file or moving the entries that use it never breaks anything. Moving a file to another folder keeps its link, but can change who can open it — see [Moving files between folders](/library/overview#moving-files-between-folders).
 
 ## Who can see a file
 
 - The **library** only shows you files in folders you can access.
-- **Images, video, audio, and fonts** embedded in an entry display for any signed-in member of your workspace who views that entry — so a picture someone with access placed in a shared entry always renders.
-- **Documents and data files** open only for people with access to the folder they live in.
-- A [public share link](/workspace/sharing#public-share-links) exposes only the files embedded in that one shared entry.
+- **Images, video, audio, fonts, and data or text files** open for anyone who can access the folder they live in. They also display for anyone reading an entry that embeds them, as long as the person who placed them there could open them.
+- **Documents, design files, and archives** open only for people with access to the folder they live in.
+- A [public share link](/workspace/sharing#public-share-links) shows only the files embedded in that one shared entry — and files from another folder only if the person who last saved the entry can open them.
