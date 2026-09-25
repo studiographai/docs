@@ -81,8 +81,22 @@ In the **Fields** panel, click **Entry type** and pick another. You can switch b
 
 Both are in the entry's **…** menu, or in the right-click menu in a list.
 
-- **Move to…** shows a folder tree to pick the destination. If the entry is an artifact that reads datasets people in the destination couldn't see, you get a heads-up — "N references won't be visible from [destination]" — but it never blocks the move. Files embedded in the entry keep showing for readers in the new folder.
+- **Move to…** shows a folder tree to pick the destination. If the entry is an artifact that reads datasets people in the destination couldn't see, you get a heads-up — "N references won't be visible from [destination]" — but it never blocks the move.
 - **Copy to…** duplicates the entry into any folder (including the same one), naming the copy "[Name] (copy)".
+
+### What moves with an entry
+
+Moving an entry doesn't move the files it uses, and you don't need to move them. Images, video, audio, fonts, and data or text files embedded in the entry keep showing for everyone who can open the entry in its new folder — including people who can't open the folder the files live in. Permission to show a file is granted when someone who can open it places it in the entry, and that permission belongs to the entry, so it goes wherever the entry goes.
+
+<Note>
+The same holds in the other direction: moving an entry into a folder with more people shows them its embedded files too, even files kept in a folder they can't open. Check what an entry embeds before moving it somewhere more widely shared.
+</Note>
+
+A few things are found through a folder rather than through the entry, so they stay behind:
+
+- **Documents, design files, and archives** linked from the entry still open only for people with access to the folder they live in. If the entry's new readers need them, [move the files](/library/overview#moving-files-between-folders) too, or share their folder.
+- **Fonts an artifact applies by family name** come from the artifact's own top-level folder or a folder shared with everyone. Move the artifact to a different top-level folder and a brand font left behind falls back to a standard font. Keep brand fonts in a folder shared with everyone, or ask the agent to reference the font files directly — a directly referenced font travels like an image. See [Fonts](/artifacts/overview#fonts).
+- **Datasets an artifact reads** are covered by the heads-up above. Moving a dataset itself also cuts it off from artifacts that read it in its old folder. See [Live data](/artifacts/live-data).
 
 ## Deleting an entry
 
