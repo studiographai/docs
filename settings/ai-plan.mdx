@@ -46,6 +46,18 @@ Switching back from your own keys to **Studiograph runs it** removes your API ke
 
 Inside the workspace, the message box has a model picker. It lists the models your plan makes available, grouped by provider, with the default first. Your choice applies to the message you send and is remembered for next time. The same menu has a **Thinking** slider for how much the agent reasons before it answers. See [Chatting with the agent](/agent/chat#choosing-a-model).
 
+## Chat on your own AI plans
+
+An Owner can turn Studio AI off for chat, so members chat on their own AI subscriptions instead of the workspace's credits or keys. Open **Settings → Workspace** and, under **Chat**, turn off **Studio AI in chat**. The setting is in the workspace itself, not the Studiograph Cloud console, and it's on by default.
+
+When it's off:
+
+- Members chat through their own AI connection: Claude Code, Codex, or Cursor, connected in the Studiograph desktop app under **Settings → AI apps**. Studio AI is no longer offered in the message box.
+- Someone with no connection set up sees why in the message box, with a button to set one up. In a browser, chat isn't available; members can use the desktop app, or connect Claude Code to the workspace over MCP (see [Connect AI tools](/ai-tools/mcp)).
+- The workspace's credits and keys aren't used for chat. Agent runs (messages to an agent, scheduled runs and routines), image generation, semantic search, meeting summaries and chat titles still use them.
+
+An Owner can turn it back on at any time. Before you turn it off, ask members to install the desktop app and connect their AI app.
+
 ## When the AI isn't available
 
 If the agent can't reach its model, the chat panel says why — for example "AI is not connected for this workspace yet" or "This workspace has run out of AI credits or provider quota." These messages include an **Open Studiograph Cloud** button that takes you to the place to fix it: add credits on **Billing**, or check your keys on **AI**.
