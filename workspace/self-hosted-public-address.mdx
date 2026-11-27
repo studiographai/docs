@@ -1,0 +1,27 @@
+---
+title: "Your workspace's public address"
+description: "Set STUDIOGRAPH_PUBLIC_URL so AI apps like Claude and ChatGPT can reach a self-hosted Studiograph workspace."
+---
+
+Claude, ChatGPT and other AI apps connect to your workspace from their own servers, not from your computer. So a self-hosted workspace needs a public `https` address they can reach. Until it has one, Home's setup list tells Owners that AI apps need a public address, and **Settings › AI apps** has no server address to give them. On Studiograph Cloud this is already set up.
+
+## Set the address
+
+Set `STUDIOGRAPH_PUBLIC_URL` on the server to the address people use to open the workspace, then restart it:
+
+```bash
+STUDIOGRAPH_PUBLIC_URL=https://studio.example.com
+```
+
+Use the address alone: `https`, the host, and nothing after it.
+
+The address has to answer on the internet over `https` with a valid certificate. A reverse proxy in front of the server is fine, as long as this is the address it serves.
+
+## What uses it
+
+- **AI apps.** The server address an app connects to is this address followed by `/mcp`, and the app's sign-in checks it. If `STUDIOGRAPH_PUBLIC_URL` is not set, AI apps fall back to the `server_url` in the workspace's `workspace.json`, and on Railway to the service's public domain.
+- **Email and calendar.** Google returns a member's connection to this address, unless `STUDIOGRAPH_SOURCE_SYNC_ORIGIN` names another. Email and calendar read only those two variables, never `server_url` or the Railway domain: without one of them, the Google client is not used. See [Email and calendar on a self-hosted workspace](/workspace/self-hosted-email-calendar).
+
+## Check it
+
+Open **Settings › AI apps**. **Server URL** shows your address followed by `/mcp`, for example `https://studio.example.com/mcp`. Then see [Connect AI tools](/ai-tools/mcp).
