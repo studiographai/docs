@@ -9,22 +9,22 @@ There are two ways to connect. Which one you use depends on whether the tool can
 
 | Method | Best for | How it works |
 | --- | --- | --- |
-| **Sign in through the browser** | Claude (web, desktop, and Cowork), ChatGPT, Claude Code, Cursor, VS Code | Paste the endpoint URL. The tool opens a browser page where you approve access. No token to manage. |
+| **Sign in through the browser** | Claude (web, desktop, and Cowork), ChatGPT, Claude Code, Cursor, VS Code | Paste the server URL. The tool opens a browser page where you approve access. No token to manage. |
 | **Personal access token** | Headless sessions: CI, scripts, `claude -p`, Codex | Create an `sg_` token once and pass it as a Bearer header or an environment variable. |
 
 Either way, the connection acts as **you**. The connected tool sees exactly the folders you can see in the app, and nothing more.
 
-## Find your endpoint URL
+## Find your server URL
 
-Open the account menu (your avatar in the top-right corner), choose **Studio**, then **MCP access**. The **Endpoint URL** field shows your workspace's address with a copy button. On Studiograph Cloud it looks like `https://<your-workspace>.studiograph.ai/mcp`.
+Open the account menu (your avatar in the top-right corner), choose **Settings**, then **AI apps**. The **Server URL** field shows your workspace's address with a copy button. On Studiograph Cloud it looks like `https://<your-workspace>.studiograph.ai/mcp`.
 
 Every member can open this page — you don't need to be an Owner.
 
 ## Create a token (for headless clients)
 
 <Steps>
-  <Step title="Open Studio → MCP access → Advanced">
-    The **Advanced** section below the endpoint URL holds your personal access tokens.
+  <Step title="Open Settings › AI apps › API tokens">
+    The **API tokens** section below the server URL holds your personal access tokens.
   </Step>
   <Step title="Create a token">
     Click **New token**, give it a name (for example "claude-code"), and click **Create token**.
@@ -38,7 +38,7 @@ Every member can open this page — you don't need to be an Owner.
 
 Claude on the web, the desktop app, the mobile apps, and Cowork all use the same connector, with browser sign-in — no token needed.
 
-1. Copy your endpoint URL from **Studio → MCP access**.
+1. Copy your server URL from **Settings › AI apps**.
 2. In Claude, open **Customize → Connectors**, click **+**, choose **Add custom connector**, and paste the URL.
 3. Approve access in the browser window that opens.
 
@@ -48,7 +48,7 @@ On Claude Team and Enterprise plans, an organization owner adds the connector on
 
 The ChatGPT desktop app connects to MCP servers directly:
 
-1. Copy your endpoint URL from **Studio → MCP access**.
+1. Copy your server URL from **Settings › AI apps**.
 2. In the ChatGPT desktop app, open **Settings → MCP servers → Add server**.
 3. Give it a name, choose **Streamable HTTP**, paste the URL, and save.
 
@@ -112,7 +112,7 @@ export STUDIOGRAPH_MCP_TOKEN=sg_your_token_here
 
 ## Cursor, VS Code, and other MCP clients
 
-Cursor, VS Code, and other clients that support browser sign-in need only the endpoint URL: add it as a remote (HTTP) MCP server and approve access when the browser opens.
+Cursor, VS Code, and other clients that support browser sign-in need only the server URL: add it as a remote (HTTP) MCP server and approve access when the browser opens.
 
 A client that can't sign in through the browser takes a token instead, with this config shape:
 
@@ -154,9 +154,9 @@ Deleting a whole top-level folder is something only a person can do, in the web 
 
 ## Revoking access
 
-Both kinds of connection are listed under **Studio → MCP access**:
+Both kinds of connection are listed under **Settings › AI apps**:
 
-- **Browser sign-ins** appear under **Connected apps**. Click **Disconnect** next to one to end its access.
-- **Tokens** are listed under **Advanced**. Open a token and click **Revoke token**.
+- **Browser sign-ins** appear under **Connected clients**. Click **Disconnect** next to one to end its access.
+- **Tokens** are listed under **API tokens**. Open a token and click **Revoke token**.
 
 Either way, any client using that connection stops working immediately. A token's value is never shown again after you create it — if you lose it, revoke it and create a new one.
