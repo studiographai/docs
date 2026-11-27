@@ -68,6 +68,13 @@
           "settings/ai-plan",
           "settings/entry-types"
         ]
+      },
+      {
+        "group": "Self-hosted",
+        "pages": [
+          "workspace/self-hosted-email-calendar",
+          "workspace/self-hosted-public-address"
+        ]
       }
     ]
   },

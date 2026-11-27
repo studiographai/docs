@@ -1,0 +1,70 @@
+---
+title: "Email and calendar on a self-hosted workspace"
+description: "Give your own Studiograph server a Google OAuth client so members can connect Gmail and Google Calendar."
+---
+
+On a self-hosted workspace, members can connect Gmail and Google Calendar once the server has a Google OAuth client of its own. Until then, Home's setup list tells Owners that email and calendar need a Google OAuth client. On Studiograph Cloud this is already set up, and you don't need this page.
+
+Each member connects their own Google account. Studiograph only reads: it asks Google for read-only access to mail and to calendar events.
+
+## What you need
+
+- A Google Cloud project you can manage.
+- Your workspace at a public `https` address, set as `STUDIOGRAPH_PUBLIC_URL` (or as `STUDIOGRAPH_SOURCE_SYNC_ORIGIN`, below). A `server_url` in `workspace.json` is not enough here. See [Your workspace's public address](/workspace/self-hosted-public-address). For a test on your own computer, `http://localhost` works too.
+
+## 1. Choose who can connect
+
+In the [Google Cloud console](https://console.cloud.google.com/), open **Google Auth Platform** for your project and set its **Audience**. The choice decides whether Google has to review your app.
+
+| Audience | Who can connect | Google review |
+| --- | --- | --- |
+| **Internal** | Only accounts in your own Google Workspace organization. The project must belong to that organization. | Not needed. Your Workspace administrator may need to allow the app. |
+| **External**, publishing status **Testing** | Up to 100 test users you list. | Not needed, but each connection ends seven days after it was made, so members have to connect again every week. |
+| **External**, publishing status **In production** | Anyone with a Google account. | Needed. Read access to Gmail is a restricted scope, so Google requires verification, including an independent security assessment, before people outside your test list can connect. |
+
+For a team that works in one Google Workspace organization, **Internal** is the simplest choice.
+
+Sources: Google's [restricted scope verification](https://developers.google.com/identity/protocols/oauth2/production-readiness/restricted-scope-verification) and [app audience](https://support.google.com/cloud/answer/15549945) pages.
+
+## 2. Turn on the APIs and add the scopes
+
+1. In **APIs & Services**, enable the **Gmail API** and the **Google Calendar API**.
+2. In **Google Auth Platform › Data Access**, add these scopes:
+   - `https://www.googleapis.com/auth/gmail.readonly`
+   - `https://www.googleapis.com/auth/calendar.events.readonly`
+
+Studiograph also asks for `openid` and `email`, to know which Google account a member connected.
+
+## 3. Create the OAuth client
+
+In **Google Auth Platform › Clients**, create a client:
+
+- **Application type**: Web application.
+- **Authorized redirect URI**: your workspace address followed by `/inbox`, for example `https://studio.example.com/inbox`.
+
+Copy the client ID and the client secret.
+
+## 4. Set the server's variables
+
+Set these on the server, then restart it:
+
+```bash
+STUDIOGRAPH_SOURCE_SYNC_ENABLED=1
+STUDIOGRAPH_SOURCE_SYNC_GOOGLE_CLIENT_ID=<your client ID>
+STUDIOGRAPH_SOURCE_SYNC_GOOGLE_CLIENT_SECRET=<your client secret>
+STUDIOGRAPH_SOURCE_SYNC_REDIRECT=direct
+# Optional: the address Google returns to. Unset, STUDIOGRAPH_PUBLIC_URL is used.
+STUDIOGRAPH_SOURCE_SYNC_ORIGIN=https://studio.example.com
+```
+
+| Variable | What it does |
+| --- | --- |
+| `STUDIOGRAPH_SOURCE_SYNC_ENABLED` | Turns email and calendar on. Off unless it is exactly `1`. |
+| `STUDIOGRAPH_SOURCE_SYNC_GOOGLE_CLIENT_ID` | Your OAuth client's ID. |
+| `STUDIOGRAPH_SOURCE_SYNC_GOOGLE_CLIENT_SECRET` | Your OAuth client's secret. It stays on the server and is never sent to a browser. |
+| `STUDIOGRAPH_SOURCE_SYNC_REDIRECT` | `direct` sends Google's answer straight back to your workspace's `/inbox`. Without it, the answer goes through Studiograph Cloud's sign-in service, which accepts only Cloud workspaces. |
+| `STUDIOGRAPH_SOURCE_SYNC_ORIGIN` | The `https` address Google returns to, with nothing after the host. Optional when `STUDIOGRAPH_PUBLIC_URL` is set. |
+
+## 5. Check it
+
+Open Home as an Owner. The setup list's **Email and calendar** row now offers **Connect Google**, and **Settings › Accounts** lists **Gmail** and **Google Calendar**, each with **Connect**. Connect your own account to confirm Google accepts the client.
